@@ -1,0 +1,11 @@
+node_modules/
+_checkpoint-*/
+.reasonix/
+.claude/
+.playwright-mcp/
+E2E*/
+*.png
+*.jpg
+*.jpeg
+Thumbs.db
+.DS_Store

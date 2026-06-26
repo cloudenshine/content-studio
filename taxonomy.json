@@ -1,0 +1,498 @@
+{
+  "version": "1.0",
+  "description": "Content Studio 层级分类体系 — 大类→中类→小类，约束继承链",
+  "tree": [
+    {
+      "id": "文学创作",
+      "label": "文学创作",
+      "icon": "✍️",
+      "constraints": {
+        "scope": "虚构或半虚构叙事文本，以情感共鸣和审美体验为核心",
+        "doctrine": [
+          "必须有明确的主题立意",
+          "必须有完整的情感弧线",
+          "不得抄袭或明显借鉴他人作品设定"
+        ],
+        "tone_range": "any",
+        "allowed_craft": ["anti-ai-slop", "sentence-rhythm", "sensory-imagery", "chinese-style"],
+        "forbidden_patterns": []
+      },
+      "children": [
+        {
+          "id": "小说",
+          "label": "小说",
+          "constraints": {
+            "scope": "以人物塑造和情节推进为核心的叙事作品",
+            "doctrine": [
+              "必须有完整的故事结构（开端-发展-高潮-结局）",
+              "必须有至少一个立体角色（有欲望/缺陷/成长）",
+              "情节推进遵循因果逻辑"
+            ],
+            "tone_range": "any",
+            "p0_checks": ["no_character_ooc", "no_plot_hole"]
+          },
+          "children": [
+            {
+              "id": "长篇小说",
+              "label": "长篇小说 (>80K字)",
+              "constraints": {
+                "scope": "篇幅超过8万字的长篇叙事作品，允许多线叙事和复杂世界观",
+                "doctrine": [
+                  "建议使用三幕或四幕结构",
+                  "每条支线必须在50章内兑现",
+                  "世界观设定必须有一致性文档"
+                ],
+                "tone_range": "any",
+                "word_range": [80000, 500000]
+              }
+            },
+            {
+              "id": "中篇小说",
+              "label": "中篇小说 (20K-80K字)",
+              "constraints": {
+                "scope": "2-8万字的中篇叙事，单线或多线但不超过3条",
+                "doctrine": [
+                  "主线聚焦，不可超过2条支线",
+                  "建议集中爆发而非循序铺垫",
+                  "篇幅有限，省去世界观全貌展示"
+                ],
+                "word_range": [20000, 80000]
+              }
+            },
+            {
+              "id": "短篇小说",
+              "label": "短篇小说 (<20K字)",
+              "constraints": {
+                "scope": "2万字以内的短篇叙事，聚焦一个核心事件或情感瞬间",
+                "doctrine": [
+                  "只讲一个故事，一条线到底",
+                  "开篇直接进入冲突",
+                  "结尾留有余味或反转"
+                ],
+                "word_range": [1000, 20000]
+              }
+            },
+            {
+              "id": "微型小说",
+              "label": "微型小说 (<2K字)",
+              "constraints": {
+                "scope": "2000字以内的极短篇，突出一个瞬间、一个反转或一个意象",
+                "doctrine": [
+                  "控制在3个场景以内",
+                  "结尾必须有意外或余味",
+                  "去掉一切修饰词"
+                ],
+                "word_range": [100, 2000]
+              }
+            }
+          ]
+        },
+        {
+          "id": "剧本",
+          "label": "剧本",
+          "constraints": {
+            "scope": "以对白和舞台/镜头指示为核心的表演文本",
+            "doctrine": [
+              "格式必须遵循行业标准（对白/动作/场景标题分离）",
+              "对白必须符合角色身份和性格",
+              "舞台指示只写可被看到和听到的内容"
+            ],
+            "tone_range": "any",
+            "allowed_craft": ["anti-ai-slop", "sentence-rhythm", "chinese-style"],
+            "p0_checks": ["format_standard_compliant", "dialogue_character_consistent"]
+          }
+        },
+        {
+          "id": "诗歌",
+          "label": "诗歌",
+          "constraints": {
+            "scope": "以意象、节奏和语言美感为核心的诗性文本",
+            "doctrine": [
+              "至少有明确的意象核心",
+              "节奏服务于情感而非格律",
+              "避免直白抒情"
+            ],
+            "tone_range": "any",
+            "allowed_craft": ["sentence-rhythm", "sensory-imagery", "chinese-style"]
+          }
+        },
+        {
+          "id": "散文",
+          "label": "散文",
+          "constraints": {
+            "scope": "以真实体验和感悟为基础的文学性随笔",
+            "doctrine": [
+              "必须有个人视角和真实感受",
+              "一事一议，不可跑题",
+              "语言自然，避免刻意修辞"
+            ],
+            "tone_range": "any"
+          }
+        },
+        {
+          "id": "儿童文学",
+          "label": "儿童文学",
+          "constraints": {
+            "scope": "面向儿童的文学作品，分年龄段创作",
+            "doctrine": [
+              "语言难度匹配目标年龄段",
+              "主题积极，但不过度美化现实",
+              "角色和情节对儿童有启发性"
+            ],
+            "tone_range": "warm",
+            "allowed_craft": ["anti-ai-slop", "sensory-imagery", "chinese-style"],
+            "p0_checks": ["age_appropriate_language", "positive_theme"]
+          },
+          "children": [
+            {
+              "id": "童话",
+              "label": "童话",
+              "constraints": {
+                "scope": "以幻想元素承载教育或情感启蒙的短篇儿童故事",
+                "doctrine": [
+                  "结尾必须有正向价值",
+                  "反派不得过于恐怖",
+                  "语言适合家长朗读"
+                ]
+              }
+            },
+            {
+              "id": "少儿小说",
+              "label": "少儿小说",
+              "constraints": {
+                "scope": "面向6-14岁儿童的阶段性小说",
+                "doctrine": [
+                  "主角年龄接近目标读者",
+                  "情节复杂度随年龄递增",
+                  "价值观必须经过审慎设计"
+                ]
+              }
+            },
+            {
+              "id": "绘本文字",
+              "label": "绘本文字",
+              "constraints": {
+                "scope": "配合插图的精简文字，每页不超过100字",
+                "doctrine": [
+                  "文字必须留白给画面",
+                  "每页一句核心句",
+                  "音韵感强烈，适合朗读"
+                ]
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "商业写作",
+      "label": "商业写作",
+      "icon": "💼",
+      "constraints": {
+        "scope": "以商业目的为核心的应用写作，追求清晰、高效和说服力",
+        "doctrine": [
+          "必须有明确的商业目的",
+          "必须考虑目标读者身份",
+          "不得虚构数据和事实"
+        ],
+        "tone_range": ["formal", "neutral"],
+        "allowed_craft": ["anti-ai-slop", "sentence-rhythm", "chinese-style"],
+        "forbidden_patterns": ["情感煽动", "过度承诺"]
+      },
+      "children": [
+        {
+          "id": "营销文案",
+          "label": "营销文案",
+          "constraints": {
+            "scope": "以转化为目标的商业推广文本",
+            "doctrine": [
+              "必须有明确的价值主张",
+              "必须有CTA（行动号召）",
+              "不得虚假宣传"
+            ],
+            "tone_range": ["casual", "neutral"],
+            "p0_checks": ["call_to_action", "no_false_claims"]
+          },
+          "children": [
+            {
+              "id": "产品页",
+              "label": "产品页面文案",
+              "constraints": {
+                "scope": "电商或官网产品详情页",
+                "doctrine": [
+                  "痛点前置→方案居中→价格收尾",
+                  "用具体数据替代形容词"
+                ]
+              }
+            },
+            {
+              "id": "社媒短文",
+              "label": "社交媒体短文",
+              "constraints": {
+                "scope": "微博/朋友圈/即刻等短文字社交平台",
+                "doctrine": [
+                  "前3行必须抓注意力",
+                  "控制在300字以内"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "id": "汇报报告",
+          "label": "汇报与报告",
+          "constraints": {
+            "scope": "工作汇报、数据分析报告、提案",
+            "doctrine": [
+              "结论先行，数据支撑",
+              "结构清晰，有标题层级",
+              "避免主观判断"
+            ],
+            "tone_range": "formal",
+            "p0_checks": ["data_or_evidence", "key_message_clear"]
+          },
+          "children": [
+            {
+              "id": "周报",
+              "label": "周报/月报",
+              "constraints": {
+                "scope": "周期性工作汇报",
+                "doctrine": [
+                  "一页原则，控制在800字以内",
+                  "用动词开头（完成/推进/解决）"
+                ]
+              }
+            },
+            {
+              "id": "调研报告",
+              "label": "调研/分析报告",
+              "constraints": {
+                "scope": "包含数据分析和结论建议的正式报告",
+                "doctrine": [
+                  "必须有数据来源标注",
+                  "结论必须有数据支撑",
+                  "建议必须可执行"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "id": "产品文档",
+          "label": "产品文档",
+          "constraints": {
+            "scope": "产品说明书、API文档、用户指南",
+            "doctrine": [
+              "用用户的语言而非技术语言",
+              "重点解决用户的问题而非展示功能"
+            ],
+            "tone_range": "neutral"
+          }
+        }
+      ]
+    },
+    {
+      "id": "知识输出",
+      "label": "知识输出",
+      "icon": "📚",
+      "constraints": {
+        "scope": "以知识传递和技能培养为核心的教育性内容",
+        "doctrine": [
+          "知识准确，引用的数据必须有来源",
+          "结构清晰，便于学习者跟进",
+          "必须有明确的受众定位"
+        ],
+        "tone_range": ["neutral", "warm"],
+        "allowed_craft": ["anti-ai-slop", "sentence-rhythm", "chinese-style"]
+      },
+      "children": [
+        {
+          "id": "课程脚本",
+          "label": "课程与教程",
+          "constraints": {
+            "scope": "线上课程、视频脚本、教程指南",
+            "doctrine": [
+              "每个模块必须有明确的学习目标",
+              "内容分块不超过7±2原则",
+              "每个概念至少配一个例证"
+            ],
+            "tone_range": "warm",
+            "p0_checks": ["learning_objective_clear", "example_provided"]
+          },
+          "children": [
+            {
+              "id": "视频脚本",
+              "label": "课程视频脚本",
+              "constraints": {
+                "scope": "配合视频画面的口播脚本",
+                "doctrine": [
+                  "每段不超过90秒",
+                  "口语化但不口语滥用"
+                ]
+              }
+            },
+            {
+              "id": "教程指南",
+              "label": "图文教程/指南",
+              "constraints": {
+                "scope": "可打印或在线阅读的步骤式指南",
+                "doctrine": [
+                  "步骤编号清晰",
+                  "每个步骤配截图或示意图描述"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "id": "深度分析",
+          "label": "深度分析与科普",
+          "constraints": {
+            "scope": "对特定主题的深入研究或科普文章",
+            "doctrine": [
+              "深入但不啰嗦，控制在3000字以内",
+              "专业度匹配目标读者",
+              "引用必须可验证"
+            ],
+            "p0_checks": ["data_or_evidence", "key_message_clear"]
+          }
+        }
+      ]
+    },
+    {
+      "id": "媒体社交",
+      "label": "媒体与社交",
+      "icon": "📱",
+      "constraints": {
+        "scope": "面向社交媒体的短内容创作",
+        "doctrine": [
+          "第一句即钩子",
+          "每个平台有自己的说话方式",
+          "互动引导（评论/转发/点赞）"
+        ],
+        "tone_range": ["casual", "warm"],
+        "allowed_craft": ["anti-ai-slop", "sensory-imagery", "chinese-style"]
+      },
+      "children": [
+        {
+          "id": "社媒帖子",
+          "label": "社媒帖子",
+          "constraints": {
+            "scope": "各社交平台的原生帖子",
+            "doctrine": [
+              "平台不同语气不同",
+              "不直接复制粘贴跨平台",
+              "控制字数在平台上限80%以内"
+            ],
+            "p0_checks": ["hook_present"]
+          },
+          "children": [
+            {
+              "id": "小红书",
+              "label": "小红书笔记",
+              "constraints": {
+                "scope": "种草/分享/教程类小红书笔记",
+                "doctrine": [
+                  "封面即标题重复内容",
+                  "多分段，每段不超过3行",
+                  "结尾加上话题标签"
+                ]
+              }
+            },
+            {
+              "id": "公众号",
+              "label": "公众号推文",
+              "constraints": {
+                "scope": "微信公众号长文推文",
+                "doctrine": [
+                  "标题控制在25字以内",
+                  "文中至少3个小标题",
+                  "结尾引导关注/在看/转发"
+                ]
+              }
+            },
+            {
+              "id": "微博",
+              "label": "微博短文",
+              "constraints": {
+                "scope": "微博140字短文或头条文章",
+                "doctrine": [
+                  "前40字抓注意力",
+                  "可引用但必须标明来源"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "id": "新闻通讯",
+          "label": "新闻与通讯",
+          "constraints": {
+            "scope": "新闻稿、通讯稿、简报",
+            "doctrine": [
+              "倒金字塔结构（最重要信息在前）",
+              "5W1H要素齐备",
+              "客观中立，不夹带个人观点"
+            ],
+            "tone_range": "neutral"
+          }
+        }
+      ]
+    },
+    {
+      "id": "学术专业",
+      "label": "学术与专业",
+      "icon": "🎓",
+      "constraints": {
+        "scope": "学术研究、技术文档、专业领域的规范性写作",
+        "doctrine": [
+          "引用规范，标注来源",
+          "用词精确，避免模糊表述",
+          "结构遵循该领域标准格式"
+        ],
+        "tone_range": "formal",
+        "allowed_craft": ["sentence-rhythm", "chinese-style"]
+      },
+      "children": [
+        {
+          "id": "论文",
+          "label": "学术论文",
+          "constraints": {
+            "scope": "学术期刊论文、学位论文",
+            "doctrine": [
+              "必须有摘要/引言/方法/结果/讨论/结论",
+              "引用必须使用标准格式",
+              "避免第一人称（除非期刊允许）"
+            ],
+            "p0_checks": ["citation_format", "structure_complete"],
+            "allowed_craft": ["sentence-rhythm", "chinese-style"]
+          }
+        },
+        {
+          "id": "技术文档",
+          "label": "技术文档",
+          "constraints": {
+            "scope": "API文档、技术规格、架构说明",
+            "doctrine": [
+              "代码示例必须可运行",
+              "同义术语不得混用",
+              "提供搜索索引"
+            ]
+          }
+        },
+        {
+          "id": "研究笔记",
+          "label": "研究笔记与草稿",
+          "constraints": {
+            "scope": "个人研究过程中的思考记录和不完整草稿",
+            "doctrine": [
+              "标注每段的状态（结论/猜想/问题）",
+              "引用必须在同笔记内记录"
+            ],
+            "tone_range": "any"
+          }
+        }
+      ]
+    }
+  ]
+}

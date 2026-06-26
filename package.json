@@ -1,0 +1,14 @@
+{
+  "name": "content-studio",
+  "version": "0.2.0",
+  "private": true,
+  "description": "Open Design 架构的文字内容创作引擎",
+  "type": "module",
+  "scripts": {
+    "generate": "node cli.mjs",
+    "start": "node src/server.js",
+    "dev": "node --watch src/server.js",
+    "demo": "node cli.mjs --skill novel-chapter --design web-novel-cool --prompt \"一个少年在废土上捡到一块能说话的怀表\""
+  },
+  "dependencies": {}
+}

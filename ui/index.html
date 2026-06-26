@@ -1,0 +1,652 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Content Studio — 文字内容创作系统</title>
+<style>
+  :root {
+    --bg: #1a1a2e; --surface: #16213e; --surface2: #0f3460;
+    --text: #e8e8e8; --text-dim: #8892a0; --text-muted: #5a6478;
+    --accent: #e94560; --accent2: #0f9b8e; --border: #2a2a4a;
+    --success: #4ade80; --fail: #f87171; --warn: #fbbf24;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: -apple-system, 'Noto Sans SC', sans-serif; background: var(--bg); color: var(--text); line-height: 1.6; min-height: 100vh; }
+  .container { max-width: 1100px; margin: 0 auto; padding: 20px; }
+  header { padding: 20px 0; border-bottom: 1px solid var(--border); margin-bottom: 20px; display: flex; justify-content: space-between; align-items: center; }
+  header h1 { font-size: 20px; font-weight: 700; }
+  header h1 span { color: var(--accent); }
+  header .subtitle { color: var(--text-dim); font-size: 13px; }
+  .mode-toggle { font-size: 12px; padding: 6px 14px; border: 1px solid var(--border); border-radius: 14px; cursor: pointer; color: var(--text-dim); background: transparent; }
+  .mode-toggle.active { color: var(--accent2); border-color: var(--accent2); }
+  .runmode-btn { font-size: 16px; padding: 4px 12px; border: none; cursor: pointer; background: transparent; color: var(--text-muted); transition: all 0.2s; }
+  .runmode-btn.active { background: var(--accent2); color: white; }
+  .runmode-btn:hover:not(.active) { background: var(--surface2); }
+  .breadcrumb { display: flex; align-items: center; gap: 8px; margin-bottom: 16px; font-size: 13px; padding: 8px 0; }
+  .breadcrumb-item { color: var(--text-muted); cursor: pointer; }
+  .breadcrumb-item:hover { color: var(--accent2); }
+  .breadcrumb-item.active { color: var(--text); font-weight: 600; }
+  .breadcrumb-sep { color: var(--text-muted); font-size: 12px; }
+  .tier-title { font-size: 14px; font-weight: 600; color: var(--text-dim); margin-bottom: 12px; }
+  .tier-cards { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 12px; margin-bottom: 20px; }
+  .tier-card { background: var(--surface); border: 1px solid var(--border); border-radius: 8px; padding: 16px; cursor: pointer; transition: all 0.2s; }
+  .tier-card:hover { border-color: var(--accent2); transform: translateY(-2px); }
+  .tier-card .icon { font-size: 28px; margin-bottom: 8px; display: block; }
+  .tier-card .name { font-size: 15px; font-weight: 600; margin-bottom: 4px; }
+  .tier-card .count { font-size: 11px; color: var(--text-muted); margin-top: 8px; }
+  .tier-card .admin-actions { display: flex; gap: 4px; margin-top: 8px; padding-top: 6px; border-top: 1px solid var(--border); }
+  .admin-btn { font-size: 11px; padding: 2px 8px; border: 1px solid var(--border); border-radius: 4px; cursor: pointer; background: var(--bg); color: var(--text-dim); }
+  .admin-btn:hover { border-color: var(--accent2); color: var(--accent2); }
+  .admin-btn.danger:hover { border-color: var(--fail); color: var(--fail); }
+  .admin-add-card { background: var(--surface); border: 2px dashed var(--border); border-radius: 8px; padding: 16px; cursor: pointer; display: flex; align-items: center; justify-content: center; font-size: 28px; color: var(--text-muted); }
+  .admin-add-card:hover { border-color: var(--accent2); color: var(--accent2); }
+  .empty-state { text-align: center; padding: 60px 20px; color: var(--text-muted); }
+  .empty-state p { font-size: 15px; margin-bottom: 8px; }
+  .form-section { background: var(--surface); border-radius: 8px; padding: 20px; margin-bottom: 16px; border: 1px solid var(--border); }
+  .form-section h3 { font-size: 13px; font-weight: 600; margin-bottom: 14px; color: var(--accent2); display: flex; align-items: center; gap: 8px; }
+  .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+  .form-grid .full { grid-column: 1 / -1; }
+  .smart-field { display: flex; flex-direction: column; gap: 6px; }
+  .smart-field label { font-size: 13px; font-weight: 500; color: var(--text-dim); display: flex; align-items: center; gap: 6px; }
+  .smart-field label .hint { font-size: 11px; color: var(--text-muted); font-weight: 400; }
+  .smart-field label .required { color: var(--accent); }
+  .smart-field select, .smart-field input, .smart-field textarea { padding: 8px 10px; background: var(--bg); border: 1px solid var(--border); color: var(--text); border-radius: 4px; font-size: 13px; font-family: inherit; width: 100%; }
+  .smart-field textarea { min-height: 60px; resize: vertical; }
+  .smart-field select { cursor: pointer; }
+  .smart-field select:focus, .smart-field input:focus, .smart-field textarea:focus { outline: none; border-color: var(--accent2); }
+  .multiselect-grid { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 4px; }
+  .chip { display: inline-flex; align-items: center; gap: 4px; padding: 4px 10px; border-radius: 14px; font-size: 12px; background: var(--bg); border: 1px solid var(--border); cursor: pointer; user-select: none; }
+  .chip.selected { background: var(--accent2); border-color: var(--accent2); color: white; }
+  .chip:hover { border-color: var(--accent2); }
+  .ref-tabs { display: flex; gap: 0; margin-bottom: 12px; border-bottom: 1px solid var(--border); }
+  .ref-tab { padding: 8px 16px; font-size: 13px; cursor: pointer; border-bottom: 2px solid transparent; color: var(--text-dim); }
+  .ref-tab.active { color: var(--accent2); border-bottom-color: var(--accent2); }
+  .ref-panel { display: none; }
+  .ref-panel.active { display: block; }
+  .ref-panel textarea { width: 100%; padding: 10px; background: var(--bg); border: 1px solid var(--border); color: var(--text); border-radius: 4px; font-size: 13px; font-family: inherit; min-height: 80px; resize: vertical; }
+  .ref-panel input[type=text] { width: 100%; padding: 8px 10px; background: var(--bg); border: 1px solid var(--border); color: var(--text); border-radius: 4px; font-size: 13px; }
+  .ref-actions { display: flex; gap: 8px; margin-top: 8px; }
+  .ref-panel input[type=file] { display: none; }
+  .drop-zone { border: 2px dashed var(--border); border-radius: 8px; padding: 24px; text-align: center; color: var(--text-muted); cursor: pointer; }
+  .drop-zone.dragover { border-color: var(--accent2); background: rgba(15,155,142,0.08); }
+  .ref-list { margin-top: 12px; }
+  .ref-item { display: flex; align-items: center; justify-content: space-between; padding: 8px 12px; background: var(--bg); border: 1px solid var(--border); border-radius: 4px; margin-bottom: 6px; font-size: 13px; }
+  .ref-item .ref-info { display: flex; align-items: center; gap: 8px; flex: 1; min-width: 0; }
+  .ref-item .ref-name { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .ref-item .ref-del { cursor: pointer; color: var(--fail); font-size: 16px; }
+  .actions { display: flex; gap: 12px; margin-bottom: 24px; }
+  .btn { padding: 12px 28px; border: none; border-radius: 6px; font-size: 14px; font-weight: 600; cursor: pointer; }
+  .btn-primary { background: var(--accent2); color: white; }
+  .btn-primary:hover { background: #0d8a7e; }
+  .btn-primary:disabled { opacity: 0.4; cursor: not-allowed; }
+  .btn-secondary { background: var(--surface2); color: var(--text); }
+  .btn-secondary:hover { background: #1a4a7a; }
+  .btn-danger { background: var(--accent); color: white; }
+  .result { display: none; margin-top: 20px; }
+  .result.active { display: block; }
+  .result-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; }
+  .result-content { background: var(--surface); border-radius: 8px; padding: 20px; border: 1px solid var(--border); white-space: pre-wrap; font-size: 14px; line-height: 1.8; max-height: 60vh; overflow-y: auto; }
+  .eval-bar { display: flex; align-items: center; gap: 10px; margin-bottom: 6px; }
+  .eval-bar .label { font-size: 12px; color: var(--text-dim); width: 100px; flex-shrink: 0; }
+  .eval-bar .track { flex: 1; height: 6px; background: var(--bg); border-radius: 3px; }
+  .eval-bar .fill { height: 100%; border-radius: 3px; }
+  .eval-bar .score { font-size: 12px; color: var(--text-dim); width: 30px; text-align: right; }
+  .check-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: 6px; margin-top: 8px; }
+  .check-item { font-size: 12px; padding: 4px 8px; border-radius: 4px; background: var(--bg); }
+  .check-item.pass { color: var(--success); }
+  .check-item.fail { color: var(--fail); }
+  .check-category { font-size: 12px; color: var(--text-muted); margin-top: 8px; margin-bottom: 4px; font-weight: 600; }
+  .constraint-box { background: var(--surface2); border-radius: 6px; padding: 10px 14px; margin-bottom: 16px; border-left: 3px solid var(--accent2); font-size: 12px; color: var(--text-dim); line-height: 1.5; }
+  .status-bar { font-size: 12px; color: var(--text-muted); margin: 8px 0; }
+
+  /* Editor */
+  .editor-field { margin-bottom: 12px; }
+  .editor-field label { display: block; font-size: 12px; color: var(--text-dim); margin-bottom: 4px; }
+  .editor-field input, .editor-field textarea, .editor-field select { width: 100%; padding: 8px 10px; background: var(--bg); border: 1px solid var(--border); color: var(--text); border-radius: 4px; font-size: 13px; font-family: inherit; }
+  .editor-field textarea { min-height: 40px; resize: vertical; }
+  .field-row { display: flex; gap: 8px; align-items: center; margin-bottom: 8px; padding: 8px; background: var(--bg); border-radius: 4px; border: 1px solid var(--border); }
+  .field-row input, .field-row select { flex: 1; min-width: 0; }
+  .field-row .del-field { color: var(--fail); cursor: pointer; font-size: 18px; }
+  .add-field-btn { font-size: 12px; padding: 6px 14px; border: 1px dashed var(--border); border-radius: 4px; cursor: pointer; background: transparent; color: var(--text-dim); margin-top: 4px; }
+  .add-field-btn:hover { border-color: var(--accent2); color: var(--accent2); }
+  .options-input { display: flex; gap: 4px; flex-wrap: wrap; }
+  .options-input input { flex: 1; min-width: 60px; }
+  .options-input .del-opt { color: var(--fail); cursor: pointer; }
+</style>
+</head>
+<body>
+<div class="container">
+  <header>
+    <div>
+      <h1>📝 Content <span>Studio</span></h1>
+      <div class="subtitle" id="modeLabel">创作模式 · 选类→约束→生成</div>
+    </div>
+    <div style="display:flex;gap:8px;align-items:center;">
+      <span class="status-bar" id="status">...</span>
+      <div style="display:flex;border:1px solid var(--border);border-radius:6px;overflow:hidden;">
+        <button class="runmode-btn active" data-mode="claude" onclick="setRunMode('claude')" title="Local CLI · 主力推荐">🖥️</button>
+        <button class="runmode-btn" data-mode="ollama" onclick="setRunMode('ollama')" title="本地 Ollama">🦙</button>
+        <button class="runmode-btn" data-mode="api" onclick="setRunMode('api')" title="云端 API">☁️</button>
+      </div>
+      <button class="mode-toggle" onclick="openSettings()" title="运行设置">⚙️</button>
+      <button class="mode-toggle" id="modeToggle" onclick="toggleAdminMode()">🔧</button>
+    </div>
+  </header>
+
+  <div class="breadcrumb" id="breadcrumb"></div>
+  <div id="tierArea"></div>
+  <div id="constraintInfo" style="display:none;"></div>
+  <div id="formArea" style="display:none;">
+    <div class="form-section"><h3>📋 创作需求</h3><div class="form-grid" id="skillForm"></div></div>
+    <div class="form-section">
+      <h3>🎨 风格包 <span class="hint">可多选</span></h3>
+      <div class="multiselect-grid" id="designChips"></div>
+      <div id="designStrengths"></div>
+    </div>
+    <div class="form-section">
+      <h3>📎 创作参考源</h3>
+      <div class="ref-tabs"><div class="ref-tab active" onclick="switchRefTab('paste')">✏️ 粘贴文字</div><div class="ref-tab" onclick="switchRefTab('url')">🔗 网页抓取</div><div class="ref-tab" onclick="switchRefTab('vault')">🗄️ Obsidian</div><div class="ref-tab" onclick="switchRefTab('file')">📁 上传文件</div></div>
+      <div class="ref-panel active" id="refPaste"><textarea id="refPasteInput" placeholder="粘贴参考文字..." style="min-height:100px;"></textarea></div>
+      <div class="ref-panel" id="refUrl"><input type="text" id="refUrlInput" placeholder="输入页面URL..."><div class="ref-actions"><button class="btn-sm" onclick="fetchUrl()">抓取</button></div></div>
+      <div class="ref-panel" id="refVault"><div class="ref-actions"><input type="text" id="vaultPathInput" placeholder="输入 Obsidian Vault 路径..." style="flex:1;"><button class="btn-sm" onclick="connectVault()">连接</button></div><div id="vaultNoteList" style="margin-top:8px;"></div></div>
+      <div class="ref-panel" id="refFile"><div class="drop-zone" id="dropZone">点击或拖拽文件到此处</div></div>
+      <div class="ref-list" id="refList"></div>
+      <input type="file" id="fileInput" accept=".md,.txt,.html,.docx">
+    </div>
+    <div class="actions"><button class="btn btn-primary" id="generateBtn" onclick="onGenerate()">🚀 生成</button><button class="btn btn-secondary" onclick="onReset()">↺ 重置</button></div>
+  </div>
+  <!-- 编辑器 -->
+  <div id="editorArea" style="display:none;">
+    <div class="form-section">
+      <h3>✏️ 技能编辑器 <span class="hint" id="editorPath"></span></h3>
+      <div class="editor-field"><label>技能标识 (name)</label><input id="edit_name" placeholder="directory-name"></div>
+      <div class="editor-field"><label>显示名称 (label)</label><input id="edit_label" placeholder="技能显示名称"></div>
+      <div class="editor-field full"><label>描述 (description)</label><textarea id="edit_description" style="min-height:40px;"></textarea></div>
+      <div class="editor-field full"><h4 style="font-size:13px;color:var(--text-dim);margin:12px 0 8px;">输入字段 (inputs)</h4><div id="edit_fields"></div><button class="add-field-btn" onclick="addField()">+ 增加字段</button></div>
+      <div class="editor-field full"><label>正文模板 (body)</label><textarea id="edit_body" style="min-height:120px;"></textarea></div>
+      <div class="actions"><button class="btn btn-primary" onclick="saveSkillEditor()">💾 保存</button><button class="btn btn-secondary" onclick="closeEditor()">取消</button></div>
+    </div>
+  </div>
+
+  <!-- 设置面板 -->
+  <div id="settingsOverlay" style="display:none;position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,0.5);z-index:100;" onclick="closeSettings()"></div>
+  <div id="settingsPanel" style="display:none;position:fixed;top:0;right:0;bottom:0;width:400px;background:var(--surface);z-index:101;padding:24px;overflow-y:auto;border-left:1px solid var(--border);">
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:20px;">
+      <h3 style="margin:0;">⚙️ 运行设置</h3>
+      <button onclick="closeSettings()" style="background:none;border:none;color:var(--text-dim);cursor:pointer;font-size:20px;">✕</button>
+    </div>
+    <div id="cfgCLI">
+      <h4 style="color:var(--accent2);margin-bottom:12px;">🖥️ Local CLI <span style="font-size:11px;color:var(--text-muted);">主力推荐</span></h4>
+      <p style="font-size:12px;color:var(--text-dim);margin-bottom:12px;">调用本地已安装的 Claude Code / Cursor 等 CLI 工具，使用已有付费模型权限，系统无额外费用。</p>
+      <div id="cliDetectStatus" style="font-size:12px;margin-bottom:12px;padding:8px;background:var(--bg);border-radius:4px;">⏳ 检测中...</div>
+      <div class="editor-field"><label>CLI 工具</label><select id="cfg_cli_tool"><option value="claude">Claude Code (claude)</option><option value="cursor">Cursor (cursor)</option><option value="codex">Codex CLI (codex)</option><option value="gemini">Gemini CLI (gemini)</option></select></div>
+      <div class="editor-field"><label>额外参数</label><input id="cfg_cli_args" placeholder="如 --model claude-sonnet-4-6"></div>
+      <div class="editor-field"><label>超时 (秒)</label><input id="cfg_cli_timeout" type="number" value="300"></div>
+      <button class="btn btn-secondary" style="margin-top:8px;" onclick="detectCLI()">🔍 重新检测</button>
+    </div>
+    <div id="cfgOllama" style="display:none;">
+      <h4 style="color:var(--accent2);margin-bottom:12px;">🦙 本地 Ollama</h4>
+      <div class="editor-field"><label>端点 URL</label><input id="cfg_ollama_url" value="http://localhost:11434/api/generate"></div>
+      <div class="editor-field"><label>模型名称</label><input id="cfg_ollama_model" value="huihui_ai/qwen3.5-abliterated:9b"></div>
+      <div class="editor-field"><label>Temperature</label><input id="cfg_ollama_temp" type="number" step="0.1" min="0" max="2" value="0.8"></div>
+      <div class="editor-field"><label>Max Tokens</label><input id="cfg_ollama_tokens" type="number" step="100" min="100" max="32768" value="8192"></div>
+    </div>
+    <div id="cfgApi" style="display:none;">
+      <h4 style="color:var(--accent2);margin-bottom:12px;">☁️ 云端 API</h4>
+      <div class="editor-field"><label>端点 URL</label><input id="cfg_api_url" value="https://api.openai.com/v1/chat/completions"></div>
+      <div class="editor-field"><label>API Key</label><input id="cfg_api_key" type="password" placeholder="sk-..."></div>
+      <div class="editor-field"><label>模型名称</label><input id="cfg_api_model" value="gpt-4o"></div>
+      <div class="editor-field"><label>Temperature</label><input id="cfg_api_temp" type="number" step="0.1" min="0" max="2" value="0.7"></div>
+      <div class="editor-field"><label>Max Tokens</label><input id="cfg_api_tokens" type="number" step="100" min="100" max="32768" value="4096"></div>
+    </div>
+    <div class="actions" style="margin-top:20px;"><button class="btn btn-primary" onclick="saveSettings()">💾 保存</button><button class="btn btn-secondary" onclick="closeSettings()">取消</button></div>
+  </div>
+
+  <div class="result" id="result">
+    <div class="result-header"><h3>📄 生成结果</h3><span class="status-bar" id="resultMeta"></span></div>
+    <div class="evaluation" id="evaluation"></div>
+    <div class="result-content" id="resultContent"></div>
+  </div>
+</div>
+
+<script>
+const BASE = "";
+let currentPath = "", currentSkill = null, designs = [], references = [], vaultConnected = false;
+let isAdmin = false, editingSkillPath = null;
+let runMode = localStorage.getItem('cs_runMode') || 'claude';
+let runConfig = JSON.parse(localStorage.getItem('cs_runConfig') || '{}');
+const defaultConfig = {
+  claude: { tool: 'claude', args: '', timeout: 300 },
+  ollama: { url: 'http://localhost:11434/api/generate', model: 'huihui_ai/qwen3.5-abliterated:9b', temperature: 0.8, max_tokens: 8192 },
+  api: { url: 'https://api.openai.com/v1/chat/completions', key: '', model: 'gpt-4o', temperature: 0.7, max_tokens: 4096 },
+};
+for (const [k, v] of Object.entries(defaultConfig)) { if (!runConfig[k]) runConfig[k] = { ...v }; }
+
+function setRunMode(mode) {
+  runMode = mode;
+  localStorage.setItem('cs_runMode', mode);
+  document.querySelectorAll('.runmode-btn').forEach(b => b.classList.toggle('active', b.dataset.mode === mode));
+  updateStatus();
+}
+
+async function detectCLI() {
+  const el = document.getElementById('cliDetectStatus');
+  el.textContent = '⏳ 检测中...';
+  try {
+    const res = await fetch('/api/cli-detect');
+    const tools = await res.json();
+    const avail = Object.entries(tools).filter(([_, v]) => v.available);
+    if (avail.length === 0) {
+      el.innerHTML = '⚠️ 未检测到 CLI 工具。<br>请确认已安装 <a href="https://docs.anthropic.com/en/docs/claude-code" target="_blank" style="color:var(--accent2);">Claude Code</a> 并加入 PATH。';
+    } else {
+      el.innerHTML = avail.map(([k, v]) => `✅ <b>${k}</b>: ${v.version}`).join('<br>');
+      const sel = document.getElementById('cfg_cli_tool');
+      if (avail.length > 0 && sel) sel.value = avail[0][0];
+    }
+  } catch { el.textContent = '❌ 检测失败'; }
+}
+
+function openSettings() {
+  document.getElementById('settingsOverlay').style.display = 'block';
+  document.getElementById('settingsPanel').style.display = 'block';
+  document.getElementById('cfgCLI').style.display = runMode === 'claude' ? 'block' : 'none';
+  document.getElementById('cfgOllama').style.display = runMode === 'ollama' ? 'block' : 'none';
+  document.getElementById('cfgApi').style.display = runMode === 'api' ? 'block' : 'none';
+  const cfg = runConfig[runMode] || {};
+  const prefix = 'cfg_' + (runMode === 'claude' ? 'cli' : runMode) + '_';
+  for (const [k, v] of Object.entries(cfg)) { const el = document.getElementById(prefix + k); if (el) el.value = v; }
+  if (runMode === 'claude') detectCLI();
+}
+
+function closeSettings() {
+  document.getElementById('settingsOverlay').style.display = 'none';
+  document.getElementById('settingsPanel').style.display = 'none';
+}
+
+function saveSettings() {
+  const modeKey = runMode === 'claude' ? 'cli' : runMode;
+  const prefix = 'cfg_' + modeKey + '_';
+  const cfg = {};
+  for (const el of document.querySelectorAll('#settingsPanel input, #settingsPanel select')) {
+    if (el.id && el.id.startsWith(prefix)) {
+      cfg[el.id.replace(prefix, '')] = el.type === 'number' ? parseFloat(el.value) : el.value;
+    }
+  }
+  runConfig[runMode] = cfg;
+  localStorage.setItem('cs_runConfig', JSON.stringify(runConfig));
+  closeSettings();
+  updateStatus();
+}
+
+function updateStatus() {
+  const cfg = runConfig[runMode] || {};
+  const s = document.getElementById('status');
+  if (runMode === 'claude') s.textContent = `🖥️ ${cfg.tool || 'claude'}`;
+  else if (runMode === 'ollama') s.textContent = `🦙 ${cfg.model || 'Ollama'}`;
+  else s.textContent = `☁️ ${cfg.model || 'API'}`;
+}
+
+function toggleAdminMode() {
+  isAdmin = !isAdmin;
+  document.getElementById("modeToggle").textContent = isAdmin ? "✍️ 创作" : "⚙️ 管理";
+  document.getElementById("modeLabel").textContent = isAdmin ? "管理模式 · 增删改分类与技能" : "创作模式 · 选类→约束→生成";
+  closeEditor();
+  hideForm();
+  document.getElementById("result").classList.remove("active");
+  loadTier(currentPath || "");
+}
+
+function updateBreadcrumb(path) {
+  const el = document.getElementById("breadcrumb");
+  const segments = path ? path.split("/") : [];
+  let html = `<span class="breadcrumb-item active" onclick="loadTier('')">🏠 全部类别</span>`;
+  let acc = "";
+  for (const seg of segments) {
+    acc += "/" + seg;
+    html += `<span class="breadcrumb-sep">›</span><span class="breadcrumb-item ${acc === path ? 'active' : ''}" onclick="loadTier('${acc}')">${seg}</span>`;
+  }
+  el.innerHTML = html;
+}
+
+async function loadTier(parentPath) {
+  currentPath = parentPath;
+  updateBreadcrumb(parentPath);
+  const res = await fetch(BASE + "/api/taxonomy?parent=" + encodeURIComponent(parentPath));
+  const data = await res.json();
+  const area = document.getElementById("tierArea");
+
+  if (!isAdmin && data.children.length === 0) {
+    const skillRes = await fetch(BASE + "/api/skills?parent=" + encodeURIComponent(parentPath));
+    const skills = await skillRes.json();
+    if (skills.length > 0) { loadSkill(skills[0].path || skills[0].id); area.innerHTML = `<div class="tier-title">✅ 已选择：${parentPath}</div>`; return; }
+    else { area.innerHTML = `<div class="empty-state"><p>此分类下暂无可用技能</p><div class="sub">请选择其他分类</div></div>`; hideForm(); return; }
+  }
+
+  let html = `<div class="tier-title">${parentPath ? (isAdmin ? '管理子分类与技能' : '请选择子类型') : (isAdmin ? '管理全部分类' : '请选择创作大类')}</div><div class="tier-cards">`;
+  for (const child of data.children) {
+    const label = child.label;
+    html += `<div class="tier-card" onclick="${isAdmin ? '' : "loadTier('" + (parentPath ? parentPath + '/' + child.id : child.id) + "')"}">
+      <span class="icon">${child.icon || '📄'}</span>
+      <div class="name">${label}</div>
+      ${child.hasChildren ? '<div class="count">包含更多子类型 ›</div>' : child.hasSkill ? '<div class="count">📄 技能</div>' : '<div class="count">空</div>'}`;
+    if (isAdmin) {
+      html += `<div class="admin-actions">
+        <span class="admin-btn" onclick="event.stopPropagation();addSubCategory('${parentPath ? parentPath + '/' + child.id : child.id}')">➕子类</span>
+        <span class="admin-btn" onclick="event.stopPropagation();addSkillAt('${parentPath ? parentPath + '/' + child.id : child.id}')">➕技能</span>
+        ${child.hasSkill ? `<span class="admin-btn" onclick="event.stopPropagation();editSkill('${parentPath ? parentPath + '/' + child.id : child.id}')">✏️</span>` : ''}
+        <span class="admin-btn danger" onclick="event.stopPropagation();deleteNode('${parentPath ? parentPath + '/' + child.id : child.id}', ${child.hasSkill})">🗑️</span>
+      </div>`;
+    }
+    html += `</div>`;
+  }
+  // 管理模式下根节点显示添加按钮
+  if (isAdmin) {
+    html += `<div class="admin-add-card" onclick="addSubCategory('${parentPath || ''}')">➕<br><span style="font-size:12px;">添加分类</span></div>`;
+  }
+  html += `</div>`;
+  area.innerHTML = html;
+  if (!isAdmin) hideForm();
+}
+
+async function loadSkill(skillPath) {
+  const res = await fetch(BASE + "/api/skills/" + encodeURIComponent(skillPath));
+  const data = await res.json();
+  if (data.error) { alert(data.error); return; }
+  currentSkill = data;
+  if (data.constraints && data.constraints.scope) {
+    let h = `<div class="constraint-box"><strong>📐 创作约束</strong>：${data.constraints.scope}`;
+    if (data.constraints.doctrine && data.constraints.doctrine.length) {
+      h += `<br><strong>原则</strong>：<ul style="margin:4px 0 0 16px;padding:0;">`;
+      for (const d of data.constraints.doctrine) h += `<li style="margin:2px 0;">${d}</li>`;
+      h += `</ul>`;
+    }
+    h += `</div>`;
+    document.getElementById("constraintInfo").innerHTML = h;
+    document.getElementById("constraintInfo").style.display = "block";
+  }
+  renderForm(data.inputs || []);
+  loadDesigns();
+  document.getElementById("formArea").style.display = "block";
+  document.getElementById("result").classList.remove("active");
+}
+
+function renderForm(inputs) {
+  const grid = document.getElementById("skillForm");
+  let html = "";
+  for (const field of inputs) {
+    if (!field || !field.name) continue;
+    const isLong = field.ui === "textarea";
+    const required = field.required ? '<span class="required">*</span>' : "";
+    const opts = field.options || [];
+    const label = field.label || field.name;
+    const hint = field.hint || '';
+    html += `<div class="smart-field ${isLong ? 'full' : ''}"><label>${label} ${required}<span class="hint">${hint}</span></label>`;
+    if (field.ui === "multiselect" && opts.length > 0) {
+      html += `<div class="multiselect-grid" id="ms_${field.name}">`;
+      html += opts.map(o => `<span class="chip" data-key="${field.name}" data-val="${o.replace(/"/g,'&quot;')}" onclick="toggleChip('${field.name}',this)">${o}</span>`).join('');
+      html += `<span class="chip" style="border-style:dashed;opacity:0.6;" onclick="addChipOption('${field.name}')">+ 添加</span></div>`;
+      html += `<textarea id="input_${field.name}" placeholder="选中或添加选项后自动填入，也可手动编辑" style="width:100%;padding:8px 10px;background:var(--bg);border:1px solid var(--border);color:var(--text);border-radius:4px;font-size:13px;min-height:50px;resize:vertical;"></textarea>`;
+    } else if (field.ui === "dropdown" && opts.length > 0) {
+      html += `<select id="input_${field.name}" style="width:100%;padding:8px;background:var(--bg);border:1px solid var(--border);color:var(--text);border-radius:4px;">${opts.map(o => `<option value="${o}">${o}</option>`).join('')}</select>`;
+    } else if (field.ui === "textarea") {
+      html += `<textarea id="input_${field.name}" placeholder="${hint}" style="width:100%;padding:8px 10px;background:var(--bg);border:1px solid var(--border);color:var(--text);border-radius:4px;font-size:13px;min-height:60px;resize:vertical;"></textarea>`;
+    } else {
+      html += `<input type="text" id="input_${field.name}" placeholder="${hint}" style="width:100%;padding:8px 10px;background:var(--bg);border:1px solid var(--border);color:var(--text);border-radius:4px;font-size:13px;">`;
+    }
+    html += `</div>`;
+  }
+  grid.innerHTML = html;
+}
+
+function toggleChip(key, el) {
+  el.classList.toggle('selected');
+  const selected = [];
+  document.querySelectorAll(`#ms_${key} .chip[data-key="${key}"].selected`).forEach(c => selected.push(c.dataset.val));
+  const ta = document.getElementById('input_' + key);
+  if (ta) ta.value = selected.join('、');
+}
+
+function addChipOption(key) {
+  const val = prompt('请输入自定义选项：');
+  if (!val || !val.trim()) return;
+  const grid = document.getElementById('ms_' + key);
+  if (!grid) return;
+  const chip = document.createElement('span');
+  chip.className = 'chip selected'; chip.dataset.key = key; chip.dataset.val = val.trim();
+  chip.textContent = val.trim();
+  chip.onclick = function() { toggleChip(key, this); };
+  grid.insertBefore(chip, grid.lastElementChild);
+  toggleChip(key, chip);
+}
+
+async function loadDesigns() {
+  const res = await fetch(BASE + "/api/designs"); designs = await res.json();
+  const dc = document.getElementById("designChips");
+  dc.innerHTML = `<span class="chip selected" onclick="toggleDesign('')" style="background:var(--accent2);border-color:var(--accent2);color:white;">✕ 不使用</span>`
+    + designs.map(d => `<span class="chip" data-design="${d.id}" onclick="toggleDesign('${d.id}')">${d.label}</span>`).join("");
+  document.getElementById("designStrengths").innerHTML = "";
+}
+
+function toggleDesign(id) {
+  document.querySelectorAll('#designChips .chip').forEach(c => {
+    if (c.dataset.design === id) { c.classList.toggle('selected'); c.style.cssText = c.classList.contains('selected') ? 'background:var(--accent2);border-color:var(--accent2);color:white;' : ''; }
+  });
+  const sel = document.querySelectorAll('#designChips .chip.selected[data-design]');
+  const nu = document.querySelector('#designChips .chip:first-child');
+  sel.length === 0 ? (nu.classList.add('selected'), nu.style.cssText = 'background:var(--accent2);border-color:var(--accent2);color:white;') : (nu.classList.remove('selected'), nu.style.cssText = '');
+  updateStrengths();
+}
+
+function updateStrengths() {
+  const sel = document.querySelectorAll('#designChips .chip.selected[data-design]');
+  const el = document.getElementById("designStrengths");
+  if (sel.length === 0) { el.innerHTML = ""; return; }
+  el.innerHTML = Array.from(sel).map(c => {
+    const id = c.dataset.id;
+    return `<div style="display:flex;align-items:center;gap:8px;margin-top:6px;"><span style="font-size:12px;color:var(--text-dim);width:80px;">${c.textContent}</span><input type="range" min="0" max="100" value="70" id="ds_${id}" style="flex:1;" oninput="this.nextElementSibling.textContent=this.value+'%'"><span style="font-size:11px;color:var(--text-muted);width:40px;">70%</span></div>`;
+  }).join('');
+}
+
+function switchRefTab(tab) {
+  document.querySelectorAll('.ref-tab').forEach(t => t.classList.remove('active'));
+  document.querySelectorAll('.ref-panel').forEach(p => p.classList.remove('active'));
+  document.querySelector(`.ref-tab:nth-child(${{paste:1,url:2,vault:3,file:4}[tab]})`).classList.add('active');
+  document.getElementById('ref' + tab.charAt(0).toUpperCase() + tab.slice(1)).classList.add('active');
+}
+
+function addReference(name, type, content) {
+  if (!content || !content.trim()) return;
+  references.push({ name, type, content: content.trim() });
+  document.getElementById("refList").innerHTML = references.map((r,i) => `<div class="ref-item"><span class="ref-info"><span class="ref-name">${r.name}</span><span class="ref-type">(${r.type})</span><span class="ref-size">${r.content.length}字</span></span><span class="ref-del" onclick="references.splice(${i},1);this.parentElement.remove()">✕</span></div>`).join('');
+}
+
+async function fetchUrl() {
+  const url = document.getElementById("refUrlInput").value;
+  if (!url) return;
+  const res = await fetch(BASE + "/api/fetch-url", { method:"POST", headers:{"Content-Type":"application/json"}, body:JSON.stringify({url}) });
+  const data = await res.json();
+  addReference(url, "网页", data.content);
+}
+
+async function connectVault() {
+  const path = document.getElementById("vaultPathInput").value;
+  if (!path) return;
+  const res = await fetch(BASE + "/api/vault/config", { method:"POST", headers:{"Content-Type":"application/json"}, body:JSON.stringify({path}) });
+  const data = await res.json();
+  vaultConnected = data.connected;
+  if (data.connected) {
+    const notes = await fetch(BASE + "/api/vault/notes").then(r=>r.json());
+    document.getElementById("vaultNoteList").innerHTML = `<div style="font-size:12px;color:var(--text-dim);">✅ 已连接 · ${notes.length}篇笔记</div>`;
+  }
+}
+
+async function onGenerate() {
+  const btn = document.getElementById("generateBtn"); btn.disabled = true; btn.textContent = "⏳ 生成中...";
+  document.getElementById("result").classList.remove("active");
+  const inputs = {};
+  document.querySelectorAll("#skillForm [id^=input_]").forEach(el => { inputs[el.id.replace("input_","")] = el.value; });
+  const selectedDesigns = [];
+  document.querySelectorAll('#designChips .chip.selected[data-design]').forEach(c => {
+    const id = c.dataset.design;
+    const slider = document.getElementById('ds_' + id);
+    selectedDesigns.push({ id, strength: slider ? parseInt(slider.value) : 70 });
+  });
+  try {
+    const res = await fetch(BASE + "/api/generate", { method:"POST", headers:{"Content-Type":"application/json"}, body:JSON.stringify({ skill: currentSkill.path, designs: selectedDesigns, inputs, references: references.map(r => ({ name: r.name, type: r.type, content: r.content })), mode: runMode, config: runConfig[runMode] || {} }) });
+    const data = await res.json();
+    document.getElementById("resultContent").textContent = data.content;
+    document.getElementById("resultMeta").textContent = `${data.stats.chars} 字 · ${data.stats.elapsed_seconds}s`;
+    const ev = data.evaluation;
+    let eh = "";
+    if (ev.scores) {
+      const dc = { logical_consistency:'#4ade80', audience_resonance:'#60a5fa', structural_integrity:'#c084fc', language_quality:'#fbbf24', originality:'#f87171', ai_density:'#a78bfa' };
+      for (const [dim, sc] of Object.entries(ev.scores)) {
+        const dl = { logical_consistency:'逻辑一致性', audience_resonance:'受众共鸣度', structural_integrity:'结构完整性', language_quality:'语言质量', originality:'原创性', ai_density:'AI腔密度' }[dim]||dim;
+        eh += `<div class="eval-bar"><span class="label">${dl}</span><div class="track"><div class="fill" style="width:${sc*10}%;background:${dc[dim]||'#0f9b8e'};"></div></div><span class="score">${sc.toFixed(1)}</span></div>`;
+      }
+      eh += `<div style="font-size:14px;font-weight:600;margin:8px 0;">综合评分：${ev.overall.toFixed(2)} / 10</div>`;
+    }
+    if (ev.hard_checks) {
+      if (ev.hard_checks.P0) eh += `<div class="check-category">🚫 P0</div><div class="check-grid">${Object.entries(ev.hard_checks.P0).map(([k,v])=>`<div class="check-item ${v?'pass':'fail'}"><span class="icon">${v?'✓':'✗'}</span>${k}</div>`).join('')}</div>`;
+      if (ev.hard_checks.P1) eh += `<div class="check-category">⚠️ P1</div><div class="check-grid">${Object.entries(ev.hard_checks.P1).map(([k,v])=>`<div class="check-item ${v?'pass':'fail'}"><span class="icon">${v?'✓':'✗'}</span>${k}</div>`).join('')}</div>`;
+    }
+    if (ev.ai_density !== undefined) eh += `<div style="margin-top:8px;font-size:12px;color:var(--text-muted);border-top:1px solid var(--border);padding-top:6px;">🤖 AI腔密度: ${ev.ai_density.toFixed(1)}/10 · Burstiness: ${ev.burstiness||'N/A'} · P0: ${ev.all_P0_passed?'✅':'❌'} · P1: ${ev.all_P1_passed?'✅':'❌'} · P2: ${ev.all_P2_passed===undefined?'—':ev.all_P2_passed?'✅':'❌'}</div>`;
+    document.getElementById("evaluation").innerHTML = eh;
+    document.getElementById("result").classList.add("active");
+  } catch(e) { alert("生成失败: " + e.message); }
+  btn.disabled = false; btn.textContent = "🚀 生成";
+}
+
+function hideForm() {
+  document.getElementById("formArea").style.display = "none";
+  document.getElementById("constraintInfo").style.display = "none";
+  document.getElementById("result").classList.remove("active");
+}
+
+function onReset() { currentPath = ""; currentSkill = null; references = []; document.getElementById("refList").innerHTML = ""; loadTier(""); }
+
+/* ── 管理：分类 CRUD ────────────────────── */
+async function addSubCategory(parentPath) {
+  const label = prompt("输入新分类名称：");
+  if (!label || !label.trim()) return;
+  const path = parentPath ? parentPath + "/" + label.trim() : label.trim();
+  try {
+    const res = await fetch(BASE + "/api/taxonomy", { method:"POST", headers:{"Content-Type":"application/json"}, body:JSON.stringify({ path, label: label.trim() }) });
+    const data = await res.json();
+    if (data.error) { alert(data.error); return; }
+    loadTier(parentPath);
+  } catch(e) { alert("创建失败: " + e.message); }
+}
+
+async function addSkillAt(parentPath) {
+  const name = prompt("输入技能标识（目录名）：");
+  if (!name || !name.trim()) return;
+  const fullPath = parentPath + "/" + name.trim();
+  await saveSkillToServer(fullPath, { label: name.trim(), description: "新建技能", body: `# ${name.trim()}\n\n`, inputs: [] });
+  loadTier(parentPath);
+}
+
+async function deleteNode(path, isSkill) {
+  if (!confirm(`确定删除${isSkill ? '技能' : '分类'}「${path}」？${isSkill ? '' : '（只能删除空目录）'}`)) return;
+  const endpoint = isSkill ? "/api/skills/" : "/api/taxonomy/";
+  try {
+    const res = await fetch(BASE + endpoint + encodeURIComponent(path), { method:"DELETE" });
+    const data = await res.json();
+    if (data.error) { alert(data.error); return; }
+    const parentPath = path.split("/").slice(0,-1).join("/");
+    loadTier(parentPath);
+  } catch(e) { alert("删除失败: " + e.message); }
+}
+
+/* ── 管理：技能编辑器 ────────────────────── */
+async function editSkill(path) {
+  editingSkillPath = path;
+  document.getElementById("editorPath").textContent = path;
+  document.getElementById("editorArea").style.display = "block";
+  document.getElementById("formArea").style.display = "none";
+  document.getElementById("constraintInfo").style.display = "none";
+  document.getElementById("result").classList.remove("active");
+  try {
+    const res = await fetch(BASE + "/api/skills/" + encodeURIComponent(path));
+    const data = await res.json();
+    document.getElementById("edit_name").value = (data.meta && data.meta.name) || path.split("/").pop();
+    document.getElementById("edit_label").value = data.label || "";
+    document.getElementById("edit_description").value = data.description || "";
+    document.getElementById("edit_body").value = data.body || "";
+    renderEditorFields(data.inputs || (data.meta && data.meta.inputs) || []);
+  } catch(e) { alert("加载失败: " + e.message); closeEditor(); }
+}
+
+function renderEditorFields(fields) {
+  const el = document.getElementById("edit_fields");
+  el.innerHTML = fields.map((f, i) => {
+    const opts = (f.options || []).map(o => `<span class="chip" onclick="this.remove()" style="font-size:11px;padding:2px 6px;">${o} ✕</span>`).join('');
+    return `<div class="field-row">
+      <input value="${f.name||''}" placeholder="字段名" onchange="updateField(${i},'name',this.value)" style="width:100px;">
+      <input value="${f.label||''}" placeholder="标签" onchange="updateField(${i},'label',this.value)" style="width:100px;">
+      <select onchange="updateField(${i},'ui',this.value)" style="width:90px;">
+        <option value="multiselect" ${f.ui==='multiselect'?'selected':''}>多选</option>
+        <option value="dropdown" ${f.ui==='dropdown'?'selected':''}>单选</option>
+        <option value="textarea" ${f.ui==='textarea'?'selected':''}>长文本</option>
+        <option value="text" ${f.ui==='text'||!f.ui?'selected':''}>短文本</option>
+      </select>
+      <label style="font-size:11px;white-space:nowrap;"><input type="checkbox" ${f.required?'checked':''} onchange="updateField(${i},'required',this.checked)">必填</label>
+      <div style="flex:1;display:flex;gap:2px;flex-wrap:wrap;" id="opts_${i}">
+        ${opts}
+        <input style="width:50px;font-size:11px;padding:2px;background:transparent;border:1px dashed var(--border);color:var(--text-dim);" placeholder="+选项" onkeydown="if(event.key==='Enter'){const v=this.value;if(v){addOption(${i},v);this.value=''}}">
+      </div>
+      <span class="del-field" onclick="removeField(${i})">✕</span>
+    </div>`;
+  }).join('');
+  if (!window._editFields) window._editFields = fields;
+  window._editFields = fields;
+}
+
+function updateField(idx, key, val) { if (window._editFields && window._editFields[idx]) window._editFields[idx][key] = val; }
+function addOption(idx, val) {
+  if (!window._editFields[idx].options) window._editFields[idx].options = [];
+  window._editFields[idx].options.push(val);
+  renderEditorFields(window._editFields);
+}
+function removeField(idx) { window._editFields.splice(idx, 1); renderEditorFields(window._editFields); }
+function addField() { window._editFields.push({name:"", label:"", ui:"multiselect", required:false, options:[]}); renderEditorFields(window._editFields); }
+
+async function saveSkillEditor() {
+  const data = {
+    label: document.getElementById("edit_label").value,
+    description: document.getElementById("edit_description").value,
+    body: document.getElementById("edit_body").value,
+    inputs: (window._editFields || []).filter(f => f.name && f.name.trim()),
+  };
+  await saveSkillToServer(editingSkillPath, data);
+  closeEditor();
+  loadTier(currentPath);
+}
+
+async function saveSkillToServer(path, data) {
+  try {
+    const res = await fetch(BASE + "/api/skills", { method:"POST", headers:{"Content-Type":"application/json"}, body:JSON.stringify({ path, ...data }) });
+    const r = await res.json();
+    if (r.error) alert(r.error);
+    return r;
+  } catch(e) { alert("保存失败: " + e.message); }
+}
+
+function closeEditor() { document.getElementById("editorArea").style.display = "none"; editingSkillPath = null; }
+
+loadTier("");
+
+/* ── 文件拖拽 ──────────────────────────── */
+const dropZone = document.getElementById("dropZone"), fileInput = document.getElementById("fileInput");
+dropZone.addEventListener("click", () => fileInput.click());
+dropZone.addEventListener("dragover", e => { e.preventDefault(); dropZone.classList.add("dragover"); });
+dropZone.addEventListener("dragleave", () => dropZone.classList.remove("dragover"));
+dropZone.addEventListener("drop", e => { e.preventDefault(); dropZone.classList.remove("dragover"); Array.from(e.dataTransfer.files).forEach(f => { const r = new FileReader(); r.onload = ev => addReference(f.name,"文件",ev.target.result); r.readAsText(f); }); });
+fileInput.addEventListener("change", () => { Array.from(fileInput.files).forEach(f => { const r = new FileReader(); r.onload = ev => addReference(f.name,"文件",ev.target.result); r.readAsText(f); }); });
+
+// 初始不显示管理模式
+document.querySelector('#designChips .chip:first-child')?.classList.add('selected');
+</script>
+</body>
+</html>
