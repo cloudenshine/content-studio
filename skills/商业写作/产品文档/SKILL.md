@@ -4,6 +4,12 @@ label: 产品文档/用户指南
 description: 清晰易用的产品文档和用户指南编写，兼顾不同角色的阅读需求
 mode: content-generate
 inputs:
+  - name: user_idea
+    type: text
+    required: true
+    label: 用户想法
+    hint: 你想创作什么？一句话想法、一个场景、一种感觉都可以，越具体越好
+    ui: textarea
   - name: product_name
     type: text
     required: true

@@ -1,0 +1,16 @@
+{
+  "rework": 1,
+  "scores": {
+    "task_completion": 5,
+    "information_accuracy": 5,
+    "structure_usability": 4,
+    "language_naturalness": 3,
+    "genre_fit": 3
+  },
+  "manual_checks": {
+    "no_factual_errors": true
+  },
+  "blocking_issues": [],
+  "notes": "文风过于文学化，需将‘拦路虎’、‘做减法策略’等修饰词改为客观事实陈述。",
+  "verdict": "pass"
+}

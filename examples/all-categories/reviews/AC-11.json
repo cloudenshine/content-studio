@@ -1,0 +1,16 @@
+{
+  "rework": 1,
+  "scores": {
+    "task_completion": 5,
+    "information_accuracy": 5,
+    "structure_usability": 4,
+    "language_naturalness": 4,
+    "genre_fit": 4
+  },
+  "manual_checks": {
+    "no_factual_errors": true
+  },
+  "blocking_issues": [],
+  "notes": "情感化叙事过多，建议将核心功能点（离线、39元）提升至更显著位置以增强商业可信度。",
+  "verdict": "pass"
+}

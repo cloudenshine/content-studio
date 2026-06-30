@@ -4,6 +4,12 @@ label: 长篇小说章节 (>80K字)
 description: 生成一章长篇小说正文，结构完整，适合复杂世界观
 mode: content-generate
 inputs:
+  - name: user_idea
+    type: text
+    required: true
+    label: 用户想法
+    hint: 你想创作什么？一句话想法、一个场景、一种感觉都可以，越具体越好
+    ui: textarea
   - name: premise
     type: text
     required: true
@@ -12,11 +18,11 @@ inputs:
     ui: multiselect
     options: [主角成长, 阴谋揭露, 救援行动, 发现秘密, 身份反转, 情感冲突]
   - name: target_words
-    type: integer
+    type: text
     default: 5000
     label: 目标字数
-    ui: dropdown
-    options: [3000, 5000, 8000, 10000]
+    hint: 直接输入字数，如 5000
+    ui: text
   - name: pov_character
     type: string
     label: 视角人物

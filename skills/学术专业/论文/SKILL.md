@@ -4,6 +4,12 @@ label: 学术论文
 description: 规范化学术论文写作，遵循学术写作规范与引用格式
 mode: content-generate
 inputs:
+  - name: user_idea
+    type: text
+    required: true
+    label: 用户想法
+    hint: 你想创作什么？一句话想法、一个场景、一种感觉都可以，越具体越好
+    ui: textarea
   - name: paper_title
     type: text
     required: true

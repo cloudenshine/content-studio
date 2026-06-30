@@ -1,6 +1,6 @@
 {
   "name": "content-studio",
-  "version": "0.2.0",
+  "version": "0.4.0",
   "private": true,
   "description": "Open Design 架构的文字内容创作引擎",
   "type": "module",
@@ -8,7 +8,18 @@
     "generate": "node cli.mjs",
     "start": "node src/server.js",
     "dev": "node --watch src/server.js",
-    "demo": "node cli.mjs --skill novel-chapter --design web-novel-cool --prompt \"一个少年在废土上捡到一块能说话的怀表\""
+    "demo": "node cli.mjs --skill 文学创作/小说/短篇小说 --design web-novel-cool --prompt \"一个少年在废土上捡到一块能说话的怀表\"",
+    "test": "node --test",
+    "benchmark:validate": "node scripts/draft-benchmark.mjs validate",
+    "benchmark:prepare": "node scripts/draft-benchmark.mjs prepare --out .content-studio/benchmarks/draft-quality",
+    "delivery:validate": "node scripts/all-category-delivery.mjs validate",
+    "delivery:prepare": "node scripts/all-category-delivery.mjs prepare",
+    "delivery:run": "node scripts/all-category-delivery.mjs run",
+    "delivery:revise": "node scripts/all-category-delivery.mjs revise",
+    "delivery:snapshot": "node scripts/all-category-delivery.mjs snapshot",
+    "delivery:review": "node scripts/all-category-delivery.mjs review",
+    "delivery:verify": "node scripts/all-category-delivery.mjs verify",
+    "delivery:publish": "node scripts/all-category-delivery.mjs publish"
   },
   "dependencies": {}
 }

@@ -4,6 +4,12 @@ label: 绘本文字
 description: 低幼绘本文字创作，每页不超过100字，注重韵律和画面感
 mode: content-generate
 inputs:
+  - name: user_idea
+    type: text
+    required: true
+    label: 用户想法
+    hint: 你想创作什么？一句话想法、一个场景、一种感觉都可以，越具体越好
+    ui: textarea
   - name: story_core
     type: text
     required: true
@@ -12,17 +18,11 @@ inputs:
     ui: multiselect
     options: [探索发现, 日常习惯, 情绪认知, 亲子关系, 自然认知, 社交启蒙, 晚安故事]
   - name: page_count
-    type: string
+    type: text
     required: false
     label: 页数
-    hint: 绘本的总页数
-    ui: dropdown
-    options:
-      - 8
-      - 12
-      - 16
-      - 20
-      - 24
+    hint: 直接输入页数，如 16
+    ui: text
   - name: age_range
     type: string
     required: false

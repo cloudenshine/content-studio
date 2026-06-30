@@ -1,0 +1,202 @@
+[
+  {
+    "id": "AC-01", "skill": "文学创作/小说/长篇小说", "design": "hard-scifi",
+    "inputs": {"user_idea": "写一章火星轨道站限时抢修中的师徒秘密与道德抉择", "premise": "火星轨道站氧气只够六小时，维修员林澈发现事故来自导师隐瞒的旧设计缺陷", "target_words": "1800", "pov_character": "主角视角", "chapter_type": "揭秘/反转", "previous_chapter_hook": "氧气读数突然归零", "character_state": "受伤低谷"},
+    "min_chars": 1200, "max_chars": 5000,
+    "required_terms": ["林澈", "氧气", "六小时", "导师"], "forbidden_terms": ["魔法", "无限氧气"],
+    "manual_checks": ["no_factual_errors", "no_character_ooc", "no_world_rule_break"],
+    "review_focus": "人物选择有代价，空间站规则前后一致，作为章节有推进和章末牵引。"
+  },
+  {
+    "id": "AC-02", "skill": "文学创作/小说/中篇小说", "design": "suspense-noir",
+    "inputs": {"user_idea": "写一个档案名单异常牵出十年前火灾真相的悬疑故事", "premise": "档案员周岚发现十年前火灾名单里多出一个从未存在的人", "target_words": "1500", "chapter_type": "铺垫反转"},
+    "min_chars": 1000, "max_chars": 2800,
+    "required_terms": ["周岚", "火灾", "名单"], "forbidden_terms": ["鬼魂", "做梦"],
+    "manual_checks": ["no_factual_errors", "no_character_ooc"],
+    "review_focus": "线索具体，反转来自已出现的信息，不以超自然解释。"
+  },
+  {
+    "id": "AC-03", "skill": "文学创作/小说/短篇小说", "design": "warm-healing",
+    "inputs": {"user_idea": "写一个陌生人因误送旧信共同寻找收信者的温暖故事", "premise": "搬家工人误把一箱旧信送给陌生人，两人决定一起找到真正收信者", "target_words": "1200", "narrative_mode": "第三人称限知", "tone": "温暖治愈"},
+    "min_chars": 900, "max_chars": 2400,
+    "required_terms": ["旧信"], "required_any": [["收信者", "收件人", "主人", "老伴"]], "forbidden_terms": ["奇迹般", "命中注定"],
+    "manual_checks": ["no_factual_errors"],
+    "review_focus": "完整单线故事，情感来自行动而非说教。"
+  },
+  {
+    "id": "AC-04", "skill": "文学创作/小说/微型小说", "design": "classical-chinese",
+    "inputs": {"user_idea": "写一篇县令追查无人报失盗窃案的反转微型小说", "core_idea": "县令审一桩无人报失的盗窃案", "target_words": "600", "twist": "反转（事实翻转）"},
+    "min_chars": 350, "max_chars": 1500,
+    "required_terms": ["失主"], "required_any": [["县令", "知县"]], "forbidden_terms": ["系统", "穿越"],
+    "manual_checks": [],
+    "review_focus": "短而完整，反转改变前文含义且不过度解释。"
+  },
+  {
+    "id": "AC-05", "skill": "文学创作/剧本", "design": "suspense-noir",
+    "inputs": {"user_idea": "把旧录音出现当日天气预报的谜团写成悬疑电影场景", "logline": "母亲在失踪儿子的旧录音里听见今天的天气预报", "scene_setting": "室内/夜", "characters_in_scene": "主角, 配角", "scene_purpose": "推进剧情", "format": "电影剧本"},
+    "min_chars": 600, "max_chars": 1800,
+    "required_terms": ["内景", "夜", "录音"], "forbidden_terms": ["她心里想", "他意识到自己正在"],
+    "manual_checks": ["format_standard_compliant", "dialogue_character_consistent"],
+    "review_focus": "符合电影剧本可见可听原则，对白有区分和潜台词。"
+  },
+  {
+    "id": "AC-06", "skill": "文学创作/诗歌", "design": "classical-chinese",
+    "inputs": {"user_idea": "用凌晨便利店窗上的雨写一首克制的孤独意象诗", "core_image": "凌晨便利店窗上的雨", "emotional_key": "孤独/疏离", "lines": "12", "style": "意象派（密集意象）"},
+    "min_chars": 100, "max_chars": 600,
+    "required_terms": ["雨", "玻璃"], "forbidden_terms": ["我很孤独", "人生就是"],
+    "manual_checks": ["has_central_image", "avoids_direct_lyricism"],
+    "review_focus": "中心意象稳定，情绪由意象和节奏呈现。"
+  },
+  {
+    "id": "AC-07", "skill": "文学创作/散文", "design": "warm-healing",
+    "inputs": {"user_idea": "从亲手修补旧木凳写日常物件承载的记忆", "subject": "修补一只陪伴多年的旧木凳", "target_words": "900", "tone": "平实叙述"},
+    "min_chars": 650, "max_chars": 1700,
+    "required_terms": ["木凳", "砂纸", "钉"], "forbidden_terms": ["岁月静好", "人生哲理"],
+    "manual_checks": ["personal_perspective_present"],
+    "review_focus": "第一人称经验明确，以动作细节自然引出感受。"
+  },
+  {
+    "id": "AC-08", "skill": "文学创作/儿童文学/童话", "design": "warm-healing",
+    "inputs": {"user_idea": "写一个小兔子鼓起勇气承认打碎风铃的低龄童话", "core_conflict": "小兔子害怕承认自己打碎了朋友的风铃", "character_name": "小兔子米粒", "moral_lesson": "诚实守信", "word_count": "700"},
+    "min_chars": 500, "max_chars": 1300,
+    "required_terms": ["米粒", "风铃"], "required_any": [["承认", "是我", "诚实"]], "forbidden_terms": ["死亡", "惩罚一辈子"],
+    "manual_checks": ["positive_theme"],
+    "review_focus": "适合3-8岁，句子清楚，价值观由选择和后果呈现。"
+  },
+  {
+    "id": "AC-09", "skill": "文学创作/儿童文学/少儿小说", "design": "warm-healing",
+    "inputs": {"user_idea": "写十一岁女孩带领天文社从观测失败中重新出发", "logline": "十一岁女孩为保住学校天文社，组织一次失败后重来的观测活动", "protagonist_age": "9-11岁", "theme": "勇气", "chapters": "第一章"},
+    "min_chars": 900, "max_chars": 2200,
+    "required_terms": ["天文社", "失败"], "required_any": [["观测", "望远镜"]], "forbidden_terms": ["成人恋爱", "血腥"],
+    "manual_checks": ["positive_theme"],
+    "review_focus": "主角行为符合年龄，困难真实，积极主题不说教。"
+  },
+  {
+    "id": "AC-10", "skill": "文学创作/儿童文学/绘本文字", "design": "warm-healing",
+    "inputs": {"user_idea": "用小刺猬学习表达安静需求的故事做十二页绘本文字", "story_core": "小刺猬第一次学会说出我需要安静一会儿", "page_count": "12", "age_range": "4-6岁"},
+    "min_chars": 250, "max_chars": 1200,
+    "required_terms": ["第1页", "第12页", "小刺猬", "安静"], "forbidden_terms": ["心理疾病", "社交障碍"],
+    "manual_checks": [],
+    "review_focus": "按页输出，画面可视，单页文字简短，适合亲子共读。"
+  },
+  {
+    "id": "AC-11", "skill": "商业写作/营销文案/产品页", "design": "brand-storytelling",
+    "inputs": {"user_idea": "为离线待办应用静单写一页克制可信的产品介绍", "product_name": "静单", "product_type": "APP/移动端", "target_audience": "自由职业者", "core_benefit": "离线管理个人待办", "benefit_category": "功能价值", "price_point": "一次性买断39元", "social_proof": "暂无公开数据", "call_to_action": "下载试用版"},
+    "min_chars": 400, "max_chars": 1700,
+    "required_terms": ["静单", "离线", "39元", "下载试用版"], "forbidden_terms": ["行业领先", "百万用户", "100%"],
+    "manual_checks": ["no_factual_errors"],
+    "review_focus": "只使用给定事实，价值清楚，社会证明不足时不编造。"
+  },
+  {
+    "id": "AC-12", "skill": "商业写作/营销文案/社媒短文", "design": "xiaohongshu",
+    "inputs": {"user_idea": "为一款可拆洗玻璃水瓶写真实克制的小红书短文", "core_message": "500ml玻璃水瓶，可拆洗，耐温0-80℃", "platform": "小红书", "tone": "克制实用", "target_action": "评论互动"},
+    "min_chars": 180, "max_chars": 650,
+    "required_terms": ["500ml", "可拆洗", "0-80℃"], "forbidden_terms": ["永不漏水", "食品级认证", "环保100%"],
+    "manual_checks": ["no_factual_errors"],
+    "review_focus": "信息准确、短、自然，不补充未提供性能。"
+  },
+  {
+    "id": "AC-13", "skill": "商业写作/汇报报告/周报", "design": "wechat-deep-read",
+    "inputs": {"user_idea": "把登录页原型测试结果整理成结论先行的产品周报", "report_type": "产品周报", "week_range": "本周", "team_size": "3人", "key_achievements": "完成登录页原型", "achievement_type": "产品开发", "metrics": "测试6人，4人找不到密码找回", "blockers": "入口不明显", "next_week_plan": "只修入口和提示，不开发新功能", "audience_level": "产品负责人"},
+    "min_chars": 300, "max_chars": 1000,
+    "required_terms": ["6人", "4人", "不开发新功能"], "forbidden_terms": ["测试成功", "用户一致好评"],
+    "manual_checks": ["no_factual_errors"],
+    "review_focus": "结论先行，事实和计划分开，不美化问题。"
+  },
+  {
+    "id": "AC-14", "skill": "商业写作/汇报报告/调研报告", "design": "wechat-deep-read",
+    "inputs": {"user_idea": "根据八次访谈写一份不过度外推的注册体验调研报告", "research_topic": "注册流程体验", "research_method": "8次一对一访谈", "key_findings": "5人嫌步骤多，2人担心隐私，1人无意见", "data_sources": "用户访谈", "conclusion": "需进一步研究", "recommendations": "先合并一个非必要步骤并做5人复测"},
+    "min_chars": 400, "max_chars": 1400,
+    "required_terms": ["8次", "5人", "2人", "1人", "样本"], "forbidden_terms": ["所有用户", "市场普遍"],
+    "manual_checks": ["no_factual_errors"],
+    "review_focus": "不夸大样本，结论、证据、局限和下一步完整。"
+  },
+  {
+    "id": "AC-15", "skill": "商业写作/产品文档", "design": "knowledge-edutainment",
+    "inputs": {"user_idea": "为不熟悉技术的行政人员写CSV去重工具快速开始", "product_name": "净表 CSV 去重工具", "document_type": "快速开始", "target_user": "行政人员", "core_features": "选择文件、选择去重列、预览、导出副本", "usage_scenarios": "个人使用"},
+    "min_chars": 350, "max_chars": 1100,
+    "required_terms": ["选择文件", "选择去重列", "预览", "导出副本", "原文件"], "forbidden_terms": ["命令行", "自动修复全部"],
+    "manual_checks": ["no_factual_errors"],
+    "review_focus": "四步可照做，明确原文件不修改，不添加不存在功能。"
+  },
+  {
+    "id": "AC-16", "skill": "知识输出/课程脚本/视频脚本", "design": "short-video-script",
+    "inputs": {"user_idea": "做一节教初学者三步整理可检索阅读笔记的短视频课", "course_title": "个人知识管理入门", "lesson_title": "三步写出可检索笔记", "duration_minutes": "5", "target_audience": "初级学员", "learning_objective": "学会把一段阅读内容整理成标题、摘要、来源三部分", "key_points": "标题具体、摘要用自己的话、保留来源", "example_scenario": "整理一篇关于睡眠习惯的文章"},
+    "min_chars": 650, "max_chars": 1800,
+    "required_terms": ["学习目标", "标题", "摘要", "来源"], "required_any": [["例子", "比如", "实战"]], "forbidden_terms": ["保证记住", "万能方法"],
+    "manual_checks": [],
+    "review_focus": "适合口播，有时间节奏、示例和明确学习结果。"
+  },
+  {
+    "id": "AC-17", "skill": "知识输出/课程脚本/教程指南", "design": "knowledge-edutainment",
+    "inputs": {"user_idea": "写一份零基础用户可照做的Git本地安全练习教程", "tutorial_title": "用Git做一次本地安全练习", "skill_level": "零基础", "prerequisites": "已安装Git", "steps": "新建目录、初始化、创建文件、提交、查看记录、删除练习目录", "expected_outcome": "理解commit是一次可追踪快照", "time_estimate": "15分钟"},
+    "min_chars": 600, "max_chars": 1700,
+    "required_terms": ["git init", "git add", "git commit", "删除练习目录"], "forbidden_terms": ["git push", "远程仓库"],
+    "manual_checks": [],
+    "review_focus": "步骤可执行、无远程副作用、概念解释准确。"
+  },
+  {
+    "id": "AC-18", "skill": "知识输出/深度分析", "design": "wechat-deep-read",
+    "inputs": {"user_idea": "向职场读者解释平均数如何掩盖偏斜分布并给出改进读法", "topic": "平均数为何会掩盖分布", "target_reader": "需要阅读业务报表的职场人", "thesis": "平均数有用，但在偏斜分布中应结合中位数", "key_arguments": "工资分布与任务耗时两个数字例子", "data_sources": "文内构造的教学示例，不代表真实调查", "word_count": "1200"},
+    "min_chars": 850, "max_chars": 2200,
+    "required_terms": ["平均数", "中位数", "工资", "任务耗时"], "required_any": [["示例", "假设", "例如"]], "forbidden_terms": ["平均数毫无意义", "真实调查显示"],
+    "manual_checks": ["no_factual_errors"],
+    "review_focus": "概念准确，两个数字例子可复算，说明两种指标的边界。"
+  },
+  {
+    "id": "AC-19", "skill": "媒体社交/社媒帖子/小红书", "design": "xiaohongshu",
+    "inputs": {"user_idea": "分享用纸质卡片拆解难读非虚构书的个人方法", "topic": "用纸质卡片整理难读的非虚构书", "note_type": "经验分享", "target_audience": "职场新人", "key_points": "一张卡只写一个观点、背面记录来源、读完后按问题重排", "product_name": "无"},
+    "min_chars": 350, "max_chars": 1000,
+    "required_terms": ["一张卡", "来源", "重排"], "forbidden_terms": ["效率翻倍", "亲测封神", "必买"],
+    "manual_checks": [],
+    "review_focus": "方法具体可收藏，不伪造效果，不过度使用表情。"
+  },
+  {
+    "id": "AC-20", "skill": "媒体社交/社媒帖子/公众号", "design": "wechat-deep-read",
+    "inputs": {"user_idea": "写一篇解释待办清单过长为何让人更难开始的实用文章", "title": "待办越写越长，为什么反而不想开始？", "article_type": "实用短文", "core_message": "过长清单增加选择成本，可用今日唯一任务减负", "target_audience": "职场人士", "word_count": "900"},
+    "min_chars": 500, "max_chars": 1700,
+    "required_terms": ["选择成本", "今日唯一任务"], "forbidden_terms": ["你只是懒", "焦虑症诊断", "扫码"],
+    "manual_checks": [],
+    "review_focus": "解释克制，有一个可执行方法，不卖课。"
+  },
+  {
+    "id": "AC-21", "skill": "媒体社交/社媒帖子/微博", "design": "knowledge-edutainment",
+    "inputs": {"user_idea": "用一条微博说明远程协作应重视书面交接而非随时在线", "core_message": "远程工作中随时在线不等于协作顺畅，建议用书面交接明确下一步", "post_type": "观点表达", "hashtags": "#远程协作", "mention_accounts": "无"},
+    "min_chars": 120, "max_chars": 420,
+    "required_terms": ["在线", "书面交接", "#远程协作"], "forbidden_terms": ["办公室都低效", "远程一定更好"],
+    "manual_checks": [],
+    "review_focus": "单一观点，建议具体，不制造工作方式对立。"
+  },
+  {
+    "id": "AC-22", "skill": "媒体社交/新闻通讯", "design": "brand-storytelling",
+    "inputs": {"user_idea": "根据给定事实写社区旧书修复活动新闻通讯", "headline": "社区图书角完成首次旧书修复活动", "date": "2026年6月28日", "location": "青禾社区活动室", "key_facts": "12名居民修复37册旧书，活动持续2小时，未募集资金", "quotes": "志愿者陈青：修书比丢书慢，但值得", "boilerplate": "青禾社区图书角由居民志愿维护"},
+    "min_chars": 300, "max_chars": 1200,
+    "required_terms": ["2026年6月28日", "青禾社区", "12名", "37册", "2小时"], "forbidden_terms": ["数百人", "圆满成功", "募集善款"],
+    "manual_checks": ["no_factual_errors"],
+    "review_focus": "事实完整、倒金字塔清楚、不添加未提供信息。"
+  },
+  {
+    "id": "AC-23", "skill": "学术专业/论文", "design": "wechat-deep-read",
+    "inputs": {"user_idea": "设计任务切换频率与主观疲劳关系的研究方法论文草稿", "paper_title": "任务切换频率与主观疲劳：一份方法设计草稿", "abstract": "仅设计研究问题、变量和局限，不报告真实实验结论", "keywords": "任务切换, 主观疲劳, 方法设计", "section_structure": "摘要、引言、方法、预期分析、局限、参考说明", "references": "[1] 用户提供的内部观察记录（未公开，仅作方法示例）"},
+    "min_chars": 900, "max_chars": 2400,
+    "required_terms": ["摘要", "方法", "局限", "[1]", "不报告真实"], "forbidden_terms": ["研究证明", "显著提升", "p<"],
+    "manual_checks": [],
+    "review_focus": "结构符合方法设计草稿，明确无真实数据，不伪造结论或文献。"
+  },
+  {
+    "id": "AC-24", "skill": "学术专业/技术文档", "design": "knowledge-edutainment",
+    "inputs": {"user_idea": "为不熟悉命令行的Windows用户写LocalNote安装指南", "doc_title": "LocalNote 1.0 安装指南", "product_version": "v1.0", "document_type": "安装指南", "target_audience": "不熟悉命令行的Windows用户", "code_examples": "无；安装包双击安装"},
+    "min_chars": 500, "max_chars": 1400,
+    "required_terms": ["LocalNote", "v1.0", "Windows", "卸载"], "forbidden_terms": ["macOS", "Linux", "管理员权限必须"],
+    "manual_checks": ["no_factual_errors"],
+    "review_focus": "只写给定平台和版本，步骤、验证、卸载完整，不杜撰菜单。"
+  },
+  {
+    "id": "AC-25", "skill": "学术专业/研究笔记", "design": "wechat-deep-read",
+    "inputs": {"user_idea": "整理个人用户放弃复杂待办工具的探索性访谈研究笔记", "research_question": "为什么个人用户放弃使用复杂的待办工具？", "current_status": "已完成3次探索性访谈", "key_sources": "三份匿名访谈摘要A/B/C", "preliminary_findings": "两人提到设置成本，一人提到提醒太多；仅为初步观察", "next_steps": "再访谈5人并区分新手与长期用户", "questions_for_review": "样本是否过少，问题是否带有引导性"},
+    "min_chars": 500, "max_chars": 1400,
+    "required_terms": ["3次", "两人", "一人", "初步观察", "再访谈5人"], "forbidden_terms": ["所有用户", "已经证明"],
+    "manual_checks": ["no_factual_errors"],
+    "review_focus": "事实、推测、局限和下一步分开，保留不确定性。"
+  }
+]

@@ -1,0 +1,16 @@
+{
+  "rework": 1,
+  "scores": {
+    "task_completion": 5,
+    "information_accuracy": 5,
+    "structure_usability": 4,
+    "language_naturalness": 4,
+    "genre_fit": 5
+  },
+  "manual_checks": {
+    "no_factual_errors": true
+  },
+  "blocking_issues": [],
+  "notes": "语气过于活泼，与‘克制’要求有轻微偏差，建议删减感叹词。",
+  "verdict": "pass"
+}

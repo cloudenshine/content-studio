@@ -1,68 +1,104 @@
-# Content Studio — 层级内容创作系统
+# Content Studio — 内容创作执行引擎
 
-> Open Design 架构 · 零依赖 · 本地优先 · 层级约束驱动
+> 零依赖·本地优先·层级约束驱动·CLI/WebUI 双模式
+> 版本 0.4.0 · taxonomy 1.1 · 2026-06-30
 
-## 体系架构
-
-```
-用户界面（3步引导）
-  Step 1: 选大类 (文学/商业/知识/媒体/学术)
-  Step 2: 选中类 (小说/剧本/营销/报告...)
-  Step 3: 选小类 (长篇小说/产品页/小红书...)
-    ↓
-约束引擎 (constraint-engine.js) 按路径合并约束链
-    ↓
-技能加载器 (skill-loader.js) 只加载当前技能
-    ↓
-LLM 生成 → 5维自评 + P0/P1/P2 硬检查
-```
-
-## 分类树 (taxonomy.json)
+## 架构
 
 ```
-5 大类 → 20+ 中类 → 50+ 小类
-文学创作: 小说(长篇/中篇/短篇/微型) 剧本 诗歌 散文 儿童文学
-商业写作: 营销文案(产品页/社媒短文) 汇报报告(周报/调研) 产品文档
-知识输出: 课程脚本(视频/教程) 深度分析
-媒体社交: 社媒帖子(小红书/公众号/微博) 新闻通讯
-学术专业: 论文 技术文档 研究笔记
+┌─ 用户层 ───────────────────────────┐
+│  CLI (cli.mjs) │ Web UI (server.js) │
+└──────────────┬───────────────────────┘
+               ↓
+┌─ 适配层 ───────────────────────────┐
+│  src/registry.js       技能/风格注册表│
+│  src/example-registry.js 只读实例注册表│
+│  src/server.js         HTTP API + UI│
+│  src/vault-watcher.js  vault 读写   │
+│  lib/constraint-engine.js tax加载   │
+│  lib/skill-loader.js   SKILL.md加载 │
+└──────────────┬───────────────────────┘
+               ↓
+┌─ 内核 (lib/core/) 纯函数零 I/O ────┐
+│  scorer / prompt-assembler          │
+│  constraint-engine / parse-frontmatter│
+│  rag / llm-judge / memory          │
+└──────────────────────────────────────┘
+               ↓
+┌─ 资产 ──────────────────────────────┐
+│  taxonomy.json / skills/ designs/ craft/ │
+│  examples/all-categories/ 通过实例与证据 │
+└──────────────────────────────────────┘
 ```
+
+## CLI 参数
+
+```bash
+node cli.mjs --prompt "..."           # 必填
+  --skill <路径>                      # 技能
+  --design <id>[:强度]               # 风格/多风格混合
+  --mode ollama|byok|cli             # LLM 后端
+  --vault-out <路径> --vault-dir <名> # 写入 Obsidian vault
+  --rag-dir <路径>                    # 知识检索
+  --memory <路径>                     # 偏好笔记
+  --judge                            # LLM-as-judge
+  --auto-revise --max-revisions <N>  # 自动纠偏
+  --project <名>                      # 项目 MOC
+  --history / --read-history <id>    # 历史
+  --list-examples / --read-example   # 只读实例
+```
+
+## Web UI 功能
+
+| 功能 | 说明 |
+|------|------|
+| 层级分类导航 | 5大→中→小类，选择即约束 |
+| 创作表单 | 动态生成字段：用户想法(textarea) + 结构化字段 |
+| AI 自动补全 | 输入想法后一键智能填充全部字段 |
+| 风格包混合 | 多选+强度滑块，主要/辅助风格分层 |
+| 联网搜索 | 生成前搜索实时内容 |
+| 参考源 | 粘贴/URL抓取/Obsidian/文件上传 |
+| 评估面板 | 6维雷达 + P0/P1/P2 硬检查 |
+| 历史管理 | 生成记录查看/删除 |
+| Vault 保存 | 直接写入 Obsidian vault |
+| 技能编辑器 | Web 端管理 SKILL.md |
 
 ## 核心文件
 
 | 文件 | 职责 |
 |------|------|
-| `taxonomy.json` | 完整分类树 + 每个节点的约束定义 |
-| `lib/constraint-engine.js` | 按路径合并约束链（大类→中类→小类） |
-| `lib/skill-loader.js` | 懒加载技能（LRU 缓存 3 个） |
-| `src/registry.js` | 评分引擎 + prompt 组装 |
-| `src/server.js` | HTTP API + 分类导航端点 |
-| `skills/.../SKILL.md` | 技能定义（按分类路径组织） |
-| `designs/.../DESIGN.md` | 风格包定义 |
-| `craft/*.md` | 通用工艺规则 |
+| `taxonomy.json` | 5 大类层级约束树（38 节点） |
+| `lib/core/` | 7 个纯函数内核文件（零 I/O，零依赖） |
+| `lib/constraint-engine.js` | taxonomy 加载 + 约束链合并 |
+| `lib/skill-loader.js` | SKILL.md 懒加载 + LRU 缓存 |
+| `src/registry.js` | 技能/风格/工艺注册表 + saveSkill |
+| `src/example-registry.js` | 25 类通过实例只读注册表 |
+| `src/server.js` | HTTP API + Web UI + AI 自动补全 |
+| `src/vault-watcher.js` | Obsidian vault 读写 |
+| `cli.mjs` | CLI 入口 |
+| `modules/persist/store.js` | 历史持久化 |
+| `craft/*.md` | 5 条工艺规则 |
+| `examples/all-categories/` | v2 交付实例、manifest 和 verification |
+| `test/` | 合同/核心/前端 测试套件 |
 
-## 关键 API
+## 已删除
 
-| 端点 | 说明 |
-|------|------|
-| `GET /api/taxonomy?parent=` | 获取某节点下的子节点列表 |
-| `GET /api/taxonomy/长篇小说` | 获取该路径的约束+可用技能 |
-| `GET /api/skills?parent=` | 列出某路径下的可用技能 |
-| `POST /api/generate` | 生成（传 skill 为分类路径） |
+- `obsidian/` — Obsidian 插件（API 兼容性问题，已转为 vault 直写方式）
+- `restore-checkpoint.bat` — 临时恢复脚本
 
-## 约束继承规则
+## 验证与边界
 
-每个节点在 taxonomy.json 中定义约束，子节点继承并追加父节点约束：
+- app 版本为 `0.4.0`，taxonomy 版本为 `1.1`，delivery schema 为 `v2`。
+- 修改合同后运行 `npm run delivery:validate` 和 `npm test`。
+- `.content-studio/` 属于运行时私有目录，不得提交；正式实例仅来自验证通过后的发布步骤。
+- 实例 CLI/API/UI 只能读取，不得增加删除、覆盖或写回草稿的快捷操作。
 
-- `doctrine[]` — 父项 + 子项合并
-- `allowed_craft[]` — 子收窄父（取子值）
-- `forbidden_patterns[]` — 合并
-- `p0_checks[]` — 合并
-- `tone_range` — 子覆盖父
+## 约束体系
 
-## 运行
+5 大类 → 20+ 中类 → 38+ 小类，约束通过层级继承合并：
+- doctrine[] — 引导式原则（合并父+子）
+- forbidden_patterns[] — 禁止模式（合并）
+- p0_checks[] — 硬性检查（合并）
+- tone_range / word_range — 子覆盖父
 
-| 命令 | 功能 |
-|------|------|
-| `npm start` | 启动服务器 (localhost:3456) |
-| `node cli.mjs --skill 长篇小说 --prompt "..."` | 命令行生成 |
+约束已注入 prompt 的"硬性约束"段。

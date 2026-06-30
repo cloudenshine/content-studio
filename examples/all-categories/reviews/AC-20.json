@@ -1,0 +1,14 @@
+{
+  "rework": 0,
+  "scores": {
+    "task_completion": 5,
+    "information_accuracy": 5,
+    "structure_usability": 5,
+    "language_naturalness": 5,
+    "genre_fit": 5
+  },
+  "manual_checks": {},
+  "blocking_issues": [],
+  "notes": "核心概念‘选择成本’与‘今日唯一任务’均已包含，无违禁内容且方法可执行。",
+  "verdict": "pass"
+}

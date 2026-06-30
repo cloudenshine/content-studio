@@ -4,6 +4,12 @@ label: 童话故事
 description: 面向3-8岁儿童的童话故事创作，传递积极价值观
 mode: content-generate
 inputs:
+  - name: user_idea
+    type: text
+    required: true
+    label: 用户想法
+    hint: 你想创作什么？一句话想法、一个场景、一种感觉都可以，越具体越好
+    ui: textarea
   - name: core_conflict
     type: text
     required: true
@@ -26,16 +32,11 @@ inputs:
     ui: multiselect
     options: [诚实守信, 勇敢坚强, 友善互助, 知足感恩, 坚持不懈, 尊重他人, 爱护环境]
   - name: word_count
-    type: string
-    required: false
+    type: text
+    default: 800
     label: 字数
-    hint: 目标字数
-    ui: dropdown
-    options:
-      - 500
-      - 800
-      - 1000
-      - 1500
+    hint: 直接输入字数，如 800
+    ui: text
 craft:
   requires: [anti-ai-slop, sensory-imagery]
 output:

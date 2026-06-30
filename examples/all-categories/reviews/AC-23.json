@@ -1,0 +1,20 @@
+{
+  "rework": 0,
+  "scores": {
+    "task_completion": 5,
+    "information_accuracy": 5,
+    "structure_usability": 5,
+    "language_naturalness": 5,
+    "genre_fit": 5
+  },
+  "manual_checks": {
+    "contains_abstract": true,
+    "contains_methodology": true,
+    "contains_limitations": true,
+    "contains_ref_1": true,
+    "no_empirical_results": true
+  },
+  "blocking_issues": [],
+  "notes": "完全符合方法设计草稿要求，严格限定在变量定义与流程设计，无结论性数据。",
+  "verdict": "pass"
+}

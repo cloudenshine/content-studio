@@ -4,6 +4,12 @@ label: 少儿小说
 description: 面向6-14岁少儿的章节小说创作，传递积极成长主题
 mode: content-generate
 inputs:
+  - name: user_idea
+    type: text
+    required: true
+    label: 用户想法
+    hint: 你想创作什么？一句话想法、一个场景、一种感觉都可以，越具体越好
+    ui: textarea
   - name: logline
     type: text
     required: true
@@ -26,16 +32,11 @@ inputs:
     ui: multiselect
     options: [友谊, 勇气, 成长, 家庭, 梦想, 正义, 智慧, 坚持]
   - name: chapters
-    type: string
+    type: text
     required: false
     label: 章节数
-    hint: 目标章节数量
-    ui: dropdown
-    options:
-      - 5
-      - 8
-      - 10
-      - 12
+    hint: 直接输入章节数，如 8
+    ui: text
 craft:
   requires: [anti-ai-slop]
 output:

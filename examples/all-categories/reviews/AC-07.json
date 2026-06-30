@@ -1,0 +1,16 @@
+{
+  "rework": 1,
+  "scores": {
+    "task_completion": 4,
+    "information_accuracy": 5,
+    "structure_usability": 5,
+    "language_naturalness": 5,
+    "genre_fit": 5
+  },
+  "manual_checks": {
+    "personal_perspective_present": true
+  },
+  "blocking_issues": [],
+  "notes": "字数约850字，略低于900字目标但基本达标；包含木凳、砂纸、钉且无违禁词，动作细节丰富。",
+  "verdict": "pass"
+}

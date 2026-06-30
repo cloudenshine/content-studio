@@ -4,6 +4,12 @@ label: 课程视频口播脚本
 description: 知识类课程视频的口播脚本创作，兼顾听觉理解和记忆留存
 mode: content-generate
 inputs:
+  - name: user_idea
+    type: text
+    required: true
+    label: 用户想法
+    hint: 你想创作什么？一句话想法、一个场景、一种感觉都可以，越具体越好
+    ui: textarea
   - name: course_title
     type: text
     required: true
@@ -19,17 +25,11 @@ inputs:
     ui: multiselect
     options: [概念解析, 案例分析, 实操演示, 常见问题, 总结回顾, 实战演练]
   - name: duration_minutes
-    type: integer
+    type: text
     required: false
     label: 时长（分钟）
-    hint: 视频预计时长
-    ui: dropdown
-    options:
-      - 5
-      - 10
-      - 15
-      - 20
-      - 30
+    hint: 直接输入分钟数，如 10
+    ui: text
   - name: target_audience
     type: text
     required: true

@@ -4,6 +4,12 @@ label: 微博短文
 description: 微博短内容创作，前40字决定点击，强调快速传播和互动
 mode: content-generate
 inputs:
+  - name: user_idea
+    type: text
+    required: true
+    label: 用户想法
+    hint: 你想创作什么？一句话想法、一个场景、一种感觉都可以，越具体越好
+    ui: textarea
   - name: core_message
     type: text
     required: true
@@ -23,6 +29,12 @@ inputs:
       - 段子
       - 互动
       - 安利
+  - name: word_count
+    type: text
+    required: false
+    label: 字数
+    hint: 直接输入字数，如 140
+    ui: text
   - name: hashtags
     type: text
     required: false

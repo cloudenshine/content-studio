@@ -4,6 +4,12 @@ label: 技术文档
 description: 面向开发者和运维人员的专业技术文档编写，兼顾准确性和可操作性
 mode: content-generate
 inputs:
+  - name: user_idea
+    type: text
+    required: true
+    label: 用户想法
+    hint: 你想创作什么？一句话想法、一个场景、一种感觉都可以，越具体越好
+    ui: textarea
   - name: doc_title
     type: text
     required: true

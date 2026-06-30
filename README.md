@@ -1,76 +1,65 @@
-# Content Studio — 层级内容创作系统
+# Content Studio
 
-> Open Design 架构 · 零依赖 · 本地优先 · 层级约束驱动
+> 零依赖·层级约束驱动·多体裁内容创作引擎
 
-三位一体运行模式：
-
-| 模式 | 引擎 | 费用 | 定位 |
-|------|------|:----:|------|
-| 🖥️ **Local CLI** | Claude Code / Cursor / Codex | 已有订阅 | 主力推荐 |
-| 🦙 Ollama | 本地 LLM | 免费 | 离线/隐私 |
-| ☁️ API | OpenAI 兼容 | 按量 | 备选 |
+当前版本：Content Studio `0.4.0` · taxonomy `1.1` · delivery schema `v2`。
 
 ## 快速开始
 
 ```bash
 cd content-studio
+
+# CLI 生成
+node cli.mjs --prompt "写一个短篇故事" --skill 文学创作/小说/短篇小说
+
+# 启动 Web UI
 node src/server.js
-# 打开 http://localhost:3456
+# 浏览器打开 http://localhost:3456
+
+# 查看可用技能和风格
+node cli.mjs --list-skills
+node cli.mjs --list-designs
+
+# 浏览25类已验收实例
+node cli.mjs --list-examples
+node cli.mjs --read-example AC-05
 ```
 
-## 体系架构
+## 核心概念
 
-```
-分类树 → 选类 → 约束链合并 → 技能加载 → LLM 生成 → 5 维自评 + P0/P1/P2 硬检查
-```
+- **taxonomy.json** — 5 大类层级约束树，体裁自动适配
+- **skills/** — 26 个创作技能模板（SKILL.md），含用户想法 + AI 自动补全
+- **designs/** — 10 种语言风格包（DESIGN.md），支持多风格混合
+- **craft/** — 工艺规则（5 条）
+- **lib/core/** — 7 个纯函数内核文件，零依赖
+- **examples/all-categories/** — 25类通过硬合同与语义复核的只读实例
 
-- **分类树**：5 大类 × 20+ 中类 × 50+ 小类，每节点定义 scope/doctrine/tone/craft/p0
-- **约束引擎**：大类→中类→小类约束继承合并
-- **技能懒加载**：只加载当前路径对应的 SKILL.md，LRU 缓存 3 个
-- **工艺规则**：反 AI 套话 / 句式节奏 / 感官描写
-- **10 个风格包**：从网文爽文到硬核科幻到温暖治愈
+## Web UI 新特性
 
-## 目录结构
+- 🤖 **AI 自动补全**：输入创作想法后一键智能填充全部表单字段
+- ✏️ **自由输入量化字段**：字数/章节/时长等改为文本框，不再限制下拉选项
+- 💬 **用户想法优先**：所有体裁表单首位为「用户想法」textarea，作为 prompt 最高优先级指引
+- 🎨 **多风格混合**：可多选风格包并调节强度，主要/辅助风格分层
 
-```
-content-studio/
-├── cli.mjs               命令行工具
-├── taxonomy.json          完整分类树
-├── lib/                   核心引擎
-│   ├── constraint-engine.js  约束链合并
-│   └── skill-loader.js       懒加载技能
-├── src/                   HTTP API
-│   ├── server.js            REST 服务 + 三种 LLM 适配器
-│   └── registry.js          技能/风格注册表 + 自评引擎
-├── ui/index.html          单页 Web 应用
-├── skills/                25 个技能，按分类树组织
-├── designs/               10 个风格包
-├── craft/                 通用工艺规则
-└── obsidian/              Obsidian 集成
-```
+## 质量证据
 
-## 三种运行模式
+- `npm test`：运行合同、核心逻辑和实例 registry 测试。
+- `npm run delivery:validate`：确认25个案例与25个权威 Skill 一一对应。
+- `examples/all-categories/verification.json`：逐项验收结果。
+- `examples/all-categories/manifest.json`：模型、版本、taxonomy、案例和 Skill 摘要。
 
-```bash
-# Local CLI（默认，自动检测 Claude Code）
-node src/server.js
+Web UI 顶部的“✅ 实例”入口可按大类浏览正文与验收摘要。实例与个人历史严格分离，只读且不能覆盖草稿。
 
-# Ollama
-set LLM_MODE=ollama
-node src/server.js
+`.content-studio/` 是本地运行目录，包含历史、临时交付和日志，已被 Git 忽略；正式实例只存放在 `examples/`。
 
-# API
-set LLM_MODE=api
-set BYOK_API_KEY=sk-xxx
-node src/server.js
-```
+## LLM 后端
 
-或通过 Web UI 的 🖥️ 🦙 ☁️ 按钮直接切换，设置面板支持各模式的独立参数配置。
+| 模式 | 命令 | 说明 |
+|------|------|------|
+| CLI | `--mode cli` | Claude/Cursor/Codex/Gemini（主力推荐） |
+| Ollama | `--mode ollama` | 本地免费（需安装） |
+| API | `--mode api --api-key sk-xxx` | OpenAI 兼容 |
 
-## 零依赖
+## 完整用法
 
-```json
-"dependencies": {}
-```
-
-纯 Node ESM，无需 `npm install`。
+详见 `USAGE.md`。

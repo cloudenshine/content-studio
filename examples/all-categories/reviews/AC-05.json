@@ -1,0 +1,17 @@
+{
+  "rework": 1,
+  "scores": {
+    "task_completion": 5,
+    "information_accuracy": 5,
+    "structure_usability": 4,
+    "language_naturalness": 4,
+    "genre_fit": 5
+  },
+  "manual_checks": {
+    "format_standard_compliant": true,
+    "dialogue_character_consistent": true
+  },
+  "blocking_issues": [],
+  "notes": "对白潜台词到位，但‘艾拉猛地回头’等动作描述略显冗余，建议精简以增强悬疑节奏。",
+  "verdict": "pass"
+}

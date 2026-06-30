@@ -4,6 +4,12 @@ label: 新闻稿/通讯稿
 description: 标准新闻稿格式撰写，适合媒体发布和公关传播
 mode: content-generate
 inputs:
+  - name: user_idea
+    type: text
+    required: true
+    label: 用户想法
+    hint: 你想创作什么？一句话想法、一个场景、一种感觉都可以，越具体越好
+    ui: textarea
   - name: headline
     type: text
     required: true

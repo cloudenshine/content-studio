@@ -5,8 +5,8 @@
  * 写入生成结果回 vault。
  */
 import { readFileSync, existsSync, readdirSync, writeFileSync, mkdirSync, statSync } from "node:fs";
-import { join, extname } from "node:path";
-import { parseFrontmatter } from "./registry.js";
+import { join, extname, isAbsolute, relative, resolve } from "node:path";
+import { parseFrontmatter } from "../lib/core/parse-frontmatter.js";
 
 let vaultPath = "";
 
@@ -19,9 +19,16 @@ export function getVaultPath() {
 
 export function setVaultPath(path) {
   if (!path) { vaultPath = ""; return; }
-  const normalized = path.replace(/\\/g, "/");
+  const normalized = resolve(path);
   if (!existsSync(normalized)) throw new Error(`路径不存在: ${normalized}`);
   vaultPath = normalized;
+}
+
+function resolveVaultPath(notePath) {
+  const fullPath = resolve(vaultPath, notePath);
+  const relativePath = relative(vaultPath, fullPath);
+  if (relativePath.startsWith("..") || isAbsolute(relativePath)) throw new Error("路径越界");
+  return fullPath;
 }
 
 export function getVaultStatus() {
@@ -69,11 +76,7 @@ export function listNotes(subdir = "") {
 
 export function readNote(notePath) {
   if (!vaultPath) throw new Error("Vault 未配置");
-  const fullPath = join(vaultPath, notePath);
-  // 安全检查：防止遍历到 vault 外
-  const normalizedFull = fullPath.replace(/\\/g, "/");
-  const normalizedVault = vaultPath.replace(/\\/g, "/");
-  if (!normalizedFull.startsWith(normalizedVault)) throw new Error("路径越界");
+  const fullPath = resolveVaultPath(notePath);
   if (!existsSync(fullPath)) throw new Error(`笔记不存在: ${notePath}`);
   const content = readFileSync(fullPath, "utf-8");
   const { meta, body } = parseFrontmatter(content);
@@ -82,12 +85,9 @@ export function readNote(notePath) {
 
 export function writeNote(notePath, content, frontmatter = {}) {
   if (!vaultPath) throw new Error("Vault 未配置");
-  const fullPath = join(vaultPath, notePath);
-  const normalizedFull = fullPath.replace(/\\/g, "/");
-  const normalizedVault = vaultPath.replace(/\\/g, "/");
-  if (!normalizedFull.startsWith(normalizedVault)) throw new Error("路径越界");
+  const fullPath = resolveVaultPath(notePath);
   // 确保目录存在
-  const dir = normalizedFull.substring(0, normalizedFull.lastIndexOf("/"));
+  const dir = resolve(fullPath, "..");
   if (dir && !existsSync(dir)) mkdirSync(dir, { recursive: true });
   // 构建带 frontmatter 的 Markdown
   let output = "";

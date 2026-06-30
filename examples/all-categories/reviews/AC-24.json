@@ -1,0 +1,16 @@
+{
+  "rework": 0,
+  "scores": {
+    "task_completion": 5,
+    "information_accuracy": 5,
+    "structure_usability": 5,
+    "language_naturalness": 5,
+    "genre_fit": 5
+  },
+  "manual_checks": {
+    "no_factual_errors": true
+  },
+  "blocking_issues": [],
+  "notes": "完全符合任务合同要求，平台、版本、步骤及卸载流程准确且无违禁内容。",
+  "verdict": "pass"
+}

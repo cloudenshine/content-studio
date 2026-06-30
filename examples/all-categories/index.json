@@ -1,0 +1,282 @@
+{
+  "schema_version": 1,
+  "delivery": "all-categories-v2",
+  "count": 25,
+  "entries": [
+    {
+      "id": "AC-01",
+      "skill": "文学创作/小说/长篇小说",
+      "label": "长篇小说章节 (>80K字)",
+      "design": "hard-scifi",
+      "summary": "写一章火星轨道站限时抢修中的师徒秘密与道德抉择",
+      "output": "outputs/AC-01.md",
+      "review": "reviews/AC-01.json",
+      "prompt": "prompts/AC-01.md",
+      "chars": 4476
+    },
+    {
+      "id": "AC-02",
+      "skill": "文学创作/小说/中篇小说",
+      "label": "中篇小说章节 (20K-80K字)",
+      "design": "suspense-noir",
+      "summary": "写一个档案名单异常牵出十年前火灾真相的悬疑故事",
+      "output": "outputs/AC-02.md",
+      "review": "reviews/AC-02.json",
+      "prompt": "prompts/AC-02.md",
+      "chars": 1165
+    },
+    {
+      "id": "AC-03",
+      "skill": "文学创作/小说/短篇小说",
+      "label": "短篇小说 (<20K字)",
+      "design": "warm-healing",
+      "summary": "写一个陌生人因误送旧信共同寻找收信者的温暖故事",
+      "output": "outputs/AC-03.md",
+      "review": "reviews/AC-03.json",
+      "prompt": "prompts/AC-03.md",
+      "chars": 2344
+    },
+    {
+      "id": "AC-04",
+      "skill": "文学创作/小说/微型小说",
+      "label": "微型小说 (<2K字)",
+      "design": "classical-chinese",
+      "summary": "写一篇县令追查无人报失盗窃案的反转微型小说",
+      "output": "outputs/AC-04.md",
+      "review": "reviews/AC-04.json",
+      "prompt": "prompts/AC-04.md",
+      "chars": 524
+    },
+    {
+      "id": "AC-05",
+      "skill": "文学创作/剧本",
+      "label": "剧本",
+      "design": "suspense-noir",
+      "summary": "把旧录音出现当日天气预报的谜团写成悬疑电影场景",
+      "output": "outputs/AC-05.md",
+      "review": "reviews/AC-05.json",
+      "prompt": "prompts/AC-05.md",
+      "chars": 695
+    },
+    {
+      "id": "AC-06",
+      "skill": "文学创作/诗歌",
+      "label": "诗歌",
+      "design": "classical-chinese",
+      "summary": "用凌晨便利店窗上的雨写一首克制的孤独意象诗",
+      "output": "outputs/AC-06.md",
+      "review": "reviews/AC-06.json",
+      "prompt": "prompts/AC-06.md",
+      "chars": 159
+    },
+    {
+      "id": "AC-07",
+      "skill": "文学创作/散文",
+      "label": "散文/随笔",
+      "design": "warm-healing",
+      "summary": "从亲手修补旧木凳写日常物件承载的记忆",
+      "output": "outputs/AC-07.md",
+      "review": "reviews/AC-07.json",
+      "prompt": "prompts/AC-07.md",
+      "chars": 992
+    },
+    {
+      "id": "AC-08",
+      "skill": "文学创作/儿童文学/童话",
+      "label": "童话故事",
+      "design": "warm-healing",
+      "summary": "写一个小兔子鼓起勇气承认打碎风铃的低龄童话",
+      "output": "outputs/AC-08.md",
+      "review": "reviews/AC-08.json",
+      "prompt": "prompts/AC-08.md",
+      "chars": 636
+    },
+    {
+      "id": "AC-09",
+      "skill": "文学创作/儿童文学/少儿小说",
+      "label": "少儿小说",
+      "design": "warm-healing",
+      "summary": "写十一岁女孩带领天文社从观测失败中重新出发",
+      "output": "outputs/AC-09.md",
+      "review": "reviews/AC-09.json",
+      "prompt": "prompts/AC-09.md",
+      "chars": 1353
+    },
+    {
+      "id": "AC-10",
+      "skill": "文学创作/儿童文学/绘本文字",
+      "label": "绘本文字",
+      "design": "warm-healing",
+      "summary": "用小刺猬学习表达安静需求的故事做十二页绘本文字",
+      "output": "outputs/AC-10.md",
+      "review": "reviews/AC-10.json",
+      "prompt": "prompts/AC-10.md",
+      "chars": 945
+    },
+    {
+      "id": "AC-11",
+      "skill": "商业写作/营销文案/产品页",
+      "label": "产品页面文案",
+      "design": "brand-storytelling",
+      "summary": "为离线待办应用静单写一页克制可信的产品介绍",
+      "output": "outputs/AC-11.md",
+      "review": "reviews/AC-11.json",
+      "prompt": "prompts/AC-11.md",
+      "chars": 403
+    },
+    {
+      "id": "AC-12",
+      "skill": "商业写作/营销文案/社媒短文",
+      "label": "社交媒体短文",
+      "design": "xiaohongshu",
+      "summary": "为一款可拆洗玻璃水瓶写真实克制的小红书短文",
+      "output": "outputs/AC-12.md",
+      "review": "reviews/AC-12.json",
+      "prompt": "prompts/AC-12.md",
+      "chars": 216
+    },
+    {
+      "id": "AC-13",
+      "skill": "商业写作/汇报报告/周报",
+      "label": "周报/汇报",
+      "design": "wechat-deep-read",
+      "summary": "把登录页原型测试结果整理成结论先行的产品周报",
+      "output": "outputs/AC-13.md",
+      "review": "reviews/AC-13.json",
+      "prompt": "prompts/AC-13.md",
+      "chars": 363
+    },
+    {
+      "id": "AC-14",
+      "skill": "商业写作/汇报报告/调研报告",
+      "label": "调研/分析报告",
+      "design": "wechat-deep-read",
+      "summary": "根据八次访谈写一份不过度外推的注册体验调研报告",
+      "output": "outputs/AC-14.md",
+      "review": "reviews/AC-14.json",
+      "prompt": "prompts/AC-14.md",
+      "chars": 705
+    },
+    {
+      "id": "AC-15",
+      "skill": "商业写作/产品文档",
+      "label": "产品文档/用户指南",
+      "design": "knowledge-edutainment",
+      "summary": "为不熟悉技术的行政人员写CSV去重工具快速开始",
+      "output": "outputs/AC-15.md",
+      "review": "reviews/AC-15.json",
+      "prompt": "prompts/AC-15.md",
+      "chars": 503
+    },
+    {
+      "id": "AC-16",
+      "skill": "知识输出/课程脚本/视频脚本",
+      "label": "课程视频口播脚本",
+      "design": "short-video-script",
+      "summary": "做一节教初学者三步整理可检索阅读笔记的短视频课",
+      "output": "outputs/AC-16.md",
+      "review": "reviews/AC-16.json",
+      "prompt": "prompts/AC-16.md",
+      "chars": 1016
+    },
+    {
+      "id": "AC-17",
+      "skill": "知识输出/课程脚本/教程指南",
+      "label": "图文教程/指南",
+      "design": "knowledge-edutainment",
+      "summary": "写一份零基础用户可照做的Git本地安全练习教程",
+      "output": "outputs/AC-17.md",
+      "review": "reviews/AC-17.json",
+      "prompt": "prompts/AC-17.md",
+      "chars": 1592
+    },
+    {
+      "id": "AC-18",
+      "skill": "知识输出/深度分析",
+      "label": "深度分析/科普文章",
+      "design": "wechat-deep-read",
+      "summary": "向职场读者解释平均数如何掩盖偏斜分布并给出改进读法",
+      "output": "outputs/AC-18.md",
+      "review": "reviews/AC-18.json",
+      "prompt": "prompts/AC-18.md",
+      "chars": 966
+    },
+    {
+      "id": "AC-19",
+      "skill": "媒体社交/社媒帖子/小红书",
+      "label": "小红书笔记",
+      "design": "xiaohongshu",
+      "summary": "分享用纸质卡片拆解难读非虚构书的个人方法",
+      "output": "outputs/AC-19.md",
+      "review": "reviews/AC-19.json",
+      "prompt": "prompts/AC-19.md",
+      "chars": 409
+    },
+    {
+      "id": "AC-20",
+      "skill": "媒体社交/社媒帖子/公众号",
+      "label": "公众号推文",
+      "design": "wechat-deep-read",
+      "summary": "写一篇解释待办清单过长为何让人更难开始的实用文章",
+      "output": "outputs/AC-20.md",
+      "review": "reviews/AC-20.json",
+      "prompt": "prompts/AC-20.md",
+      "chars": 682
+    },
+    {
+      "id": "AC-21",
+      "skill": "媒体社交/社媒帖子/微博",
+      "label": "微博短文",
+      "design": "knowledge-edutainment",
+      "summary": "用一条微博说明远程协作应重视书面交接而非随时在线",
+      "output": "outputs/AC-21.md",
+      "review": "reviews/AC-21.json",
+      "prompt": "prompts/AC-21.md",
+      "chars": 146
+    },
+    {
+      "id": "AC-22",
+      "skill": "媒体社交/新闻通讯",
+      "label": "新闻稿/通讯稿",
+      "design": "brand-storytelling",
+      "summary": "根据给定事实写社区旧书修复活动新闻通讯",
+      "output": "outputs/AC-22.md",
+      "review": "reviews/AC-22.json",
+      "prompt": "prompts/AC-22.md",
+      "chars": 411
+    },
+    {
+      "id": "AC-23",
+      "skill": "学术专业/论文",
+      "label": "学术论文",
+      "design": "wechat-deep-read",
+      "summary": "设计任务切换频率与主观疲劳关系的研究方法论文草稿",
+      "output": "outputs/AC-23.md",
+      "review": "reviews/AC-23.json",
+      "prompt": "prompts/AC-23.md",
+      "chars": 1580
+    },
+    {
+      "id": "AC-24",
+      "skill": "学术专业/技术文档",
+      "label": "技术文档",
+      "design": "knowledge-edutainment",
+      "summary": "为不熟悉命令行的Windows用户写LocalNote安装指南",
+      "output": "outputs/AC-24.md",
+      "review": "reviews/AC-24.json",
+      "prompt": "prompts/AC-24.md",
+      "chars": 555
+    },
+    {
+      "id": "AC-25",
+      "skill": "学术专业/研究笔记",
+      "label": "研究笔记",
+      "design": "wechat-deep-read",
+      "summary": "整理个人用户放弃复杂待办工具的探索性访谈研究笔记",
+      "output": "outputs/AC-25.md",
+      "review": "reviews/AC-25.json",
+      "prompt": "prompts/AC-25.md",
+      "chars": 1170
+    }
+  ]
+}

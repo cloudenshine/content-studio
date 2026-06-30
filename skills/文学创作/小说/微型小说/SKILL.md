@@ -4,6 +4,12 @@ label: 微型小说 (<2K字)
 description: 一篇极短篇，突出一个瞬间、一个反转或一个意象
 mode: content-generate
 inputs:
+  - name: user_idea
+    type: text
+    required: true
+    label: 用户想法
+    hint: 你想创作什么？一句话想法、一个场景、一种感觉都可以，越具体越好
+    ui: textarea
   - name: core_idea
     type: text
     required: true
@@ -12,11 +18,11 @@ inputs:
     ui: multiselect
     options: [时间循环, 身份错位, 超能觉醒, 平行世界, 末日生存, 记忆篡改]
   - name: target_words
-    type: integer
+    type: text
     default: 1000
     label: 目标字数
-    ui: dropdown
-    options: [100, 300, 500, 800, 1000, 1500]
+    hint: 直接输入字数，如 800
+    ui: text
   - name: twist
     type: string
     label: 结尾类型

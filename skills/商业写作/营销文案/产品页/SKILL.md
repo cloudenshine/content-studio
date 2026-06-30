@@ -4,6 +4,12 @@ label: 产品页面文案
 description: 高转化率的产品页面文案创作，从痛点钩子到行动号召
 mode: content-generate
 inputs:
+  - name: user_idea
+    type: text
+    required: true
+    label: 用户想法
+    hint: 你想创作什么？一句话想法、一个场景、一种感觉都可以，越具体越好
+    ui: textarea
   - name: product_name
     type: text
     required: true

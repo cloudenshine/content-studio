@@ -4,6 +4,12 @@ label: 小红书笔记
 description: 种草推荐、经验分享类小红书笔记创作，图文并茂提升互动率
 mode: content-generate
 inputs:
+  - name: user_idea
+    type: text
+    required: true
+    label: 用户想法
+    hint: 你想创作什么？一句话想法、一个场景、一种感觉都可以，越具体越好
+    ui: textarea
   - name: topic
     type: text
     required: true

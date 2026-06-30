@@ -1,0 +1,16 @@
+{
+  "rework": 1,
+  "scores": {
+    "task_completion": 5,
+    "information_accuracy": 5,
+    "structure_usability": 4,
+    "language_naturalness": 4,
+    "genre_fit": 4
+  },
+  "manual_checks": {
+    "no_factual_errors": true
+  },
+  "blocking_issues": [],
+  "notes": "正文包含‘所有用户’等禁止词汇，且部分推测性结论未与事实严格区分。",
+  "verdict": "pass"
+}

@@ -1,0 +1,16 @@
+{
+  "rework": 1,
+  "scores": {
+    "task_completion": 5,
+    "information_accuracy": 5,
+    "structure_usability": 4,
+    "language_naturalness": 4,
+    "genre_fit": 4
+  },
+  "manual_checks": {
+    "no_factual_errors": true
+  },
+  "blocking_issues": [],
+  "notes": "结论部分将‘1人无意见’解读为‘代表被忽略的长尾群体’属于过度推演，建议修正。",
+  "verdict": "pass"
+}

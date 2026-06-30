@@ -4,6 +4,12 @@ label: 诗歌
 description: 创作现代诗，以意象和节奏为核心
 mode: content-generate
 inputs:
+  - name: user_idea
+    type: text
+    required: true
+    label: 用户想法
+    hint: 你想创作什么？一句话想法、一个场景、一种感觉都可以，越具体越好
+    ui: textarea
   - name: core_image
     type: text
     required: true
@@ -17,12 +23,11 @@ inputs:
     ui: multiselect
     options: [追忆/怀念, 孤独/疏离, 希望/新生, 忧郁/悲伤, 宁静/禅意, 愤怒/抗争, 爱/温暖, 荒诞/讽刺]
   - name: lines
-    type: integer
+    type: text
     default: 12
     label: 篇幅
-    hint: 大致行数
-    ui: dropdown
-    options: [4, 8, 12, 16, 20]
+    hint: 直接输入行数，如 16
+    ui: text
   - name: style
     type: string
     label: 风格取向

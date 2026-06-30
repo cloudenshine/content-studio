@@ -14,11 +14,13 @@ import { getChildren, getPathLabels, isValidPath, isLeafPath, mergeConstraintsBy
 import { loadSkillByPath, listAvailableSkills } from "../lib/skill-loader.js";
 import { readdirSync } from "node:fs";
 import * as vault from "./vault-watcher.js";
+import { getExample, listExamples } from "./example-registry.js";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const ROOT = join(__dirname, "..");
 const UI_DIR = join(ROOT, "ui");
 const PORT = parseInt(process.env.PORT || "3456", 10);
+const HOST = process.env.HOST || "127.0.0.1";
 
 const OLLAMA_URL = "http://localhost:11434/api/generate";
 const DEFAULT_MODEL = process.env.MODEL || "huihui_ai/qwen3.5-abliterated:9b";
@@ -38,7 +40,7 @@ const MIME = {
 };
 
 function jsonResponse(res, data, status = 200) {
-  res.writeHead(status, { "Content-Type": "application/json", "Access-Control-Allow-Origin": "*" });
+  res.writeHead(status, { "Content-Type": "application/json" });
   res.end(JSON.stringify(data, null, 2));
 }
 
@@ -60,7 +62,7 @@ function serveStatic(req, res) {
   const ext = extname(path);
   const mime = MIME[ext] || "application/octet-stream";
   const content = readFileSync(path);
-  res.writeHead(200, { "Content-Type": mime, "Content-Length": content.length, "Access-Control-Allow-Origin": "*" });
+  res.writeHead(200, { "Content-Type": mime, "Content-Length": content.length });
   res.end(content);
 }
 
@@ -82,11 +84,20 @@ async function handleGenerate(body) {
   // 构建 prompt
   const skillInputs = skill.meta.inputs || [];
   const promptParts = [];
+
+  // 用户想法 — 最重要，放在最前面作为核心驱动力
+  const userIdea = inputs.user_idea;
+  if (userIdea && userIdea.trim()) {
+    promptParts.push(`## 用户创作意图（以下为最高优先级指引，所有输出内容应围绕此展开）\n${userIdea.trim()}\n`);
+  }
+
   for (const field of skillInputs) {
+    if (field.name === 'user_idea') continue; // 已在上方单独处理
     const val = inputs[field.name];
     if (field.required && !val) throw new Error(`缺少必填字段: ${field.label || field.name}`);
     if (val) promptParts.push(`${field.label || field.name}: ${val}`);
   }
+  // 向后兼容旧字段
   if (inputs.target_audience) promptParts.push(`目标受众: ${inputs.target_audience}`);
   if (inputs.core_purpose) promptParts.push(`核心目的: ${inputs.core_purpose}`);
 
@@ -118,7 +129,7 @@ async function handleGenerate(body) {
   }
   const elapsed = ((Date.now() - start) / 1000).toFixed(1);
 
-  const evaluation = evaluateOutput(content, skill.meta);
+  const evaluation = evaluateOutput(content, skill.meta, skill.constraints);
 
   return {
     skill: skillPath,
@@ -215,6 +226,65 @@ async function detectCLITools() {
   return results;
 }
 
+/* ── AI 自动补全表单字段 ── */
+async function enrichFields(skillPath, userIdea, mode, config) {
+  const skill = loadSkillByPath(skillPath);
+  if (!skill) throw new Error(`技能 "${skillPath}" 不存在`);
+  if (!userIdea || !userIdea.trim()) throw new Error("用户想法不能为空");
+
+  const fields = (skill.meta.inputs || []).filter(f => f.name !== 'user_idea');
+  if (fields.length === 0) return { fields: {} };
+
+  const fieldDesc = fields.map(f => {
+    const opts = f.options && f.options.length > 0 ? `（可选项：${f.options.join('、')}）` : '';
+    const req = f.required ? '[必填]' : '[选填]';
+    return `${f.name} (${f.label || f.name}) ${req}${opts}`;
+  }).join('\n');
+
+  const prompt = `你是一个创作需求分析助手。用户正在使用"${skill.label}"技能创作内容。
+
+## 用户想法
+${userIdea.trim()}
+
+## 需要你填充的表单字段
+${fieldDesc}
+
+请根据用户想法，智能推断每个字段的合理值，以 JSON 格式返回（只返回 JSON，不要任何解释）：
+{
+  "field_name": "建议值",
+  ...
+}
+
+规则：
+- 只返回你有把握的字段，不确定的字段不要填
+- 值必须匹配可选项（如果有的话），或给出合理的自由文本
+- 值应该具体、有创意，不要空泛`;
+
+  let content;
+  if (mode === 'ollama') {
+    content = await callOllama(prompt, config);
+  } else if (mode === 'api') {
+    content = await callOpenAI(prompt, config);
+  } else {
+    content = await callLocalCLI(prompt, config);
+  }
+
+  // 解析 JSON 响应
+  const jsonStr = content.replace(/```json\s?|```/g, '').trim();
+  let fields_parsed = {};
+  try {
+    fields_parsed = JSON.parse(jsonStr);
+  } catch {
+    // 尝试提取 JSON 子串
+    const match = jsonStr.match(/\{[\s\S]*\}/);
+    if (match) {
+      try { fields_parsed = JSON.parse(match[0]); } catch {}
+    }
+  }
+
+  return { fields: fields_parsed };
+}
+
 /* ── 路由 ────────────────────────────────────── */
 const server = createServer(async (req, res) => {
   try {
@@ -223,13 +293,24 @@ const server = createServer(async (req, res) => {
     const method = req.method;
 
     if (method === "GET" && path === "/api") {
-      return jsonResponse(res, { status: "ok", version: "0.3.0" });
+      return jsonResponse(res, { status: "ok", version: "0.4.0" });
     }
 
     // CLI 诊断
     if (method === "GET" && path === "/api/cli-detect") {
       const tools = await detectCLITools();
       return jsonResponse(res, tools);
+    }
+
+    // 通过实例只读 API
+    if (method === "GET" && path === "/api/examples") {
+      return jsonResponse(res, listExamples());
+    }
+    if (method === "GET" && path.startsWith("/api/examples/")) {
+      const id = decodeURIComponent(path.slice("/api/examples/".length));
+      const example = getExample(id);
+      if (!example) return jsonResponse(res, { error: "实例不存在" }, 404);
+      return jsonResponse(res, example);
     }
 
     // 分类树导航
@@ -342,7 +423,58 @@ const server = createServer(async (req, res) => {
     if (method === "POST" && path === "/api/generate") {
       const body = await parseBody(req);
       const result = await handleGenerate(body);
+      // 自动保存到历史
+      try {
+        const { saveHistory } = await import("../modules/persist/store.js");
+        result.history_id = saveHistory({
+          skill: body.skill,
+          design: body.design,
+          prompt: body.prompt,
+          output: result.output || result.content || "",
+          evaluation: result.evaluation || {},
+          mode: "ollama",
+          model: DEFAULT_MODEL,
+          elapsed: result.elapsed || "0",
+        });
+      } catch {}
       return jsonResponse(res, result);
+    }
+
+    // AI 自动补全表单字段
+    if (method === "POST" && path === "/api/enrich") {
+      const body = await parseBody(req);
+      const { skill: skillPath, user_idea, mode = 'claude', config = {} } = body;
+      if (!skillPath || !user_idea) throw new Error("缺少 skill 或 user_idea 参数");
+      const result = await enrichFields(skillPath, user_idea, mode, config);
+      return jsonResponse(res, result);
+    }
+
+    // ── 历史记录 ──
+    if (method === "GET" && path === "/api/history") {
+      const { listHistory, getHistory } = await import("../modules/persist/store.js");
+      const urlObj = new URL(req.url, `http://${req.headers.host}`);
+      const id = urlObj.searchParams.get("id");
+      if (id) {
+        const entry = getHistory(id);
+        if (!entry) return jsonResponse(res, { error: "记录不存在" }, 404);
+        return jsonResponse(res, entry);
+      }
+      const entries = listHistory(parseInt(urlObj.searchParams.get("limit") || "50"));
+      return jsonResponse(res, entries);
+    }
+    if (method === "DELETE" && path === "/api/history") {
+      const { listHistory, getHistory } = await import("../modules/persist/store.js");
+      const body = await parseBody(req);
+      if (!body.id) return jsonResponse(res, { error: "缺少 id 参数" }, 400);
+      const { rmSync, existsSync } = await import("fs");
+      const { join } = await import("path");
+      const { dirname } = await import("path");
+      import("url").then(async ({ fileURLToPath }) => {
+        const __dirname = dirname(fileURLToPath(import.meta.url));
+        const historyPath = join(__dirname, "..", ".content-studio", "history", `${body.id}.json`);
+        if (existsSync(historyPath)) rmSync(historyPath);
+      });
+      return jsonResponse(res, { deleted: body.id });
     }
 
     if (method === "POST" && path === "/api/evaluate") {
@@ -350,7 +482,7 @@ const server = createServer(async (req, res) => {
       if (!body.skill || !body.content) throw new Error("缺少 skill 或 content 参数");
       const skill = loadSkillByPath(body.skill);
       if (!skill) throw new Error(`技能 "${body.skill}" 不存在`);
-      return jsonResponse(res, evaluateOutput(body.content, skill.meta));
+      return jsonResponse(res, evaluateOutput(body.content, skill.meta, skill.constraints));
     }
 
     // Obsidian Vault 路由
@@ -384,13 +516,13 @@ const server = createServer(async (req, res) => {
   }
 });
 
-server.listen(PORT, () => {
+server.listen(PORT, HOST, () => {
   const vs = vault.getVaultStatus();
   const totalSkills = listAvailableSkills("").length;
   console.log(`\n  🖥  Content Studio（层级版）已启动`);
   console.log(`  ─────────────────────────────`);
-  console.log(`  🌐  UI:   http://localhost:${PORT}`);
-  console.log(`  📡  Tax:  http://localhost:${PORT}/api/taxonomy`);
+  console.log(`  🌐  UI:   http://${HOST}:${PORT}`);
+  console.log(`  📡  Tax:  http://${HOST}:${PORT}/api/taxonomy`);
   console.log(`  🖥️  Local CLI:  自动检测 Claude Code / Cursor / Codex / Gemini`);
   console.log(`  🦙  Ollama:     http://localhost:11434/api/generate`);
   console.log(`  ☁️  API:       兼容 OpenAI 接口`);

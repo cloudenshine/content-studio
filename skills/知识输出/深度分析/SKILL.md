@@ -4,6 +4,12 @@ label: 深度分析/科普文章
 description: 面向不同读者的深度分析文章，用论据驱动论点，兼顾可读性和严谨性
 mode: content-generate
 inputs:
+  - name: user_idea
+    type: text
+    required: true
+    label: 用户想法
+    hint: 你想创作什么？一句话想法、一个场景、一种感觉都可以，越具体越好
+    ui: textarea
   - name: topic
     type: text
     required: true
@@ -44,16 +50,11 @@ inputs:
     ui: multiselect
     options: [内部数据, 公开报告, 用户访谈, 问卷调查, 行业白皮书, 学术论文]
   - name: word_count
-    type: string
+    type: text
     required: false
     label: 字数
-    hint: 目标文章字数
-    ui: dropdown
-    options:
-      - 1000
-      - 2000
-      - 3000
-      - 5000
+    hint: 直接输入字数，如 2000
+    ui: text
 craft:
   requires: []
 output:

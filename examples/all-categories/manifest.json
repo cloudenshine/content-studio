@@ -1,0 +1,319 @@
+{
+  "delivery": "all-categories-v2",
+  "schema_version": 2,
+  "created_at": "2026-06-30T09:44:47.406Z",
+  "generator": "huihui_ai/qwen3.5-abliterated:9b",
+  "reviewer": "gemma-4-31B-it-The-DECKAR:latest",
+  "case_count": 25,
+  "provenance": {
+    "app_version": "0.4.0",
+    "taxonomy_version": "1.1",
+    "taxonomy_sha256": "b1139a3e1a923588d87b1d4bcb98bd70104e5dd0da6b386829b9d8ef32c446ff",
+    "cases_sha256": "8c4c7f8dea3bcb573a77d7d0b83ed6e6598cbe2bb5c5959a5951066e14b668f1",
+    "skills_sha256": "529e3c553d819faf45ba764698d67cf1c7b08e899699fc7232c52c87ecedd555",
+    "skill_files": [
+      {
+        "path": "文学创作/小说/长篇小说",
+        "sha256": "896effa88b92817a44724f8e762a4761cff0c9ec8844efd1081845856db57f05"
+      },
+      {
+        "path": "文学创作/小说/中篇小说",
+        "sha256": "1c301e278485903cf1470d2ff5055e5e1b092e4fc46db25a767f0dcd163fe63e"
+      },
+      {
+        "path": "文学创作/小说/短篇小说",
+        "sha256": "1e5417abe1129f54365d2cf2374c563b73e1c3ae7f7a5bfc9db6c884bb6ce4f8"
+      },
+      {
+        "path": "文学创作/小说/微型小说",
+        "sha256": "7d06615957ee07f3f8fad8aca83f60a7a616a7a1da771a8a4f21c4b8e2b58cdd"
+      },
+      {
+        "path": "文学创作/剧本",
+        "sha256": "cc87af22f4edf0d6763d3890ccb3f6817803d276bf1599e7025e2cab75a27779"
+      },
+      {
+        "path": "文学创作/诗歌",
+        "sha256": "371610d6a308ffeab4dc55ea15775a924c46d7ecc740392742197f8041890f54"
+      },
+      {
+        "path": "文学创作/散文",
+        "sha256": "df833388f99184d87fb4a8e9023f2ff24f482d02c89bd1352f22f97e34fd1acf"
+      },
+      {
+        "path": "文学创作/儿童文学/童话",
+        "sha256": "3e94dc59da8aabd506f9427e4ca85cd02c247d4b6fd333525b99bed87006f076"
+      },
+      {
+        "path": "文学创作/儿童文学/少儿小说",
+        "sha256": "d26ee30ca2e062eacd62312fdca21122f391bf492709f5cc5931ac4b6be990ae"
+      },
+      {
+        "path": "文学创作/儿童文学/绘本文字",
+        "sha256": "0a3da67775bf5d64744cc648049a658cebb459a6cf0d0626538ee9e6eb2a0a50"
+      },
+      {
+        "path": "商业写作/营销文案/产品页",
+        "sha256": "1ff228d8f49b72ccae853253b5ed0d32ea972d27c8db29793cee74bbc80cf0d5"
+      },
+      {
+        "path": "商业写作/营销文案/社媒短文",
+        "sha256": "d1d0ddf2924381f5c4c0fd47fd227fd8e56f8dec5da42aed09d8e27628220bdb"
+      },
+      {
+        "path": "商业写作/汇报报告/周报",
+        "sha256": "e8d1d99190e5c837cf7e2b3c5bd9d043255994823bb17a6c219d0f1f63be3a91"
+      },
+      {
+        "path": "商业写作/汇报报告/调研报告",
+        "sha256": "d889b6a8a01231cd1df148aed44332cc8edfae16aa1147d2c7e3e6c873475d47"
+      },
+      {
+        "path": "商业写作/产品文档",
+        "sha256": "8e89e4f7668917e99346cf432e609979323fcb1ec5ae0bbc48f950f806893739"
+      },
+      {
+        "path": "知识输出/课程脚本/视频脚本",
+        "sha256": "cb5c078530ac5acb0fff637493382a8c9ba9370d471b454d6d377ea48c5c6cc6"
+      },
+      {
+        "path": "知识输出/课程脚本/教程指南",
+        "sha256": "4457e210eede691a08541923469d23e92237bd825c582ffa948f6740fdcacdb6"
+      },
+      {
+        "path": "知识输出/深度分析",
+        "sha256": "094aec80b4a6b0cde462f5b8e84e0956e31741569f571a1df2dee5cfac06c41e"
+      },
+      {
+        "path": "媒体社交/社媒帖子/小红书",
+        "sha256": "ef1ef26bc52085f271e9340d141c752f85d7d987cd3d0dd552e871f62eb60edc"
+      },
+      {
+        "path": "媒体社交/社媒帖子/公众号",
+        "sha256": "b9e7d9f512f8138011dbb576ada26100cdf7132bdffcee699837b24b81d6482d"
+      },
+      {
+        "path": "媒体社交/社媒帖子/微博",
+        "sha256": "b2f4944ae5a9fb927d435de5c41368650e528643e146b49ee99ea97dee815cd3"
+      },
+      {
+        "path": "媒体社交/新闻通讯",
+        "sha256": "ff5039257b5f694624a3c3f6d1fe0fb27a5654001b0eab15af8ce98a16c3f9a5"
+      },
+      {
+        "path": "学术专业/论文",
+        "sha256": "fbe03da8925e844fe0d275d05009ece6c9931b67bab8053735b2238f446a7b23"
+      },
+      {
+        "path": "学术专业/技术文档",
+        "sha256": "0d4209d197a1da186ec9b8c937c96d9dbb9a2b9e6d9799b03176dc0a66bee46d"
+      },
+      {
+        "path": "学术专业/研究笔记",
+        "sha256": "77a41513269a552d5052eb42cd5ee157a68d279a2027a5d62b7ed1ee7c97f9f6"
+      }
+    ]
+  },
+  "entries": [
+    {
+      "id": "AC-01",
+      "skill": "文学创作/小说/长篇小说",
+      "design": "hard-scifi",
+      "prompt_file": "prompts/AC-01.md",
+      "output_file": "outputs/AC-01.md",
+      "review_file": "reviews/AC-01.json"
+    },
+    {
+      "id": "AC-02",
+      "skill": "文学创作/小说/中篇小说",
+      "design": "suspense-noir",
+      "prompt_file": "prompts/AC-02.md",
+      "output_file": "outputs/AC-02.md",
+      "review_file": "reviews/AC-02.json"
+    },
+    {
+      "id": "AC-03",
+      "skill": "文学创作/小说/短篇小说",
+      "design": "warm-healing",
+      "prompt_file": "prompts/AC-03.md",
+      "output_file": "outputs/AC-03.md",
+      "review_file": "reviews/AC-03.json"
+    },
+    {
+      "id": "AC-04",
+      "skill": "文学创作/小说/微型小说",
+      "design": "classical-chinese",
+      "prompt_file": "prompts/AC-04.md",
+      "output_file": "outputs/AC-04.md",
+      "review_file": "reviews/AC-04.json"
+    },
+    {
+      "id": "AC-05",
+      "skill": "文学创作/剧本",
+      "design": "suspense-noir",
+      "prompt_file": "prompts/AC-05.md",
+      "output_file": "outputs/AC-05.md",
+      "review_file": "reviews/AC-05.json"
+    },
+    {
+      "id": "AC-06",
+      "skill": "文学创作/诗歌",
+      "design": "classical-chinese",
+      "prompt_file": "prompts/AC-06.md",
+      "output_file": "outputs/AC-06.md",
+      "review_file": "reviews/AC-06.json"
+    },
+    {
+      "id": "AC-07",
+      "skill": "文学创作/散文",
+      "design": "warm-healing",
+      "prompt_file": "prompts/AC-07.md",
+      "output_file": "outputs/AC-07.md",
+      "review_file": "reviews/AC-07.json"
+    },
+    {
+      "id": "AC-08",
+      "skill": "文学创作/儿童文学/童话",
+      "design": "warm-healing",
+      "prompt_file": "prompts/AC-08.md",
+      "output_file": "outputs/AC-08.md",
+      "review_file": "reviews/AC-08.json"
+    },
+    {
+      "id": "AC-09",
+      "skill": "文学创作/儿童文学/少儿小说",
+      "design": "warm-healing",
+      "prompt_file": "prompts/AC-09.md",
+      "output_file": "outputs/AC-09.md",
+      "review_file": "reviews/AC-09.json"
+    },
+    {
+      "id": "AC-10",
+      "skill": "文学创作/儿童文学/绘本文字",
+      "design": "warm-healing",
+      "prompt_file": "prompts/AC-10.md",
+      "output_file": "outputs/AC-10.md",
+      "review_file": "reviews/AC-10.json"
+    },
+    {
+      "id": "AC-11",
+      "skill": "商业写作/营销文案/产品页",
+      "design": "brand-storytelling",
+      "prompt_file": "prompts/AC-11.md",
+      "output_file": "outputs/AC-11.md",
+      "review_file": "reviews/AC-11.json"
+    },
+    {
+      "id": "AC-12",
+      "skill": "商业写作/营销文案/社媒短文",
+      "design": "xiaohongshu",
+      "prompt_file": "prompts/AC-12.md",
+      "output_file": "outputs/AC-12.md",
+      "review_file": "reviews/AC-12.json"
+    },
+    {
+      "id": "AC-13",
+      "skill": "商业写作/汇报报告/周报",
+      "design": "wechat-deep-read",
+      "prompt_file": "prompts/AC-13.md",
+      "output_file": "outputs/AC-13.md",
+      "review_file": "reviews/AC-13.json"
+    },
+    {
+      "id": "AC-14",
+      "skill": "商业写作/汇报报告/调研报告",
+      "design": "wechat-deep-read",
+      "prompt_file": "prompts/AC-14.md",
+      "output_file": "outputs/AC-14.md",
+      "review_file": "reviews/AC-14.json"
+    },
+    {
+      "id": "AC-15",
+      "skill": "商业写作/产品文档",
+      "design": "knowledge-edutainment",
+      "prompt_file": "prompts/AC-15.md",
+      "output_file": "outputs/AC-15.md",
+      "review_file": "reviews/AC-15.json"
+    },
+    {
+      "id": "AC-16",
+      "skill": "知识输出/课程脚本/视频脚本",
+      "design": "short-video-script",
+      "prompt_file": "prompts/AC-16.md",
+      "output_file": "outputs/AC-16.md",
+      "review_file": "reviews/AC-16.json"
+    },
+    {
+      "id": "AC-17",
+      "skill": "知识输出/课程脚本/教程指南",
+      "design": "knowledge-edutainment",
+      "prompt_file": "prompts/AC-17.md",
+      "output_file": "outputs/AC-17.md",
+      "review_file": "reviews/AC-17.json"
+    },
+    {
+      "id": "AC-18",
+      "skill": "知识输出/深度分析",
+      "design": "wechat-deep-read",
+      "prompt_file": "prompts/AC-18.md",
+      "output_file": "outputs/AC-18.md",
+      "review_file": "reviews/AC-18.json"
+    },
+    {
+      "id": "AC-19",
+      "skill": "媒体社交/社媒帖子/小红书",
+      "design": "xiaohongshu",
+      "prompt_file": "prompts/AC-19.md",
+      "output_file": "outputs/AC-19.md",
+      "review_file": "reviews/AC-19.json"
+    },
+    {
+      "id": "AC-20",
+      "skill": "媒体社交/社媒帖子/公众号",
+      "design": "wechat-deep-read",
+      "prompt_file": "prompts/AC-20.md",
+      "output_file": "outputs/AC-20.md",
+      "review_file": "reviews/AC-20.json"
+    },
+    {
+      "id": "AC-21",
+      "skill": "媒体社交/社媒帖子/微博",
+      "design": "knowledge-edutainment",
+      "prompt_file": "prompts/AC-21.md",
+      "output_file": "outputs/AC-21.md",
+      "review_file": "reviews/AC-21.json"
+    },
+    {
+      "id": "AC-22",
+      "skill": "媒体社交/新闻通讯",
+      "design": "brand-storytelling",
+      "prompt_file": "prompts/AC-22.md",
+      "output_file": "outputs/AC-22.md",
+      "review_file": "reviews/AC-22.json"
+    },
+    {
+      "id": "AC-23",
+      "skill": "学术专业/论文",
+      "design": "wechat-deep-read",
+      "prompt_file": "prompts/AC-23.md",
+      "output_file": "outputs/AC-23.md",
+      "review_file": "reviews/AC-23.json"
+    },
+    {
+      "id": "AC-24",
+      "skill": "学术专业/技术文档",
+      "design": "knowledge-edutainment",
+      "prompt_file": "prompts/AC-24.md",
+      "output_file": "outputs/AC-24.md",
+      "review_file": "reviews/AC-24.json"
+    },
+    {
+      "id": "AC-25",
+      "skill": "学术专业/研究笔记",
+      "design": "wechat-deep-read",
+      "prompt_file": "prompts/AC-25.md",
+      "output_file": "outputs/AC-25.md",
+      "review_file": "reviews/AC-25.json"
+    }
+  ]
+}

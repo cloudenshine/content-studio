@@ -1,0 +1,17 @@
+{
+  "rework": 1,
+  "scores": {
+    "task_completion": 4,
+    "information_accuracy": 5,
+    "structure_usability": 4,
+    "language_naturalness": 5,
+    "genre_fit": 4
+  },
+  "manual_checks": {
+    "has_central_image": true,
+    "avoids_direct_lyricism": true
+  },
+  "blocking_issues": [],
+  "notes": "行数超出要求（12行），需删减至规定长度。",
+  "verdict": "pass"
+}

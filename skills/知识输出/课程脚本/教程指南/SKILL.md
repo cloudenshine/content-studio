@@ -4,6 +4,12 @@ label: 图文教程/指南
 description: 结构化图文教程编写，步骤清晰，从入门到专家分阶
 mode: content-generate
 inputs:
+  - name: user_idea
+    type: text
+    required: true
+    label: 用户想法
+    hint: 你想创作什么？一句话想法、一个场景、一种感觉都可以，越具体越好
+    ui: textarea
   - name: tutorial_title
     type: text
     required: true
@@ -46,9 +52,8 @@ inputs:
     type: text
     required: false
     label: 预计耗时
-    hint: 完成教程需要的时间(可多选)
-    ui: multiselect
-    options: [15分钟, 30分钟, 1小时, 2小时, 半天, 全天]
+    hint: 直接输入，如 1小时 或 30分钟
+    ui: text
 craft:
   requires: []
 output:

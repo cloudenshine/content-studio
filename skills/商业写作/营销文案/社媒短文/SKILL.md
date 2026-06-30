@@ -4,6 +4,12 @@ label: 社交媒体短文
 description: 微博/即刻/朋友圈等平台的短文案创作，快速抓住注意力
 mode: content-generate
 inputs:
+  - name: user_idea
+    type: text
+    required: true
+    label: 用户想法
+    hint: 你想创作什么？一句话想法、一个场景、一种感觉都可以，越具体越好
+    ui: textarea
   - name: core_message
     type: text
     required: true
@@ -22,6 +28,12 @@ inputs:
       - 即刻
       - 朋友圈
       - LinkedIn
+  - name: word_count
+    type: text
+    required: false
+    label: 字数
+    hint: 直接输入字数，如 140
+    ui: text
   - name: tone
     type: string
     required: false

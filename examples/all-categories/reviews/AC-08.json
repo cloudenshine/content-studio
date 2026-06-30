@@ -1,0 +1,16 @@
+{
+  "rework": 1,
+  "scores": {
+    "task_completion": 5,
+    "information_accuracy": 5,
+    "structure_usability": 4,
+    "language_naturalness": 5,
+    "genre_fit": 5
+  },
+  "manual_checks": {
+    "positive_theme": true
+  },
+  "blocking_issues": [],
+  "notes": "正文首段将主角误写为‘米米’，与设定‘米粒’不符，需统一名称。",
+  "verdict": "pass"
+}

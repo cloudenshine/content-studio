@@ -1,0 +1,14 @@
+{
+  "rework": 1,
+  "scores": {
+    "task_completion": 5,
+    "information_accuracy": 5,
+    "structure_usability": 4,
+    "language_naturalness": 5,
+    "genre_fit": 5
+  },
+  "manual_checks": {},
+  "blocking_issues": [],
+  "notes": "正文包含所有必须保留项且符合口播节奏，但存在‘绝招’等夸张词汇，建议将‘绝招’改为具体方法论描述以增强严谨性。",
+  "verdict": "pass"
+}

@@ -4,6 +4,12 @@ label: 公众号推文
 description: 公众号图文推送创作，兼顾打开率、完读率和转化
 mode: content-generate
 inputs:
+  - name: user_idea
+    type: text
+    required: true
+    label: 用户想法
+    hint: 你想创作什么？一句话想法、一个场景、一种感觉都可以，越具体越好
+    ui: textarea
   - name: title
     type: text
     required: true
@@ -38,16 +44,11 @@ inputs:
     ui: multiselect
     options: [职场人士, 创业者, 宝妈群体, 学生群体, 投资人, 科技爱好者]
   - name: word_count
-    type: string
+    type: text
     required: false
     label: 字数
-    hint: 目标文章字数
-    ui: dropdown
-    options:
-      - 1000
-      - 2000
-      - 3000
-      - 5000
+    hint: 直接输入字数，如 2000
+    ui: text
 craft:
   requires: []
 output:

@@ -4,6 +4,12 @@ label: 研究笔记
 description: 学术研究过程记录，从文献收集到结论撰写的全阶段笔记
 mode: content-generate
 inputs:
+  - name: user_idea
+    type: text
+    required: true
+    label: 用户想法
+    hint: 你想创作什么？一句话想法、一个场景、一种感觉都可以，越具体越好
+    ui: textarea
   - name: research_question
     type: text
     required: true

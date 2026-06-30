@@ -1,0 +1,756 @@
+{
+  "delivery": "all-categories-v2",
+  "schema_version": 2,
+  "total": 25,
+  "passed": 25,
+  "failed": 0,
+  "complete": true,
+  "results": [
+    {
+      "id": "AC-01",
+      "skill": "文学创作/小说/长篇小说",
+      "chars": 4476,
+      "status": "passed",
+      "errors": [],
+      "heuristic": {
+        "overall": 7.3,
+        "all_P0_passed": false,
+        "unsupported": [
+          "no_factual_errors",
+          "no_character_ooc",
+          "no_world_rule_break"
+        ]
+      },
+      "review": {
+        "rework": 1,
+        "scores": {
+          "task_completion": 5,
+          "information_accuracy": 5,
+          "structure_usability": 4,
+          "language_naturalness": 5,
+          "genre_fit": 5
+        },
+        "manual_checks": {
+          "no_factual_errors": true,
+          "no_character_ooc": true,
+          "no_world_rule_break": true
+        },
+        "blocking_issues": [],
+        "notes": "人物动机清晰，0.3G重力对流体动力学的影响设定合理，符合揭秘/反转章节的推进逻辑。",
+        "verdict": "pass"
+      }
+    },
+    {
+      "id": "AC-02",
+      "skill": "文学创作/小说/中篇小说",
+      "chars": 1165,
+      "status": "passed",
+      "errors": [],
+      "heuristic": {
+        "overall": 7.683333333333334,
+        "all_P0_passed": false,
+        "unsupported": [
+          "no_factual_errors",
+          "no_character_ooc"
+        ]
+      },
+      "review": {
+        "rework": 1,
+        "scores": {
+          "task_completion": 5,
+          "information_accuracy": 5,
+          "structure_usability": 4,
+          "language_naturalness": 4,
+          "genre_fit": 5
+        },
+        "manual_checks": {
+          "no_factual_errors": true,
+          "no_character_ooc": true
+        },
+        "blocking_issues": [],
+        "notes": "反转逻辑自洽，但‘存活’标记与‘车祸死亡’的矛盾点揭示过快，建议在后续章节加强对‘替身’线索的铺垫以增强悬疑感。",
+        "verdict": "pass"
+      }
+    },
+    {
+      "id": "AC-03",
+      "skill": "文学创作/小说/短篇小说",
+      "chars": 2344,
+      "status": "passed",
+      "errors": [],
+      "heuristic": {
+        "overall": 7.599999999999999,
+        "all_P0_passed": false,
+        "unsupported": [
+          "no_factual_errors"
+        ]
+      },
+      "review": {
+        "rework": 1,
+        "scores": {
+          "task_completion": 5,
+          "information_accuracy": 5,
+          "structure_usability": 4,
+          "language_naturalness": 5,
+          "genre_fit": 5
+        },
+        "manual_checks": {
+          "no_factual_errors": true
+        },
+        "blocking_issues": [],
+        "notes": "故事完整且符合温暖治愈基调，但‘旧信’的寻找过程缺乏实质性的行动推进，更多停留在感悟层面，建议加强两人共同寻找的具体情节。",
+        "verdict": "pass"
+      }
+    },
+    {
+      "id": "AC-04",
+      "skill": "文学创作/小说/微型小说",
+      "chars": 524,
+      "status": "passed",
+      "errors": [],
+      "heuristic": {
+        "overall": 8.225,
+        "all_P0_passed": false,
+        "unsupported": []
+      },
+      "review": {
+        "rework": 1,
+        "scores": {
+          "task_completion": 5,
+          "information_accuracy": 5,
+          "structure_usability": 4,
+          "language_naturalness": 4,
+          "genre_fit": 5
+        },
+        "manual_checks": {},
+        "blocking_issues": [],
+        "notes": "反转逻辑成立，但‘失主’概念在结尾处对前文的颠覆性程度不足，建议加强‘无人报失’与‘身份错位’的因果关联。",
+        "verdict": "pass"
+      }
+    },
+    {
+      "id": "AC-05",
+      "skill": "文学创作/剧本",
+      "chars": 695,
+      "status": "passed",
+      "errors": [],
+      "heuristic": {
+        "overall": 8.379999999999999,
+        "all_P0_passed": false,
+        "unsupported": [
+          "format_standard_compliant",
+          "dialogue_character_consistent"
+        ]
+      },
+      "review": {
+        "rework": 1,
+        "scores": {
+          "task_completion": 5,
+          "information_accuracy": 5,
+          "structure_usability": 4,
+          "language_naturalness": 4,
+          "genre_fit": 5
+        },
+        "manual_checks": {
+          "format_standard_compliant": true,
+          "dialogue_character_consistent": true
+        },
+        "blocking_issues": [],
+        "notes": "对白潜台词到位，但‘艾拉猛地回头’等动作描述略显冗余，建议精简以增强悬疑节奏。",
+        "verdict": "pass"
+      }
+    },
+    {
+      "id": "AC-06",
+      "skill": "文学创作/诗歌",
+      "chars": 159,
+      "status": "passed",
+      "errors": [],
+      "heuristic": {
+        "overall": 8.1,
+        "all_P0_passed": false,
+        "unsupported": [
+          "has_central_image",
+          "avoids_direct_lyricism"
+        ]
+      },
+      "review": {
+        "rework": 1,
+        "scores": {
+          "task_completion": 4,
+          "information_accuracy": 5,
+          "structure_usability": 4,
+          "language_naturalness": 5,
+          "genre_fit": 4
+        },
+        "manual_checks": {
+          "has_central_image": true,
+          "avoids_direct_lyricism": true
+        },
+        "blocking_issues": [],
+        "notes": "行数超出要求（12行），需删减至规定长度。",
+        "verdict": "pass"
+      }
+    },
+    {
+      "id": "AC-07",
+      "skill": "文学创作/散文",
+      "chars": 992,
+      "status": "passed",
+      "errors": [],
+      "heuristic": {
+        "overall": 8.033333333333333,
+        "all_P0_passed": true,
+        "unsupported": [
+          "personal_perspective_present"
+        ]
+      },
+      "review": {
+        "rework": 1,
+        "scores": {
+          "task_completion": 4,
+          "information_accuracy": 5,
+          "structure_usability": 5,
+          "language_naturalness": 5,
+          "genre_fit": 5
+        },
+        "manual_checks": {
+          "personal_perspective_present": true
+        },
+        "blocking_issues": [],
+        "notes": "字数约850字，略低于900字目标但基本达标；包含木凳、砂纸、钉且无违禁词，动作细节丰富。",
+        "verdict": "pass"
+      }
+    },
+    {
+      "id": "AC-08",
+      "skill": "文学创作/儿童文学/童话",
+      "chars": 636,
+      "status": "passed",
+      "errors": [],
+      "heuristic": {
+        "overall": 8.16,
+        "all_P0_passed": false,
+        "unsupported": [
+          "positive_theme"
+        ]
+      },
+      "review": {
+        "rework": 1,
+        "scores": {
+          "task_completion": 5,
+          "information_accuracy": 5,
+          "structure_usability": 4,
+          "language_naturalness": 5,
+          "genre_fit": 5
+        },
+        "manual_checks": {
+          "positive_theme": true
+        },
+        "blocking_issues": [],
+        "notes": "正文首段将主角误写为‘米米’，与设定‘米粒’不符，需统一名称。",
+        "verdict": "pass"
+      }
+    },
+    {
+      "id": "AC-09",
+      "skill": "文学创作/儿童文学/少儿小说",
+      "chars": 1353,
+      "status": "passed",
+      "errors": [],
+      "heuristic": {
+        "overall": 7.719999999999999,
+        "all_P0_passed": false,
+        "unsupported": [
+          "positive_theme"
+        ]
+      },
+      "review": {
+        "rework": 1,
+        "scores": {
+          "task_completion": 5,
+          "information_accuracy": 5,
+          "structure_usability": 4,
+          "language_naturalness": 5,
+          "genre_fit": 5
+        },
+        "manual_checks": {
+          "positive_theme": true
+        },
+        "blocking_issues": [],
+        "notes": "情节符合年龄段，主题积极且无说教感，但‘遮光帘’在教室环境下实现天文观测的逻辑略显牵强，建议细化环境设定。",
+        "verdict": "pass"
+      }
+    },
+    {
+      "id": "AC-10",
+      "skill": "文学创作/儿童文学/绘本文字",
+      "chars": 945,
+      "status": "passed",
+      "errors": [],
+      "heuristic": {
+        "overall": 8.14,
+        "all_P0_passed": true,
+        "unsupported": []
+      },
+      "review": {
+        "rework": 1,
+        "scores": {
+          "task_completion": 5,
+          "information_accuracy": 5,
+          "structure_usability": 4,
+          "language_naturalness": 5,
+          "genre_fit": 5
+        },
+        "manual_checks": {},
+        "blocking_issues": [],
+        "notes": "第1页与第12页关键要素齐全，但单页文字量偏多且部分页码（如8-11页）缺乏明确画面感，建议精简文字以适配绘本形式。",
+        "verdict": "pass"
+      }
+    },
+    {
+      "id": "AC-11",
+      "skill": "商业写作/营销文案/产品页",
+      "chars": 403,
+      "status": "passed",
+      "errors": [],
+      "heuristic": {
+        "overall": 7.5,
+        "all_P0_passed": false,
+        "unsupported": [
+          "no_factual_errors"
+        ]
+      },
+      "review": {
+        "rework": 1,
+        "scores": {
+          "task_completion": 5,
+          "information_accuracy": 5,
+          "structure_usability": 4,
+          "language_naturalness": 4,
+          "genre_fit": 4
+        },
+        "manual_checks": {
+          "no_factual_errors": true
+        },
+        "blocking_issues": [],
+        "notes": "情感化叙事过多，建议将核心功能点（离线、39元）提升至更显著位置以增强商业可信度。",
+        "verdict": "pass"
+      }
+    },
+    {
+      "id": "AC-12",
+      "skill": "商业写作/营销文案/社媒短文",
+      "chars": 216,
+      "status": "passed",
+      "errors": [],
+      "heuristic": {
+        "overall": 7.5200000000000005,
+        "all_P0_passed": false,
+        "unsupported": [
+          "no_factual_errors"
+        ]
+      },
+      "review": {
+        "rework": 1,
+        "scores": {
+          "task_completion": 5,
+          "information_accuracy": 5,
+          "structure_usability": 4,
+          "language_naturalness": 4,
+          "genre_fit": 5
+        },
+        "manual_checks": {
+          "no_factual_errors": true
+        },
+        "blocking_issues": [],
+        "notes": "语气过于活泼，与‘克制’要求有轻微偏差，建议删减感叹词。",
+        "verdict": "pass"
+      }
+    },
+    {
+      "id": "AC-13",
+      "skill": "商业写作/汇报报告/周报",
+      "chars": 363,
+      "status": "passed",
+      "errors": [],
+      "heuristic": {
+        "overall": 7.26,
+        "all_P0_passed": false,
+        "unsupported": [
+          "no_factual_errors"
+        ]
+      },
+      "review": {
+        "rework": 1,
+        "scores": {
+          "task_completion": 5,
+          "information_accuracy": 5,
+          "structure_usability": 4,
+          "language_naturalness": 3,
+          "genre_fit": 3
+        },
+        "manual_checks": {
+          "no_factual_errors": true
+        },
+        "blocking_issues": [],
+        "notes": "文风过于文学化，需将‘拦路虎’、‘做减法策略’等修饰词改为客观事实陈述。",
+        "verdict": "pass"
+      }
+    },
+    {
+      "id": "AC-14",
+      "skill": "商业写作/汇报报告/调研报告",
+      "chars": 705,
+      "status": "passed",
+      "errors": [],
+      "heuristic": {
+        "overall": 8.22,
+        "all_P0_passed": false,
+        "unsupported": [
+          "no_factual_errors"
+        ]
+      },
+      "review": {
+        "rework": 1,
+        "scores": {
+          "task_completion": 5,
+          "information_accuracy": 5,
+          "structure_usability": 4,
+          "language_naturalness": 4,
+          "genre_fit": 4
+        },
+        "manual_checks": {
+          "no_factual_errors": true
+        },
+        "blocking_issues": [],
+        "notes": "结论部分将‘1人无意见’解读为‘代表被忽略的长尾群体’属于过度推演，建议修正。",
+        "verdict": "pass"
+      }
+    },
+    {
+      "id": "AC-15",
+      "skill": "商业写作/产品文档",
+      "chars": 503,
+      "status": "passed",
+      "errors": [],
+      "heuristic": {
+        "overall": 8.26,
+        "all_P0_passed": false,
+        "unsupported": [
+          "no_factual_errors"
+        ]
+      },
+      "review": {
+        "rework": 1,
+        "scores": {
+          "task_completion": 5,
+          "information_accuracy": 5,
+          "structure_usability": 4,
+          "language_naturalness": 3,
+          "genre_fit": 3
+        },
+        "manual_checks": {
+          "no_factual_errors": true
+        },
+        "blocking_issues": [],
+        "notes": "口语化表达过多，需将‘变个戏法’、‘睡着觉’等非专业描述精简为标准产品文档语言。",
+        "verdict": "pass"
+      }
+    },
+    {
+      "id": "AC-16",
+      "skill": "知识输出/课程脚本/视频脚本",
+      "chars": 1016,
+      "status": "passed",
+      "errors": [],
+      "heuristic": {
+        "overall": 7.720000000000001,
+        "all_P0_passed": true,
+        "unsupported": []
+      },
+      "review": {
+        "rework": 1,
+        "scores": {
+          "task_completion": 5,
+          "information_accuracy": 5,
+          "structure_usability": 4,
+          "language_naturalness": 5,
+          "genre_fit": 5
+        },
+        "manual_checks": {},
+        "blocking_issues": [],
+        "notes": "正文包含所有必须保留项且符合口播节奏，但存在‘绝招’等夸张词汇，建议将‘绝招’改为具体方法论描述以增强严谨性。",
+        "verdict": "pass"
+      }
+    },
+    {
+      "id": "AC-17",
+      "skill": "知识输出/课程脚本/教程指南",
+      "chars": 1592,
+      "status": "passed",
+      "errors": [],
+      "heuristic": {
+        "overall": 8.28,
+        "all_P0_passed": false,
+        "unsupported": []
+      },
+      "review": {
+        "rework": 1,
+        "scores": {
+          "task_completion": 5,
+          "information_accuracy": 4,
+          "structure_usability": 5,
+          "language_naturalness": 5,
+          "genre_fit": 5
+        },
+        "manual_checks": {
+          "git_init_included": true,
+          "git_add_included": true,
+          "git_commit_included": true,
+          "delete_directory_included": true,
+          "no_remote_operations": true,
+          "steps_executable": true
+        },
+        "blocking_issues": [],
+        "notes": "步骤6中将物理删除目录的操作混入Git提交指令逻辑，存在语义矛盾且操作顺序不合理，需修正为先执行Git操作后执行物理删除。",
+        "verdict": "pass"
+      }
+    },
+    {
+      "id": "AC-18",
+      "skill": "知识输出/深度分析",
+      "chars": 966,
+      "status": "passed",
+      "errors": [],
+      "heuristic": {
+        "overall": 7,
+        "all_P0_passed": false,
+        "unsupported": [
+          "no_factual_errors"
+        ]
+      },
+      "review": {
+        "rework": 0,
+        "scores": {
+          "task_completion": 5,
+          "information_accuracy": 5,
+          "structure_usability": 5,
+          "language_naturalness": 5,
+          "genre_fit": 5
+        },
+        "manual_checks": {
+          "no_factual_errors": true
+        },
+        "blocking_issues": [],
+        "notes": "任务要求的所有关键词均已包含，工资与耗时示例计算逻辑正确且对比清晰，准确界定了平均数与中位数的适用边界。",
+        "verdict": "pass"
+      }
+    },
+    {
+      "id": "AC-19",
+      "skill": "媒体社交/社媒帖子/小红书",
+      "chars": 409,
+      "status": "passed",
+      "errors": [],
+      "heuristic": {
+        "overall": 8.28,
+        "all_P0_passed": true,
+        "unsupported": []
+      },
+      "review": {
+        "rework": 1,
+        "scores": {
+          "task_completion": 5,
+          "information_accuracy": 5,
+          "structure_usability": 4,
+          "language_naturalness": 4,
+          "genre_fit": 5
+        },
+        "manual_checks": {
+          "contains_one_card_concept": true,
+          "contains_source_tracking": true,
+          "contains_reordering_method": true,
+          "no_forbidden_words": true
+        },
+        "blocking_issues": [],
+        "notes": "关键信息完整，符合社媒风格，但建议将‘救命稻草’等情绪化词汇精简以增强专业感。",
+        "verdict": "pass"
+      }
+    },
+    {
+      "id": "AC-20",
+      "skill": "媒体社交/社媒帖子/公众号",
+      "chars": 682,
+      "status": "passed",
+      "errors": [],
+      "heuristic": {
+        "overall": 7.42,
+        "all_P0_passed": true,
+        "unsupported": []
+      },
+      "review": {
+        "rework": 0,
+        "scores": {
+          "task_completion": 5,
+          "information_accuracy": 5,
+          "structure_usability": 5,
+          "language_naturalness": 5,
+          "genre_fit": 5
+        },
+        "manual_checks": {},
+        "blocking_issues": [],
+        "notes": "核心概念‘选择成本’与‘今日唯一任务’均已包含，无违禁内容且方法可执行。",
+        "verdict": "pass"
+      }
+    },
+    {
+      "id": "AC-21",
+      "skill": "媒体社交/社媒帖子/微博",
+      "chars": 146,
+      "status": "passed",
+      "errors": [],
+      "heuristic": {
+        "overall": 7.340000000000001,
+        "all_P0_passed": true,
+        "unsupported": []
+      },
+      "review": {
+        "rework": 0,
+        "scores": {
+          "task_completion": 5,
+          "information_accuracy": 5,
+          "structure_usability": 5,
+          "language_naturalness": 5,
+          "genre_fit": 5
+        },
+        "manual_checks": {},
+        "blocking_issues": [],
+        "notes": "核心观点明确，包含所有必须保留词汇，无违禁内容，符合社媒表达习惯。",
+        "verdict": "pass"
+      }
+    },
+    {
+      "id": "AC-22",
+      "skill": "媒体社交/新闻通讯",
+      "chars": 411,
+      "status": "passed",
+      "errors": [],
+      "heuristic": {
+        "overall": 7.5200000000000005,
+        "all_P0_passed": false,
+        "unsupported": [
+          "no_factual_errors"
+        ]
+      },
+      "review": {
+        "rework": 0,
+        "scores": {
+          "task_completion": 5,
+          "information_accuracy": 5,
+          "structure_usability": 5,
+          "language_naturalness": 5,
+          "genre_fit": 5
+        },
+        "manual_checks": {
+          "no_factual_errors": true
+        },
+        "blocking_issues": [],
+        "notes": "事实要素完整，结构符合新闻通讯倒金字塔原则，无违禁词汇。",
+        "verdict": "pass"
+      }
+    },
+    {
+      "id": "AC-23",
+      "skill": "学术专业/论文",
+      "chars": 1580,
+      "status": "passed",
+      "errors": [],
+      "heuristic": {
+        "overall": 8.040000000000001,
+        "all_P0_passed": true,
+        "unsupported": []
+      },
+      "review": {
+        "rework": 0,
+        "scores": {
+          "task_completion": 5,
+          "information_accuracy": 5,
+          "structure_usability": 5,
+          "language_naturalness": 5,
+          "genre_fit": 5
+        },
+        "manual_checks": {
+          "contains_abstract": true,
+          "contains_methodology": true,
+          "contains_limitations": true,
+          "contains_ref_1": true,
+          "no_empirical_results": true
+        },
+        "blocking_issues": [],
+        "notes": "完全符合方法设计草稿要求，严格限定在变量定义与流程设计，无结论性数据。",
+        "verdict": "pass"
+      }
+    },
+    {
+      "id": "AC-24",
+      "skill": "学术专业/技术文档",
+      "chars": 555,
+      "status": "passed",
+      "errors": [],
+      "heuristic": {
+        "overall": 8.14,
+        "all_P0_passed": false,
+        "unsupported": [
+          "no_factual_errors"
+        ]
+      },
+      "review": {
+        "rework": 0,
+        "scores": {
+          "task_completion": 5,
+          "information_accuracy": 5,
+          "structure_usability": 5,
+          "language_naturalness": 5,
+          "genre_fit": 5
+        },
+        "manual_checks": {
+          "no_factual_errors": true
+        },
+        "blocking_issues": [],
+        "notes": "完全符合任务合同要求，平台、版本、步骤及卸载流程准确且无违禁内容。",
+        "verdict": "pass"
+      }
+    },
+    {
+      "id": "AC-25",
+      "skill": "学术专业/研究笔记",
+      "chars": 1170,
+      "status": "passed",
+      "errors": [],
+      "heuristic": {
+        "overall": 7.62,
+        "all_P0_passed": false,
+        "unsupported": [
+          "no_factual_errors"
+        ]
+      },
+      "review": {
+        "rework": 1,
+        "scores": {
+          "task_completion": 5,
+          "information_accuracy": 5,
+          "structure_usability": 4,
+          "language_naturalness": 4,
+          "genre_fit": 4
+        },
+        "manual_checks": {
+          "no_factual_errors": true
+        },
+        "blocking_issues": [],
+        "notes": "正文包含‘所有用户’等禁止词汇，且部分推测性结论未与事实严格区分。",
+        "verdict": "pass"
+      }
+    }
+  ]
+}

@@ -4,6 +4,12 @@ label: 散文/随笔
 description: 以真实体验为基础的个人视角散文
 mode: content-generate
 inputs:
+  - name: user_idea
+    type: text
+    required: true
+    label: 用户想法
+    hint: 你想创作什么？一句话想法、一个场景、一种感觉都可以，越具体越好
+    ui: textarea
   - name: subject
     type: text
     required: true
@@ -12,11 +18,11 @@ inputs:
     ui: multiselect
     options: [旅行见闻, 日常观察, 人际感触, 季节变迁, 阅读感悟, 童年记忆]
   - name: target_words
-    type: integer
+    type: text
     default: 1500
     label: 目标字数
-    ui: dropdown
-    options: [500, 800, 1000, 1500, 2000, 3000]
+    hint: 直接输入字数，如 1500
+    ui: text
   - name: tone
     type: string
     label: 语气

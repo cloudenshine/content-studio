@@ -1,0 +1,17 @@
+{
+  "rework": 1,
+  "scores": {
+    "task_completion": 5,
+    "information_accuracy": 5,
+    "structure_usability": 4,
+    "language_naturalness": 4,
+    "genre_fit": 5
+  },
+  "manual_checks": {
+    "no_factual_errors": true,
+    "no_character_ooc": true
+  },
+  "blocking_issues": [],
+  "notes": "反转逻辑自洽，但‘存活’标记与‘车祸死亡’的矛盾点揭示过快，建议在后续章节加强对‘替身’线索的铺垫以增强悬疑感。",
+  "verdict": "pass"
+}

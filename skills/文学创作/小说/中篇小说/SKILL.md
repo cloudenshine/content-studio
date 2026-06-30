@@ -4,6 +4,12 @@ label: 中篇小说章节 (20K-80K字)
 description: 生成一章中篇小说正文，主线聚焦，节奏紧凑
 mode: content-generate
 inputs:
+  - name: user_idea
+    type: text
+    required: true
+    label: 用户想法
+    hint: 你想创作什么？一句话想法、一个场景、一种感觉都可以，越具体越好
+    ui: textarea
   - name: premise
     type: text
     required: true
@@ -12,16 +18,31 @@ inputs:
     ui: multiselect
     options: [主角成长, 阴谋揭露, 救援行动, 发现秘密, 身份反转, 情感冲突]
   - name: target_words
-    type: integer
+    type: text
     default: 4000
     label: 目标字数
-    ui: dropdown
-    options: [2000, 3000, 4000, 5000]
+    hint: 直接输入字数，如 4000
+    ui: text
   - name: chapter_type
     type: string
     label: 章节类型
     ui: multiselect
     options: [推进主线, 发展冲突, 铺垫反转, 高潮场景, 收官收尾]
+  - name: pov_character
+    type: string
+    label: 视角人物
+    ui: dropdown
+    options: [主角视角, 重要配角视角, 反派视角, 上帝视角, 多视角切换]
+  - name: narrative_mode
+    type: string
+    label: 叙述方式
+    ui: dropdown
+    options: [第一人称限知, 第三人称限知, 上帝视角, 书信体, 多视角切换]
+  - name: tone
+    type: string
+    label: 基调
+    ui: multiselect
+    options: [紧张悬疑, 温暖治愈, 讽刺幽默, 冷峻纪实, 诗意抒情]
 craft:
   requires: [anti-ai-slop, sentence-rhythm, sensory-imagery]
 output:

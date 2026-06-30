@@ -1,0 +1,19 @@
+{
+  "rework": 1,
+  "scores": {
+    "task_completion": 5,
+    "information_accuracy": 5,
+    "structure_usability": 4,
+    "language_naturalness": 4,
+    "genre_fit": 5
+  },
+  "manual_checks": {
+    "contains_one_card_concept": true,
+    "contains_source_tracking": true,
+    "contains_reordering_method": true,
+    "no_forbidden_words": true
+  },
+  "blocking_issues": [],
+  "notes": "关键信息完整，符合社媒风格，但建议将‘救命稻草’等情绪化词汇精简以增强专业感。",
+  "verdict": "pass"
+}

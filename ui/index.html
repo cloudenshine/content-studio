@@ -113,6 +113,15 @@
   .options-input { display: flex; gap: 4px; flex-wrap: wrap; }
   .options-input input { flex: 1; min-width: 60px; }
   .options-input .del-opt { color: var(--fail); cursor: pointer; }
+  .examples-toolbar { display:flex; gap:10px; align-items:center; margin-bottom:14px; }
+  .examples-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(260px,1fr)); gap:10px; }
+  .example-card { padding:14px; border:1px solid var(--border); border-radius:8px; background:var(--surface); cursor:pointer; }
+  .example-card:hover { border-color:var(--accent2); transform:translateY(-1px); }
+  .example-card .id { color:var(--accent2); font-size:11px; font-weight:700; }
+  .example-card .path { color:var(--text-muted); font-size:11px; margin:4px 0 8px; }
+  .example-card .summary { font-size:13px; line-height:1.5; }
+  .example-detail { margin-top:14px; }
+  .example-review { padding:10px 12px; background:var(--surface2); border:1px solid var(--border); border-radius:6px; font-size:12px; margin-bottom:10px; }
 </style>
 </head>
 <body>
@@ -130,9 +139,25 @@
         <button class="runmode-btn" data-mode="api" onclick="setRunMode('api')" title="云端 API">☁️</button>
       </div>
       <button class="mode-toggle" onclick="openSettings()" title="运行设置">⚙️</button>
+      <button class="mode-toggle" id="examplesToggle" onclick="showExamples()" title="浏览25类通过实例">✅ 实例</button>
       <button class="mode-toggle" id="modeToggle" onclick="toggleAdminMode()">🔧</button>
     </div>
   </header>
+
+  <section id="examplesArea" style="display:none;">
+    <div class="examples-toolbar">
+      <button class="btn btn-secondary" onclick="closeExamples()">← 返回创作</button>
+      <select id="exampleCategory" onchange="renderExampleList()" style="padding:7px 10px;background:var(--surface);border:1px solid var(--border);color:var(--text);border-radius:5px;"></select>
+      <span class="status-bar" id="exampleCount"></span>
+    </div>
+    <div id="exampleList" class="examples-grid"></div>
+    <div id="exampleDetail" class="example-detail" style="display:none;">
+      <button class="btn btn-secondary" onclick="closeExampleDetail()" style="margin-bottom:10px;">← 返回实例列表</button>
+      <div class="result-header"><h3 id="exampleTitle"></h3><span class="status-bar" id="exampleMeta"></span></div>
+      <div class="example-review" id="exampleReview"></div>
+      <div class="result-content" id="exampleContent"></div>
+    </div>
+  </section>
 
   <div class="breadcrumb" id="breadcrumb"></div>
   <div id="tierArea"></div>
@@ -146,6 +171,12 @@
     </div>
     <div class="form-section">
       <h3>📎 创作参考源</h3>
+      <div style="margin-bottom:8px;display:flex;gap:8px;align-items:center;">
+        <label style="font-size:12px;display:flex;align-items:center;gap:4px;cursor:pointer;">
+          <input type="checkbox" id="webSearchToggle"> 🔍 生成前联网搜索
+        </label>
+        <input type="text" id="webSearchQuery" placeholder="搜索关键词（可选，默认使用你的创作提示）" style="flex:1;font-size:12px;padding:4px 8px;background:var(--bg);border:1px solid var(--border);color:var(--text);border-radius:3px;display:none;">
+      </div>
       <div class="ref-tabs"><div class="ref-tab active" onclick="switchRefTab('paste')">✏️ 粘贴文字</div><div class="ref-tab" onclick="switchRefTab('url')">🔗 网页抓取</div><div class="ref-tab" onclick="switchRefTab('vault')">🗄️ Obsidian</div><div class="ref-tab" onclick="switchRefTab('file')">📁 上传文件</div></div>
       <div class="ref-panel active" id="refPaste"><textarea id="refPasteInput" placeholder="粘贴参考文字..." style="min-height:100px;"></textarea></div>
       <div class="ref-panel" id="refUrl"><input type="text" id="refUrlInput" placeholder="输入页面URL..."><div class="ref-actions"><button class="btn-sm" onclick="fetchUrl()">抓取</button></div></div>
@@ -207,6 +238,17 @@
     <div class="result-header"><h3>📄 生成结果</h3><span class="status-bar" id="resultMeta"></span></div>
     <div class="evaluation" id="evaluation"></div>
     <div class="result-content" id="resultContent"></div>
+    <div class="result-toolbar" id="resultToolbar" style="display:none;margin-top:8px;display:flex;gap:6px;flex-wrap:wrap;align-items:center;">
+      <button class="btn btn-sm" onclick="copyResult(this)" style="background:var(--surface2);">📋 复制</button>
+      <button class="btn btn-sm" onclick="saveResult(this)" style="background:var(--surface2);">💾 保存</button>
+      <button class="btn btn-sm" id="saveVaultBtn" onclick="saveResultToVault(this)" style="display:none;background:var(--surface2);">📁 保存到 Vault</button>
+      <span style="font-size:11px;color:var(--text-muted);margin-left:4px;">Vault 目录: <input id="vaultSubDir" value="_content-studio" style="width:120px;background:var(--bg);border:1px solid var(--border);color:var(--text);padding:2px 6px;border-radius:3px;font-size:11px;"></input></span>
+    </div>
+    <details id="historyPanel" style="margin-top:12px;">
+      <summary style="cursor:pointer;font-size:13px;color:var(--text-dim);padding:4px 0;">📋 历史记录</summary>
+      <div id="historyList" style="margin-top:8px;font-size:12px;"></div>
+      <button class="btn btn-sm" onclick="loadHistory()" style="margin-top:6px;background:var(--surface2);">🔄 刷新历史</button>
+    </details>
   </div>
 </div>
 
@@ -216,12 +258,64 @@ let currentPath = "", currentSkill = null, designs = [], references = [], vaultC
 let isAdmin = false, editingSkillPath = null;
 let runMode = localStorage.getItem('cs_runMode') || 'claude';
 let runConfig = JSON.parse(localStorage.getItem('cs_runConfig') || '{}');
+let examples = [];
 const defaultConfig = {
   claude: { tool: 'claude', args: '', timeout: 300 },
   ollama: { url: 'http://localhost:11434/api/generate', model: 'huihui_ai/qwen3.5-abliterated:9b', temperature: 0.8, max_tokens: 8192 },
   api: { url: 'https://api.openai.com/v1/chat/completions', key: '', model: 'gpt-4o', temperature: 0.7, max_tokens: 4096 },
 };
 for (const [k, v] of Object.entries(defaultConfig)) { if (!runConfig[k]) runConfig[k] = { ...v }; }
+
+function escapeHtml(value) {
+  return String(value).replace(/[&<>"']/g, char => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[char]));
+}
+
+async function showExamples() {
+  for (const id of ['breadcrumb','tierArea','constraintInfo','formArea','editorArea','result']) document.getElementById(id).style.display = 'none';
+  document.getElementById('examplesArea').style.display = 'block';
+  document.getElementById('modeLabel').textContent = '通过实例 · 当前合同下的25类验收样稿';
+  if (examples.length === 0) {
+    const res = await fetch(BASE + '/api/examples');
+    examples = await res.json();
+    const categories = [...new Set(examples.map(item => item.skill.split('/')[0]))];
+    document.getElementById('exampleCategory').innerHTML = '<option value="">全部分类</option>' + categories.map(value => `<option value="${escapeHtml(value)}">${escapeHtml(value)}</option>`).join('');
+  }
+  closeExampleDetail();
+}
+
+function closeExamples() {
+  document.getElementById('examplesArea').style.display = 'none';
+  document.getElementById('breadcrumb').style.display = '';
+  document.getElementById('tierArea').style.display = '';
+  document.getElementById('modeLabel').textContent = isAdmin ? '管理模式 · 增删改分类与技能' : '创作模式 · 选类→约束→生成';
+  loadTier(currentPath || '');
+}
+
+function renderExampleList() {
+  const category = document.getElementById('exampleCategory').value;
+  const filtered = category ? examples.filter(item => item.skill.startsWith(category + '/')) : examples;
+  document.getElementById('exampleCount').textContent = `${filtered.length} 个实例`;
+  document.getElementById('exampleList').innerHTML = filtered.map(item => `<div class="example-card" onclick="viewExample('${item.id}')"><div class="id">${item.id} · ${escapeHtml(item.label)}</div><div class="path">${escapeHtml(item.skill)}</div><div class="summary">${escapeHtml(item.summary)}</div></div>`).join('');
+  document.getElementById('exampleList').style.display = 'grid';
+}
+
+async function viewExample(id) {
+  const res = await fetch(BASE + '/api/examples/' + encodeURIComponent(id));
+  const item = await res.json();
+  if (item.error) { alert(item.error); return; }
+  document.getElementById('exampleList').style.display = 'none';
+  document.getElementById('exampleDetail').style.display = 'block';
+  document.getElementById('exampleTitle').textContent = `${item.id} · ${item.label}`;
+  document.getElementById('exampleMeta').textContent = `${item.skill} · ${item.chars} 字`;
+  document.getElementById('exampleContent').textContent = item.output_content;
+  const review = item.review_data;
+  document.getElementById('exampleReview').textContent = `验收：${review.verdict} · 返工等级 ${review.rework} · ${review.notes || '无补充意见'}`;
+}
+
+function closeExampleDetail() {
+  document.getElementById('exampleDetail').style.display = 'none';
+  renderExampleList();
+}
 
 function setRunMode(mode) {
   runMode = mode;
@@ -391,6 +485,10 @@ function renderForm(inputs) {
       html += `<select id="input_${field.name}" style="width:100%;padding:8px;background:var(--bg);border:1px solid var(--border);color:var(--text);border-radius:4px;">${opts.map(o => `<option value="${o}">${o}</option>`).join('')}</select>`;
     } else if (field.ui === "textarea") {
       html += `<textarea id="input_${field.name}" placeholder="${hint}" style="width:100%;padding:8px 10px;background:var(--bg);border:1px solid var(--border);color:var(--text);border-radius:4px;font-size:13px;min-height:60px;resize:vertical;"></textarea>`;
+      // 如果在 user_idea 上，添加 AI 自动补全按钮
+      if (field.name === 'user_idea') {
+        html += `<button type="button" class="btn enrich-btn" onclick="onEnrich()" style="margin-top:8px;font-size:12px;padding:8px 16px;">🤖 AI 自动补全</button><span id="enrichStatus" style="font-size:11px;color:var(--text-muted);margin-left:8px;"></span>`;
+      }
     } else {
       html += `<input type="text" id="input_${field.name}" placeholder="${hint}" style="width:100%;padding:8px 10px;background:var(--bg);border:1px solid var(--border);color:var(--text);border-radius:4px;font-size:13px;">`;
     }
@@ -481,6 +579,73 @@ async function connectVault() {
   }
 }
 
+/* ── AI 自动补全 ──────────────────────────── */
+async function onEnrich() {
+  const idea = document.getElementById("input_user_idea")?.value;
+  if (!idea || !idea.trim()) { alert("请先在「用户想法」中输入你的创作想法"); return; }
+
+  const status = document.getElementById("enrichStatus");
+  status.textContent = "⏳ AI 正在分析你的想法...";
+  status.style.color = "var(--warn)";
+
+  try {
+    const res = await fetch(BASE + "/api/enrich", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        skill: currentSkill.path,
+        user_idea: idea.trim(),
+        mode: runMode,
+        config: runConfig[runMode] || {}
+      })
+    });
+    const data = await res.json();
+    if (data.error) throw new Error(data.error);
+
+    const fields = data.fields || {};
+    let filled = 0;
+    for (const [name, value] of Object.entries(fields)) {
+      const el = document.getElementById("input_" + name);
+      if (el && value !== undefined && value !== null && value !== "") {
+        if (el.tagName === "SELECT") {
+          // Try to match dropdown option
+          const opts = el.options;
+          for (let i = 0; i < opts.length; i++) {
+            if (opts[i].value === value || opts[i].text === value) { el.value = opts[i].value; filled++; break; }
+          }
+        } else {
+          el.value = String(value);
+          // Highlight filled field briefly
+          el.style.borderColor = "var(--success)";
+          setTimeout(() => { el.style.borderColor = ""; }, 2000);
+          filled++;
+        }
+        // For multiselect, also try to toggle chips
+        const msGrid = document.getElementById("ms_" + name);
+        if (msGrid) {
+          const vals = String(value).split(/[,，、]/);
+          msGrid.querySelectorAll(".chip").forEach(chip => {
+            chip.classList.remove("selected");
+            if (vals.some(v => chip.dataset.val?.includes(v.trim()) || v.trim().includes(chip.dataset.val))) {
+              chip.classList.add("selected");
+            }
+          });
+          // Update the hidden textarea
+          const selected = [];
+          msGrid.querySelectorAll(".chip.selected").forEach(c => selected.push(c.dataset.val));
+          if (el.tagName === "TEXTAREA") el.value = selected.join("、");
+        }
+      }
+    }
+
+    status.textContent = `✅ 已填充 ${filled} 个字段，可自由修改后点「生成」`;
+    status.style.color = "var(--success)";
+  } catch (e) {
+    status.textContent = `❌ ${e.message}`;
+    status.style.color = "var(--fail)";
+  }
+}
+
 async function onGenerate() {
   const btn = document.getElementById("generateBtn"); btn.disabled = true; btn.textContent = "⏳ 生成中...";
   document.getElementById("result").classList.remove("active");
@@ -493,6 +658,26 @@ async function onGenerate() {
     selectedDesigns.push({ id, strength: slider ? parseInt(slider.value) : 70 });
   });
   try {
+    // ── 联网搜索（可选） ──
+    const webSearchOn = document.getElementById("webSearchToggle")?.checked;
+    if (webSearchOn) {
+      const query = document.getElementById("webSearchQuery")?.value || inputs.prompt || currentSkill?.label || "";
+      if (query) {
+        const searchUrl = `https://api.duckduckgo.com/?q=${encodeURIComponent(query)}&format=json&no_html=1&skip_disambig=1`;
+        try {
+          const sr = await fetch(searchUrl);
+          const sd = await sr.json();
+          if (sd.AbstractText) {
+            references.push({ name: `🌐 网络搜索结果: ${query}`, type: "web", content: sd.AbstractText });
+          }
+          if (sd.RelatedTopics?.length > 0) {
+            const extra = sd.RelatedTopics.slice(0, 3).map(t => t.Text || t.Result).filter(Boolean).join("\n");
+            if (extra) references.push({ name: `🔗 相关结果`, type: "web", content: extra });
+          }
+        } catch {}
+      }
+    }
+
     const res = await fetch(BASE + "/api/generate", { method:"POST", headers:{"Content-Type":"application/json"}, body:JSON.stringify({ skill: currentSkill.path, designs: selectedDesigns, inputs, references: references.map(r => ({ name: r.name, type: r.type, content: r.content })), mode: runMode, config: runConfig[runMode] || {} }) });
     const data = await res.json();
     document.getElementById("resultContent").textContent = data.content;
@@ -507,15 +692,132 @@ async function onGenerate() {
       }
       eh += `<div style="font-size:14px;font-weight:600;margin:8px 0;">综合评分：${ev.overall.toFixed(2)} / 10</div>`;
     }
-    if (ev.hard_checks) {
-      if (ev.hard_checks.P0) eh += `<div class="check-category">🚫 P0</div><div class="check-grid">${Object.entries(ev.hard_checks.P0).map(([k,v])=>`<div class="check-item ${v?'pass':'fail'}"><span class="icon">${v?'✓':'✗'}</span>${k}</div>`).join('')}</div>`;
-      if (ev.hard_checks.P1) eh += `<div class="check-category">⚠️ P1</div><div class="check-grid">${Object.entries(ev.hard_checks.P1).map(([k,v])=>`<div class="check-item ${v?'pass':'fail'}"><span class="icon">${v?'✓':'✗'}</span>${k}</div>`).join('')}</div>`;
+    if (ev.hard_checks_by_priority) {
+      const renderChecks = checks => Object.entries(checks).map(([k,v])=>`<div class="check-item ${v===true?'pass':v===false?'fail':''}"><span class="icon">${v===true?'✓':v===false?'✗':'?'}</span>${k}</div>`).join('');
+      if (Object.keys(ev.hard_checks_by_priority.P0 || {}).length) eh += `<div class="check-category">🚫 P0</div><div class="check-grid">${renderChecks(ev.hard_checks_by_priority.P0)}</div>`;
+      if (Object.keys(ev.hard_checks_by_priority.P1 || {}).length) eh += `<div class="check-category">⚠️ P1</div><div class="check-grid">${renderChecks(ev.hard_checks_by_priority.P1)}</div>`;
     }
     if (ev.ai_density !== undefined) eh += `<div style="margin-top:8px;font-size:12px;color:var(--text-muted);border-top:1px solid var(--border);padding-top:6px;">🤖 AI腔密度: ${ev.ai_density.toFixed(1)}/10 · Burstiness: ${ev.burstiness||'N/A'} · P0: ${ev.all_P0_passed?'✅':'❌'} · P1: ${ev.all_P1_passed?'✅':'❌'} · P2: ${ev.all_P2_passed===undefined?'—':ev.all_P2_passed?'✅':'❌'}</div>`;
     document.getElementById("evaluation").innerHTML = eh;
     document.getElementById("result").classList.add("active");
+    // 存储结果供后续操作
+    window._lastResult = { content: data.content, skill: currentSkill?.path, design: selectedDesigns.map(d=>d.id).join(","), evaluation: ev, history_id: data.history_id };
+    // 显示操作工具栏
+    document.getElementById("resultToolbar").style.display = "flex";
+    // 检查 vault 连接状态
+    try {
+      const vr = await fetch(BASE + "/api/vault"); const vs = await vr.json();
+      document.getElementById("saveVaultBtn").style.display = vs.connected ? "inline-flex" : "none";
+    } catch {}
   } catch(e) { alert("生成失败: " + e.message); }
   btn.disabled = false; btn.textContent = "🚀 生成";
+}
+
+/* ── 结果操作 ──────────────────────────── */
+function copyResult(btn) {
+  const text = window._lastResult?.content;
+  if (!text) return;
+  navigator.clipboard.writeText(text).then(() => {
+    const orig = btn.textContent;
+    btn.textContent = "✅ 已复制"; setTimeout(() => btn.textContent = orig, 1500);
+  }).catch(() => alert("复制失败"));
+}
+
+async function saveResult(btn) {
+  const r = window._lastResult;
+  if (!r?.content) return;
+  try {
+    await navigator.clipboard.writeText(r.content);
+    const orig = btn.textContent;
+    btn.textContent = "✅ 已复制到剪贴板"; setTimeout(() => btn.textContent = orig, 2000);
+  } catch(e) {
+    btn.textContent = "✅ 已记录"; setTimeout(() => btn.textContent = orig, 2000);
+  }
+}
+
+async function saveResultToVault(btn) {
+  const r = window._lastResult;
+  if (!r?.content) return;
+  try {
+    const vaultRes = await fetch(BASE + "/api/vault");
+    const vaultStatus = await vaultRes.json();
+    if (!vaultStatus.connected) {
+      alert("请先在 Obsidian 标签页中连接 vault 路径");
+      return;
+    }
+    const vaultDir = document.getElementById("vaultSubDir")?.value || "_content-studio";
+    const ts = new Date().toISOString().replace(/[:.]/g,"-").slice(0,19);
+    const fileName = `${ts}__${(r.skill||"untitled").replace(/[\\/]/g,"_")}.md`;
+    const path = `${vaultDir}/${fileName}`;
+    const content = `---\nskill: ${r.skill || ""}\ndesign: ${r.design || ""}\ntimestamp: ${new Date().toISOString()}\n---\n\n${r.content}\n`;
+    const res = await fetch(BASE + "/api/vault/write", {
+      method:"POST", headers:{"Content-Type":"application/json"},
+      body: JSON.stringify({ path, content })
+    });
+    const data = await res.json();
+    if (data.error) { alert(data.error); return; }
+    const orig = btn.textContent;
+    btn.textContent = "✅ 已保存"; setTimeout(() => btn.textContent = orig, 2000);
+  } catch(e) { alert("保存失败: " + e.message); }
+}
+
+/* ── 历史记录 ──────────────────────────── */
+async function loadHistory() {
+  const list = document.getElementById("historyList");
+  list.innerHTML = "⏳ 加载中...";
+  try {
+    const res = await fetch(BASE + "/api/history?limit=20");
+    const entries = await res.json();
+    if (!Array.isArray(entries) || entries.length === 0) {
+      list.innerHTML = '<span style="color:var(--text-muted);">暂无历史记录</span>';
+      return;
+    }
+    list.innerHTML = entries.map(e => {
+      const date = (e.timestamp || "").slice(0,19).replace("T"," ");
+      const score = e.overall ? e.overall.toFixed(1) : "?";
+      return `<div style="padding:6px;margin:2px 0;border:1px solid var(--border);border-radius:4px;">
+        <div style="display:flex;justify-content:space-between;align-items:center;">
+          <span style="font-size:11px;color:var(--text-muted);">${date}</span>
+          <span style="font-size:11px;">${e.skill||""} · ${e.output_len||0}字 · 评分:${score}</span>
+        </div>
+        <div style="margin-top:4px;display:flex;gap:4px;">
+          <button class="btn btn-sm" style="font-size:10px;padding:2px 6px;" onclick="viewHistory('${e.id}')">👁 查看</button>
+          <button class="btn btn-sm" style="font-size:10px;padding:2px 6px;" onclick="deleteHistory('${e.id}')">🗑 删除</button>
+        </div>
+      </div>`;
+    }).join("");
+  } catch(e) {
+    list.innerHTML = `<span style="color:var(--fail);">加载失败: ${e.message}</span>`;
+  }
+}
+
+async function viewHistory(id) {
+  try {
+    const res = await fetch(BASE + "/api/history?id=" + encodeURIComponent(id));
+    const entry = await res.json();
+    if (entry.error) { alert(entry.error); return; }
+    if (entry.output) {
+      document.getElementById("resultContent").textContent = entry.output;
+      document.getElementById("result").classList.add("active");
+      // 如果有评分也显示
+      if (entry.evaluation?.overall !== undefined) {
+        document.getElementById("resultMeta").textContent = `${entry.output.length} 字 · 评分: ${entry.evaluation.overall.toFixed(1)}`;
+      }
+      window._lastResult = { content: entry.output, skill: entry.skill, design: entry.design };
+      document.getElementById("resultToolbar").style.display = "flex";
+    }
+  } catch(e) { alert("查看失败: " + e.message); }
+}
+
+async function deleteHistory(id) {
+  if (!confirm("确定删除这条历史记录？")) return;
+  try {
+    await fetch(BASE + "/api/history", {
+      method:"DELETE", headers:{"Content-Type":"application/json"},
+      body: JSON.stringify({ id })
+    });
+    loadHistory();
+  } catch(e) { alert("删除失败: " + e.message); }
 }
 
 function hideForm() {
@@ -636,6 +938,11 @@ async function saveSkillToServer(path, data) {
 function closeEditor() { document.getElementById("editorArea").style.display = "none"; editingSkillPath = null; }
 
 loadTier("");
+
+/* ── 联网搜索 ──────────────────────────── */
+document.getElementById("webSearchToggle")?.addEventListener("change", function() {
+  document.getElementById("webSearchQuery").style.display = this.checked ? "block" : "none";
+});
 
 /* ── 文件拖拽 ──────────────────────────── */
 const dropZone = document.getElementById("dropZone"), fileInput = document.getElementById("fileInput");

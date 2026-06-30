@@ -1,0 +1,16 @@
+{
+  "rework": 1,
+  "scores": {
+    "task_completion": 5,
+    "information_accuracy": 5,
+    "structure_usability": 4,
+    "language_naturalness": 3,
+    "genre_fit": 3
+  },
+  "manual_checks": {
+    "no_factual_errors": true
+  },
+  "blocking_issues": [],
+  "notes": "口语化表达过多，需将‘变个戏法’、‘睡着觉’等非专业描述精简为标准产品文档语言。",
+  "verdict": "pass"
+}

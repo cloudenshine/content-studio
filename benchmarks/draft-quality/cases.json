@@ -1,0 +1,222 @@
+[
+  {
+    "id": "FIC-01",
+    "family": "fiction",
+    "skill": "文学创作/小说/短篇小说",
+    "design": "warm-healing",
+    "request": "写一个短篇：独居老人每天替已故妻子留一盏灯，某晚灯先亮了。不要写成灵异故事。",
+    "audience": "喜欢现实主义温情故事的成年读者",
+    "purpose": "形成有余味、不过度煽情的完整初稿",
+    "must_preserve": ["灯由现实中的人物点亮", "老人主动做出一个有代价的选择", "结尾克制"],
+    "failure_signals": ["靠鬼魂解释", "直接宣讲珍惜亲情", "只有氛围没有事件"]
+  },
+  {
+    "id": "FIC-02",
+    "family": "fiction",
+    "skill": "文学创作/小说/短篇小说",
+    "design": "suspense-noir",
+    "request": "写一个发生在停运末班地铁里的悬疑短篇，失踪者留下的不是物品，而是一段被所有人记错的广播。",
+    "audience": "偏爱逻辑悬疑的青年读者",
+    "purpose": "得到因果闭合、线索可回看的故事初稿",
+    "must_preserve": ["核心线索是广播", "误记有现实原因", "真相能由前文线索推出"],
+    "failure_signals": ["超自然强行收尾", "侦探突然知道答案", "反转与广播无关"]
+  },
+  {
+    "id": "FIC-03",
+    "family": "fiction",
+    "skill": "文学创作/小说/短篇小说",
+    "design": "hard-scifi",
+    "request": "写一篇近未来短篇：城市允许居民出售一天记忆换取公共服务积分，主角准备出售女儿出生那天。",
+    "audience": "关注技术伦理的科幻读者",
+    "purpose": "用个人选择呈现制度代价",
+    "must_preserve": ["规则前后一致", "交易有不可逆后果", "冲突落在人物选择而非技术说明"],
+    "failure_signals": ["用万能备份取消代价", "大段世界观说明", "制度突然无条件让步"]
+  },
+  {
+    "id": "FIC-04",
+    "family": "fiction",
+    "skill": "文学创作/小说/微型小说",
+    "design": "classical-chinese",
+    "request": "写一篇千字以内的古风微型小说：县令审一桩无人报失的盗窃案。",
+    "audience": "喜欢古典志怪笔法但要求逻辑自洽的读者",
+    "purpose": "得到短、稳、有反转的草稿",
+    "must_preserve": ["确有被盗之物", "无人报失有合理原因", "结尾改变对案情的理解"],
+    "failure_signals": ["仿古词汇堆砌", "鬼神直接作案", "结尾解释过度"]
+  },
+  {
+    "id": "FIC-05",
+    "family": "fiction",
+    "skill": "文学创作/散文",
+    "design": "warm-healing",
+    "request": "以修补一只旧木凳为中心写一篇生活散文，不写怀旧金句，重点放在动作和细节。",
+    "audience": "日常生活类公众号读者",
+    "purpose": "得到具体、自然、可继续润色的散文初稿",
+    "must_preserve": ["围绕一次修凳过程", "至少三个具体动作细节", "感悟由事件自然产生"],
+    "failure_signals": ["空泛怀旧", "罗列人生道理", "修凳过程缺席"]
+  },
+  {
+    "id": "KNW-01",
+    "family": "knowledge",
+    "skill": "知识输出/深度分析",
+    "design": "knowledge-edutainment",
+    "request": "向第一次存钱的大学生解释复利为什么既能帮助储蓄，也会放大债务。不要推荐具体金融产品。",
+    "audience": "无金融基础的大学生",
+    "purpose": "形成准确、易懂、可发布前复核的科普初稿",
+    "must_preserve": ["同时解释储蓄与债务", "提供一个简单数字例子", "不构成投资建议"],
+    "failure_signals": ["承诺收益", "公式没有解释", "只讲储蓄不讲债务"]
+  },
+  {
+    "id": "KNW-02",
+    "family": "knowledge",
+    "skill": "知识输出/深度分析",
+    "design": "wechat-deep-read",
+    "request": "解释为什么给 AI 接入知识库后仍会产生错误答案，区分检索失败、资料冲突和模型编造。",
+    "audience": "准备使用企业知识库的非技术管理者",
+    "purpose": "形成结构清楚的决策说明初稿",
+    "must_preserve": ["区分三类失败", "给出各自可执行的缓解方法", "不声称能完全消除错误"],
+    "failure_signals": ["把所有问题都叫幻觉", "只堆技术名词", "承诺百分百准确"]
+  },
+  {
+    "id": "KNW-03",
+    "family": "knowledge",
+    "skill": "知识输出/课程脚本/教程指南",
+    "design": "knowledge-edutainment",
+    "request": "写一份给自由职业者的教程：如何用沉没成本概念决定是否停止一个拖延已久的个人项目。",
+    "audience": "同时推进多个项目的自由职业者",
+    "purpose": "提供十分钟内可执行的判断流程",
+    "must_preserve": ["解释沉没成本", "包含继续与停止两种可能", "给出具体检查清单"],
+    "failure_signals": ["一律建议放弃", "只有概念没有步骤", "把未来成本当沉没成本"]
+  },
+  {
+    "id": "KNW-04",
+    "family": "knowledge",
+    "skill": "学术专业/技术文档",
+    "design": "wechat-deep-read",
+    "request": "为刚接触 Git 的设计师解释 commit、branch、merge 三个概念，并给出一次安全练习。",
+    "audience": "不写代码但需要参与版本协作的设计师",
+    "purpose": "形成术语少、可照做的入门文档",
+    "must_preserve": ["三个概念关系正确", "练习不涉及远程仓库", "说明如何撤销练习环境"],
+    "failure_signals": ["引入过多命令", "把 branch 说成文件副本", "缺少练习步骤"]
+  },
+  {
+    "id": "KNW-05",
+    "family": "knowledge",
+    "skill": "知识输出/深度分析",
+    "design": "wechat-deep-read",
+    "request": "解释为什么平均数可能掩盖真实情况，用工资分布和任务耗时两个例子说明中位数何时更有用。",
+    "audience": "需要阅读业务报表的普通职场人",
+    "purpose": "形成避免统计误读的科普初稿",
+    "must_preserve": ["两个例子都出现", "说明平均数并非总是错误", "解释中位数的局限"],
+    "failure_signals": ["把平均数完全否定", "没有具体数字", "混淆中位数与众数"]
+  },
+  {
+    "id": "SOC-01",
+    "family": "social",
+    "skill": "媒体社交/社媒帖子/小红书",
+    "design": "xiaohongshu",
+    "request": "写一篇小红书草稿，分享用纸质卡片整理一本难读非虚构书的方法。语气亲切，但不要伪造使用效果。",
+    "audience": "读书效率低、容易半途放弃的用户",
+    "purpose": "形成可分享、可信的经验帖",
+    "must_preserve": ["步骤不超过五步", "承认方法不适合所有书", "不虚构数据"],
+    "failure_signals": ["夸张逆袭", "表情符号过量", "只有种草没有方法"]
+  },
+  {
+    "id": "SOC-02",
+    "family": "social",
+    "skill": "媒体社交/社媒帖子/微博",
+    "design": "knowledge-edutainment",
+    "request": "写一条微博，讨论远程工作中‘随时在线’为什么不等于协作顺畅，并给一个团队实践建议。",
+    "audience": "远程团队成员和管理者",
+    "purpose": "形成有观点但不挑起无意义对立的短帖",
+    "must_preserve": ["区分在线与协作", "只有一个核心建议", "控制在 300 字内"],
+    "failure_signals": ["制造办公室与远程对立", "列出太多建议", "空泛口号"]
+  },
+  {
+    "id": "SOC-03",
+    "family": "social",
+    "skill": "媒体社交/社媒帖子/公众号",
+    "design": "wechat-deep-read",
+    "request": "写一篇公众号短文：为什么待办清单越长，人反而越容易逃避。重点是一次真实可执行的减负方法。",
+    "audience": "被任务清单压得焦虑的上班族",
+    "purpose": "形成克制、实用的公众号初稿",
+    "must_preserve": ["解释逃避机制但不做医学诊断", "给出一个减负方法", "结尾不卖课"],
+    "failure_signals": ["把焦虑归咎于懒惰", "方法超过三套", "营销式结尾"]
+  },
+  {
+    "id": "SOC-04",
+    "family": "social",
+    "skill": "媒体社交/新闻通讯",
+    "design": "brand-storytelling",
+    "request": "为一个独立开发者周报写开场：本周删除了一个开发三周的功能，因为五名试用者都找不到入口。",
+    "audience": "关注产品开发过程的订阅读者",
+    "purpose": "把失败写得具体、有学习价值",
+    "must_preserve": ["开发三周", "五名试用者", "删除决定", "不把失败包装成胜利"],
+    "failure_signals": ["英雄叙事", "隐去关键数字", "大段产品宣传"]
+  },
+  {
+    "id": "SOC-05",
+    "family": "social",
+    "skill": "媒体社交/社媒帖子/小红书",
+    "design": "xiaohongshu",
+    "request": "写一篇新手手冲咖啡记录，只描述水温、研磨和注水节奏三项变量，不推荐器材品牌。",
+    "audience": "刚开始手冲咖啡的普通用户",
+    "purpose": "形成容易收藏的实验记录帖",
+    "must_preserve": ["只讨论三项变量", "说明口味是个人感受", "不给唯一正确参数"],
+    "failure_signals": ["植入品牌", "绝对化参数", "术语堆砌"]
+  },
+  {
+    "id": "BIZ-01",
+    "family": "business",
+    "skill": "商业写作/营销文案/产品页",
+    "design": "brand-storytelling",
+    "request": "为一款完全离线、一次性买断的个人待办应用写产品页首屏。不要声称能提升百分之多少效率。",
+    "audience": "重视隐私、不喜欢订阅制的个人用户",
+    "purpose": "清楚表达差异化价值并推动试用",
+    "must_preserve": ["完全离线", "一次性买断", "个人使用", "明确行动按钮"],
+    "failure_signals": ["虚构效率数据", "企业协作卖点", "隐私承诺含糊"]
+  },
+  {
+    "id": "BIZ-02",
+    "family": "business",
+    "skill": "商业写作/营销文案/社媒短文",
+    "design": "xiaohongshu",
+    "request": "为可重复使用的玻璃水瓶写一条社媒短文。已知信息只有 500ml、可拆洗、耐温 0–80℃，不得补充其他性能。",
+    "audience": "通勤和居家饮水用户",
+    "purpose": "形成信息准确、不浮夸的短文案",
+    "must_preserve": ["500ml", "可拆洗", "0–80℃", "不虚构材质认证"],
+    "failure_signals": ["声称永不漏水", "虚构环保数据", "补充未提供配件"]
+  },
+  {
+    "id": "BIZ-03",
+    "family": "business",
+    "skill": "商业写作/产品文档",
+    "design": "wechat-deep-read",
+    "request": "为一个本地 CSV 去重工具写快速开始。流程只有选择文件、选择去重列、预览、导出副本；原文件不会被修改。",
+    "audience": "不熟悉数据工具的行政人员",
+    "purpose": "形成可直接照做的简短产品文档",
+    "must_preserve": ["四步流程", "原文件不修改", "导出的是副本"],
+    "failure_signals": ["引入命令行", "声称自动修复全部数据", "漏掉预览"]
+  },
+  {
+    "id": "BIZ-04",
+    "family": "business",
+    "skill": "商业写作/汇报报告/周报",
+    "design": "wechat-deep-read",
+    "request": "根据事实写项目周报：完成登录页原型；用户测试 6 人，其中 4 人找不到密码找回；下周只修入口和提示，不开发新功能。",
+    "audience": "小型产品团队",
+    "purpose": "形成结论先行、可追踪的周报",
+    "must_preserve": ["6 人测试", "4 人失败", "下周不开发新功能", "区分完成与问题"],
+    "failure_signals": ["美化测试结果", "新增未提供进展", "下周计划失焦"]
+  },
+  {
+    "id": "BIZ-05",
+    "family": "business",
+    "skill": "商业写作/汇报报告/调研报告",
+    "design": "wechat-deep-read",
+    "request": "写一份内部调研摘要。唯一证据是 8 次访谈中 5 人嫌注册步骤多、2 人担心隐私、1 人没有意见。明确说明样本局限。",
+    "audience": "决定下一迭代范围的产品负责人",
+    "purpose": "形成不夸大证据的决策摘要",
+    "must_preserve": ["8 次访谈", "5/2/1 分布", "样本不能代表全部用户", "提出最小下一步"],
+    "failure_signals": ["换算成普遍市场结论", "遗漏无意见者", "提出大规模重构"]
+  }
+]

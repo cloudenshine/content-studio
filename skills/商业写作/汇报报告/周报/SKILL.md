@@ -4,6 +4,12 @@ label: 周报/汇报
 description: 结构化的周报月报等周期性工作汇报生成，以数据和事实驱动
 mode: content-generate
 inputs:
+  - name: user_idea
+    type: text
+    required: true
+    label: 用户想法
+    hint: 你想创作什么？一句话想法、一个场景、一种感觉都可以，越具体越好
+    ui: textarea
   - name: report_type
     type: string
     required: false
@@ -20,9 +26,8 @@ inputs:
     type: text
     required: true
     label: 汇报周期
-    hint: 如 3月10日-3月16日(可多选)
-    ui: multiselect
-    options: [本周, 本月, 本季度, 本年度]
+    hint: 如 3月10日-3月16日
+    ui: text
   - name: team_size
     type: string
     required: false
